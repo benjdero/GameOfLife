@@ -21,6 +21,7 @@ kotlin {
                 api(compose.runtime)
                 api(compose.foundation)
                 api(compose.material)
+                api("com.arkivanov.decompose:extensions-compose-jetbrains:${Version.decompose}")
             }
         }
         val commonTest by getting {

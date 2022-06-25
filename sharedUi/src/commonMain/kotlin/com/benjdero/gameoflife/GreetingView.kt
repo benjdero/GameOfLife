@@ -2,50 +2,46 @@ package com.benjdero.gameoflife
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import kotlin.random.Random
+import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 
 @Composable
-fun RootView() {
+fun RootView(component: World) {
     Column {
         WorldView(
-            Modifier
+            component = component,
+            modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
         )
-        GreetingView(
-            Modifier
+        ControlView(
+            component = component,
+            modifier = Modifier
                 .fillMaxWidth()
         )
     }
 }
 
 @Composable
-fun WorldView(modifier: Modifier) {
-    val worldHeight = 10
-    val worldWidth = 15
-    val world: Array<Array<Boolean>> = Array(worldHeight) {
-        Array(worldWidth) {
-            Random.nextBoolean()
-        }
-    }
+fun WorldView(component: World, modifier: Modifier) {
+    val model: World.Model by component.models.subscribeAsState()
 
     Canvas(
         modifier = modifier
     ) {
-        val canvasWidth = size.width
-        val canvasHeight = size.height
+        val cellWidth: Float = size.width / model.width
+        val cellHeight: Float = size.height / model.height
 
-        val cellWidth: Float = canvasWidth / worldWidth
-        val cellHeight: Float = canvasHeight / worldHeight
-
-        world.forEachIndexed { r: Int, row: Array<Boolean> ->
+        model.world.forEachIndexed { r: Int, row: Array<Boolean> ->
             row.forEachIndexed { c: Int, cell: Boolean ->
                 drawRect(
                     color = if (cell) Color.Black else Color.White,
@@ -64,11 +60,20 @@ fun WorldView(modifier: Modifier) {
 }
 
 @Composable
-fun GreetingView(modifier: Modifier) {
-    Text(
-        modifier = modifier,
-        text = greet()
-    )
+fun ControlView(component: World, modifier: Modifier) {
+    Row {
+        Button(
+            onClick = component::nextGeneration
+        ) {
+            Text(
+                text = "Next"
+            )
+        }
+        Text(
+            modifier = modifier,
+            text = greet()
+        )
+    }
 }
 
 fun greet(): String {

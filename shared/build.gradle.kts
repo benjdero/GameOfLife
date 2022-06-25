@@ -22,7 +22,18 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                api("com.arkivanov.mvikotlin:rx:${Version.mvikotlin}")
+                api("com.arkivanov.mvikotlin:mvikotlin:${Version.mvikotlin}")
+                api("com.arkivanov.mvikotlin:mvikotlin-logging:${Version.mvikotlin}")
+                api("com.arkivanov.mvikotlin:mvikotlin-timetravel:${Version.mvikotlin}")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:${Version.mvikotlin}")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-reaktive:${Version.mvikotlin}")
+                api("com.arkivanov.decompose:decompose:${Version.decompose}")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -30,7 +41,11 @@ kotlin {
         }
         val androidMain by getting
         val androidTest by getting
-        val desktopMain by getting
+        val desktopMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:${Version.coroutines}")
+            }
+        }
         val desktopTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting

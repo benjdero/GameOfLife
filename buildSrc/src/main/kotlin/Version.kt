@@ -4,6 +4,11 @@ object Version {
     const val gradle = "7.2.1"
     const val kotlin = "1.6.10"
 
+    // Shared
+    const val mvikotlin = "3.0.0-beta02"
+    const val decompose = "0.5.2"
+    const val coroutines = "1.6.3"
+
     // Android
     const val compose = "1.1.1"
     const val activityCompose = "1.4.0"
