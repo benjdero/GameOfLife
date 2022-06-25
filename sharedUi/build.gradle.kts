@@ -21,6 +21,7 @@ kotlin {
                 api(compose.runtime)
                 api(compose.foundation)
                 api(compose.material)
+                implementation(compose.materialIconsExtended)
                 api("com.arkivanov.decompose:extensions-compose-jetbrains:${Version.decompose}")
             }
         }
