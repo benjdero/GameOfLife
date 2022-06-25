@@ -5,6 +5,11 @@ plugins {
 
 kotlin {
     android()
+    jvm("desktop") {
+        compilations.all {
+            kotlinOptions.jvmTarget = "11"
+        }
+    }
 
     listOf(
         iosX64(),
@@ -25,6 +30,8 @@ kotlin {
         }
         val androidMain by getting
         val androidTest by getting
+        val desktopMain by getting
+        val desktopTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
