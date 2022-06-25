@@ -1,4 +1,4 @@
-package com.benjdero.gameoflife
+package com.benjdero.gameoflife.ui
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Column
@@ -13,21 +13,26 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import com.benjdero.gameoflife.Greeting
+import com.benjdero.gameoflife.World
+import com.benjdero.gameoflife.ui.theme.MyTheme
 
 @Composable
 fun RootView(component: World) {
-    Column {
-        WorldView(
-            component = component,
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-        )
-        ControlView(
-            component = component,
-            modifier = Modifier
-                .fillMaxWidth()
-        )
+    MyTheme {
+        Column {
+            WorldView(
+                component = component,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+            )
+            ControlView(
+                component = component,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+        }
     }
 }
 
