@@ -28,11 +28,22 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Version.compose
+    }
 }
 
 dependencies {
     implementation(project(":shared"))
-    implementation("com.google.android.material:material:${Version.material}")
+    implementation("androidx.compose.material:material:${Version.compose}")
+    implementation("androidx.compose.animation:animation:${Version.compose}")
+    implementation("androidx.compose.ui:ui-tooling:${Version.compose}")
+    implementation("androidx.activity:activity-compose:${Version.activityCompose}")
     implementation("androidx.appcompat:appcompat:${Version.appcompat}")
-    implementation("androidx.constraintlayout:constraintlayout:${Version.constraintlayout}")
+    implementation("com.google.android.material:material:${Version.material}")
 }
