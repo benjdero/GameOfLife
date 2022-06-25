@@ -1,12 +1,12 @@
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import com.benjdero.gameoflife.GreetingView
+import com.benjdero.gameoflife.RootView
 
 fun main() = application {
     Window(onCloseRequest = ::exitApplication) {
         MaterialTheme {
-            GreetingView()
+            RootView()
         }
     }
 }
