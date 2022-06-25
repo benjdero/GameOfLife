@@ -5,7 +5,7 @@ plugins {
 
 kotlin {
     android()
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -47,10 +47,10 @@ kotlin {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = Version.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 21
-        targetSdk = 32
+        minSdk = Version.minSdk
+        targetSdk = Version.targetSdk
     }
 }
