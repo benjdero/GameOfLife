@@ -22,13 +22,18 @@ class WorldComponent(
 
     override val models: Value<Model> = store.asValue().map {
         Model(
+            running = it.running,
             width = it.width,
             height = it.height,
             world = it.world
         )
     }
 
-    override fun nextGeneration() {
-        store.accept(Intent.NextGeneration)
+    override fun runGame() {
+        store.accept(Intent.RunGame)
+    }
+
+    override fun nextStep() {
+        store.accept(Intent.NextStep)
     }
 }

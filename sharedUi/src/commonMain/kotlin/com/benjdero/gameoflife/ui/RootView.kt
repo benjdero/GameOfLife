@@ -11,7 +11,9 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowRight
+import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -74,14 +76,31 @@ fun WorldView(component: World, modifier: Modifier) {
 
 @Composable
 fun ControlView(component: World, modifier: Modifier) {
+    val model: World.Model by component.models.subscribeAsState()
+
     BottomAppBar(
         modifier = modifier
     ) {
         IconButton(
-            onClick = component::nextGeneration
+            onClick = component::runGame
         ) {
             Icon(
-                imageVector = Icons.Default.ArrowRight,
+                imageVector = if (model.running)
+                    Icons.Default.Pause
+                else
+                    Icons.Default.PlayArrow,
+                contentDescription = if (model.running)
+                    "pause"
+                else
+                    "run",
+            )
+        }
+        IconButton(
+            onClick = component::nextStep,
+            enabled = !model.running
+        ) {
+            Icon(
+                imageVector = Icons.Default.SkipNext,
                 contentDescription = "next"
             )
         }
