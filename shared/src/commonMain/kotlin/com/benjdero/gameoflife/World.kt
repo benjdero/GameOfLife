@@ -14,5 +14,17 @@ interface World {
         val width: Int,
         val height: Int,
         val world: Array<Array<Boolean>>
+    ) {
+        val flatWorld: List<FlatWorldElement> = world.flatten().mapIndexed { index: Int, value: Boolean ->
+            FlatWorldElement(
+                id = index,
+                cell = value
+            )
+        }
+    }
+
+    data class FlatWorldElement(
+        val id: Int,
+        val cell: Boolean
     )
 }

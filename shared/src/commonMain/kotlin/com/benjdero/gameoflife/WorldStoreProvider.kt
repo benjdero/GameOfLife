@@ -5,6 +5,8 @@ import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
+import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
 import com.benjdero.gameoflife.WorldStore.Intent
 import com.benjdero.gameoflife.WorldStore.State
 import kotlinx.coroutines.delay

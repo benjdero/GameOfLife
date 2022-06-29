@@ -17,10 +17,12 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(project(":shared"))
-                api(compose.runtime)
-                api(compose.foundation)
-                api(compose.material)
+                implementation(project(":shared"))
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(compose.animation)
+                implementation(compose.uiTooling)
                 implementation(compose.materialIconsExtended)
                 api("com.arkivanov.decompose:extensions-compose-jetbrains:${Version.decompose}")
             }

@@ -6,8 +6,9 @@ object Version {
 
     // Shared
     const val mvikotlin = "3.0.0-beta02"
-    const val decompose = "0.5.2"
+    const val decompose = "0.6.0"
     const val coroutines = "1.6.3"
+    const val essenty = "0.4.0"
 
     // Android
     const val compose = "1.1.1"
