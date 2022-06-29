@@ -7,10 +7,12 @@ import kotlin.random.Random
 
 internal interface WorldStore : Store<Intent, State, Nothing> {
     sealed class Intent {
-        object NextGeneration : Intent()
+        object RunGame : Intent()
+        object NextStep : Intent()
     }
 
     data class State(
+        val running: Boolean = false,
         val width: Int = 15,
         val height: Int = 10,
         val world: Array<Array<Boolean>> = Array(height) {

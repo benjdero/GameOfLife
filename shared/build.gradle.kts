@@ -10,7 +10,6 @@ kotlin {
             kotlinOptions.jvmTarget = "11"
         }
     }
-
     listOf(
         iosX64(),
         iosArm64(),
@@ -18,20 +17,26 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
+            export("com.arkivanov.mvikotlin:mvikotlin:${Version.mvikotlin}")
+            export("com.arkivanov.mvikotlin:mvikotlin-logging:${Version.mvikotlin}")
+            export("com.arkivanov.mvikotlin:mvikotlin-timetravel:${Version.mvikotlin}")
+            export("com.arkivanov.decompose:decompose:${Version.decompose}")
+            export("com.arkivanov.essenty:lifecycle:${Version.essenty}")
         }
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("com.arkivanov.mvikotlin:rx:${Version.mvikotlin}")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}")
                 api("com.arkivanov.mvikotlin:mvikotlin:${Version.mvikotlin}")
                 api("com.arkivanov.mvikotlin:mvikotlin-logging:${Version.mvikotlin}")
                 api("com.arkivanov.mvikotlin:mvikotlin-timetravel:${Version.mvikotlin}")
+                implementation("com.arkivanov.mvikotlin:rx:${Version.mvikotlin}")
                 implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:${Version.mvikotlin}")
                 implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-reaktive:${Version.mvikotlin}")
                 api("com.arkivanov.decompose:decompose:${Version.decompose}")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}")
+                api("com.arkivanov.essenty:lifecycle:${Version.essenty}")
             }
         }
         val commonTest by getting {

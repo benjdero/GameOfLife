@@ -8,9 +8,9 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.lifecycle.LifecycleC
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
-import com.benjdero.gameoflife.RootView
 import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.WorldComponent
+import com.benjdero.gameoflife.ui.RootView
 
 @OptIn(ExperimentalDecomposeApi::class)
 fun main() {

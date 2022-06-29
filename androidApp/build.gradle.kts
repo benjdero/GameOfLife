@@ -39,10 +39,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":shared"))
     implementation(project(":sharedUi"))
-    implementation("androidx.compose.material:material:${Version.compose}")
-    implementation("androidx.compose.animation:animation:${Version.compose}")
-    implementation("androidx.compose.ui:ui-tooling:${Version.compose}")
     implementation("androidx.activity:activity-compose:${Version.activityCompose}")
     implementation("androidx.appcompat:appcompat:${Version.appcompat}")
     implementation("com.google.android.material:material:${Version.material}")

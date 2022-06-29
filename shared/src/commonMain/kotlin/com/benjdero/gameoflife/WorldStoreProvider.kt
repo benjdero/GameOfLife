@@ -5,8 +5,12 @@ import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
+import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
 import com.benjdero.gameoflife.WorldStore.Intent
 import com.benjdero.gameoflife.WorldStore.State
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 internal class WorldStoreProvider(
     private val storeFactory: StoreFactory
@@ -21,18 +25,41 @@ internal class WorldStoreProvider(
         ) {}
 
     private sealed class Msg {
+        data class RunGame(val running: Boolean) : Msg()
         data class WorldUpdate(val world: Array<Array<Boolean>>) : Msg()
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {
         override fun executeIntent(intent: Intent, getState: () -> State) {
             when (intent) {
-                Intent.NextGeneration -> nextGeneration(getState())
+                Intent.RunGame -> runGame(getState)
+                Intent.NextStep -> nextStep(getState())
             }
         }
 
-        private fun nextGeneration(state: State) {
-            val nextWorld: Array<Array<Boolean>> = Array(state.height) { r ->
+        private fun runGame(getState: () -> State) {
+            val isRunning = getState().running
+            dispatch(Msg.RunGame(!isRunning))
+            if (!isRunning) {
+                scope.launch {
+                    while (true) {
+                        val state: State = getState()
+                        if (!state.running)
+                            return@launch
+                        nextStep(state)
+                        delay(500)
+                    }
+                }
+            }
+        }
+
+        private fun nextStep(state: State) {
+            val nextWorld: Array<Array<Boolean>> = calcNextWorld(state)
+            dispatch(Msg.WorldUpdate(nextWorld))
+        }
+
+        private fun calcNextWorld(state: State): Array<Array<Boolean>> =
+            Array(state.height) { r ->
                 Array(state.width) { c ->
                     val neighborsCount: Int = countNeighbors(r, c, state.height, state.width, state.world)
                     if (state.world[r][c])
@@ -41,8 +68,6 @@ internal class WorldStoreProvider(
                         neighborsCount == 3
                 }
             }
-            dispatch(Msg.WorldUpdate(nextWorld))
-        }
 
         private fun countNeighbors(row: Int, col: Int, height: Int, width: Int, world: Array<Array<Boolean>>): Int {
             var count = 0
@@ -65,6 +90,7 @@ internal class WorldStoreProvider(
     private object ReducerImpl : Reducer<State, Msg> {
         override fun State.reduce(msg: Msg): State =
             when (msg) {
+                is Msg.RunGame -> copy(running = msg.running)
                 is Msg.WorldUpdate -> copy(world = msg.world)
             }
     }
