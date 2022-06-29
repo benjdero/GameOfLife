@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.benjdero.gameoflife.Greeting
 import com.benjdero.gameoflife.World
+import com.benjdero.gameoflife.ui.theme.MyColor
 import com.benjdero.gameoflife.ui.theme.MyTheme
 
 @Composable
@@ -45,6 +46,9 @@ fun RootView(component: World) {
     }
 }
 
+private const val PADDING_HORIZONTAL = 1f
+private const val PADDING_VERTICAL = 1f
+
 @Composable
 fun WorldView(component: World, modifier: Modifier) {
     val model: World.Model by component.models.subscribeAsState()
@@ -53,6 +57,12 @@ fun WorldView(component: World, modifier: Modifier) {
     Canvas(
         modifier = modifier
     ) {
+        drawRect(
+            color = MyColor.BlueGrey50,
+            topLeft = Offset.Zero,
+            size = size
+        )
+
         val cellWidth: Float = size.width / model.width
         val cellHeight: Float = size.height / model.height
 
@@ -61,12 +71,12 @@ fun WorldView(component: World, modifier: Modifier) {
                 drawRect(
                     color = if (cell) cellColor else Color.White,
                     topLeft = Offset(
-                        x = c * cellWidth,
-                        y = r * cellHeight
+                        x = c * cellWidth + PADDING_HORIZONTAL / 2,
+                        y = r * cellHeight + PADDING_VERTICAL / 2
                     ),
                     size = Size(
-                        width = cellWidth,
-                        height = cellHeight
+                        width = cellWidth - PADDING_HORIZONTAL,
+                        height = cellHeight - PADDING_VERTICAL
                     )
                 )
             }
