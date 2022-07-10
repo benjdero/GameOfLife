@@ -1,4 +1,4 @@
-package com.benjdero.gameoflife
+package com.benjdero.gameoflife.game
 
 import com.arkivanov.decompose.value.Value
 

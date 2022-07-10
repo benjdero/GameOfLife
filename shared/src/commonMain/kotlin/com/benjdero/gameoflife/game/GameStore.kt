@@ -1,8 +1,8 @@
-package com.benjdero.gameoflife
+package com.benjdero.gameoflife.game
 
 import com.arkivanov.mvikotlin.core.store.Store
-import com.benjdero.gameoflife.GameStore.Intent
-import com.benjdero.gameoflife.GameStore.State
+import com.benjdero.gameoflife.game.GameStore.Intent
+import com.benjdero.gameoflife.game.GameStore.State
 import kotlin.random.Random
 
 internal interface GameStore : Store<Intent, State, Nothing> {

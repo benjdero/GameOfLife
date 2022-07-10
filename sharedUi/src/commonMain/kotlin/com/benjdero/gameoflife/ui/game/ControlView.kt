@@ -12,7 +12,7 @@ import androidx.compose.material.icons.filled.ZoomOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import com.benjdero.gameoflife.Game
+import com.benjdero.gameoflife.game.Game
 import kotlin.math.max
 import kotlin.math.roundToInt
 

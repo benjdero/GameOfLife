@@ -1,12 +1,13 @@
-package com.benjdero.gameoflife
+package com.benjdero.gameoflife.game
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.operator.map
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.benjdero.gameoflife.Game.Model
-import com.benjdero.gameoflife.GameStore.Intent
+import com.benjdero.gameoflife.asValue
+import com.benjdero.gameoflife.game.Game.Model
+import com.benjdero.gameoflife.game.GameStore.Intent
 
 class GameComponent(
     componentContext: ComponentContext,

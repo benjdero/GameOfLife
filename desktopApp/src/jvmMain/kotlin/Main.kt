@@ -8,8 +8,8 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.lifecycle.LifecycleC
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
-import com.benjdero.gameoflife.Game
-import com.benjdero.gameoflife.GameComponent
+import com.benjdero.gameoflife.game.Game
+import com.benjdero.gameoflife.game.GameComponent
 import com.benjdero.gameoflife.ui.game.GameView
 
 @OptIn(ExperimentalDecomposeApi::class)

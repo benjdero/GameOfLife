@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.arkivanov.decompose.defaultComponentContext
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
-import com.benjdero.gameoflife.Game
-import com.benjdero.gameoflife.GameComponent
+import com.benjdero.gameoflife.game.Game
+import com.benjdero.gameoflife.game.GameComponent
 import com.benjdero.gameoflife.ui.game.GameView
 
 class MainActivity : AppCompatActivity() {

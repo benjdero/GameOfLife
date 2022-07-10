@@ -29,8 +29,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
-import com.benjdero.gameoflife.Game
-import com.benjdero.gameoflife.Game.Model
+import com.benjdero.gameoflife.game.Game
+import com.benjdero.gameoflife.game.Game.Model
 import com.benjdero.gameoflife.ui.theme.MyTheme
 import kotlin.math.max
 import kotlin.math.sqrt

@@ -1,12 +1,12 @@
-package com.benjdero.gameoflife
+package com.benjdero.gameoflife.game
 
 import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.benjdero.gameoflife.GameStore.Intent
-import com.benjdero.gameoflife.GameStore.State
+import com.benjdero.gameoflife.game.GameStore.Intent
+import com.benjdero.gameoflife.game.GameStore.State
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
