@@ -2,7 +2,7 @@ package com.benjdero.gameoflife
 
 import com.arkivanov.decompose.value.Value
 
-interface World {
+interface Game {
     val models: Value<Model>
 
     fun runGame()

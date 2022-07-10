@@ -8,14 +8,14 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.lifecycle.LifecycleC
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
-import com.benjdero.gameoflife.World
-import com.benjdero.gameoflife.WorldComponent
-import com.benjdero.gameoflife.ui.world.WorldView
+import com.benjdero.gameoflife.Game
+import com.benjdero.gameoflife.GameComponent
+import com.benjdero.gameoflife.ui.game.GameView
 
 @OptIn(ExperimentalDecomposeApi::class)
 fun main() {
     val lifecycle = LifecycleRegistry()
-    val component: World = WorldComponent(
+    val component: Game = GameComponent(
         componentContext = DefaultComponentContext(
             lifecycle = lifecycle
         ),
@@ -31,7 +31,7 @@ fun main() {
             state = windowState
         ) {
             MaterialTheme {
-                WorldView(
+                GameView(
                     component = component
                 )
             }

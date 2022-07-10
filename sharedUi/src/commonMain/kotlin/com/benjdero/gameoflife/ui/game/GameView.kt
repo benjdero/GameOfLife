@@ -1,4 +1,4 @@
-package com.benjdero.gameoflife.ui.world
+package com.benjdero.gameoflife.ui.game
 
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.forEachGesture
@@ -29,14 +29,14 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
-import com.benjdero.gameoflife.World
-import com.benjdero.gameoflife.World.Model
+import com.benjdero.gameoflife.Game
+import com.benjdero.gameoflife.Game.Model
 import com.benjdero.gameoflife.ui.theme.MyTheme
 import kotlin.math.max
 import kotlin.math.sqrt
 
 @Composable
-fun WorldView(component: World) {
+fun GameView(component: Game) {
     val model: Model by component.models.subscribeAsState()
     var scale: Float by remember { mutableStateOf(1f) }
     var offset: Offset by remember { mutableStateOf(Offset.Zero) }

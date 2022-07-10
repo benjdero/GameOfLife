@@ -1,11 +1,11 @@
 package com.benjdero.gameoflife
 
 import com.arkivanov.mvikotlin.core.store.Store
-import com.benjdero.gameoflife.WorldStore.Intent
-import com.benjdero.gameoflife.WorldStore.State
+import com.benjdero.gameoflife.GameStore.Intent
+import com.benjdero.gameoflife.GameStore.State
 import kotlin.random.Random
 
-internal interface WorldStore : Store<Intent, State, Nothing> {
+internal interface GameStore : Store<Intent, State, Nothing> {
     sealed class Intent {
         object RunGame : Intent()
         object NextStep : Intent()

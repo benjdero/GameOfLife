@@ -6,21 +6,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.arkivanov.decompose.defaultComponentContext
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
-import com.benjdero.gameoflife.World
-import com.benjdero.gameoflife.WorldComponent
-import com.benjdero.gameoflife.ui.world.WorldView
+import com.benjdero.gameoflife.Game
+import com.benjdero.gameoflife.GameComponent
+import com.benjdero.gameoflife.ui.game.GameView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val component: World = WorldComponent(
+        val component: Game = GameComponent(
             componentContext = defaultComponentContext(),
             storeFactory = LoggingStoreFactory(TimeTravelStoreFactory())
         )
 
         setContent {
-            WorldView(component)
+            GameView(component)
         }
     }
 }

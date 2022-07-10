@@ -1,4 +1,4 @@
-package com.benjdero.gameoflife.ui.world
+package com.benjdero.gameoflife.ui.game
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import com.benjdero.gameoflife.World.Model
+import com.benjdero.gameoflife.Game.Model
 import kotlin.math.min
 
 private const val PADDING_HORIZONTAL = 1f

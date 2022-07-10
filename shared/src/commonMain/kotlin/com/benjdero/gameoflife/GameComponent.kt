@@ -5,17 +5,17 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.operator.map
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.benjdero.gameoflife.World.Model
-import com.benjdero.gameoflife.WorldStore.Intent
+import com.benjdero.gameoflife.Game.Model
+import com.benjdero.gameoflife.GameStore.Intent
 
-class WorldComponent(
+class GameComponent(
     componentContext: ComponentContext,
     storeFactory: StoreFactory
-) : World, ComponentContext by componentContext {
+) : Game, ComponentContext by componentContext {
 
     private val store =
         instanceKeeper.getStore {
-            WorldStoreProvider(
+            GameStoreProvider(
                 storeFactory = storeFactory
             ).provide()
         }

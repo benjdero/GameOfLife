@@ -1,4 +1,4 @@
-package com.benjdero.gameoflife.ui.world
+package com.benjdero.gameoflife.ui.game
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
@@ -12,13 +12,13 @@ import androidx.compose.material.icons.filled.ZoomOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import com.benjdero.gameoflife.World
+import com.benjdero.gameoflife.Game
 import kotlin.math.max
 import kotlin.math.roundToInt
 
 @Composable
 internal fun RowScope.ControlView(
-    model: World.Model,
+    model: Game.Model,
     nextStep: () -> Unit,
     scale: Float,
     setScale: (Float) -> Unit,
