@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.PointerInputScope
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
@@ -111,34 +112,46 @@ fun WorldView(component: World) {
                             translationY = offset.y
                         )
                         .pointerInput(Unit) {
-                            forEachGesture {
-                                awaitPointerEventScope {
-                                    awaitFirstDown(requireUnconsumed = false)
-                                    do {
-                                        val event = awaitPointerEvent()
-                                        when (event.changes.size) {
-                                            1 -> {
-                                                // Drag
-                                                val translation: Offset = event.changes[0].position - event.changes[0].previousPosition
-                                                offset = coerceInOffset(offset + translation)
-                                            }
-                                            2 -> {
-                                                // Zoom
-                                                val previousDelta: Offset = event.changes[0].previousPosition - event.changes[1].previousPosition
-                                                val currentDelta: Offset = event.changes[0].position - event.changes[1].position
-                                                val zoom: Float = sqrt(currentDelta.getDistanceSquared() / previousDelta.getDistanceSquared())
-                                                scale = max(scale * zoom, 1f)
-                                                offset = coerceInOffset(offset)
-                                            }
-                                        }
-                                    } while (event.changes.any { it.pressed })
+                            detectAllGestures(
+                                drag = { drag: Offset ->
+                                    offset = coerceInOffset(offset + drag)
+                                },
+                                zoom = { zoom: Float ->
+                                    scale = max(scale * zoom, 1f)
+                                    if (zoom < 1f)
+                                        offset = coerceInOffset(offset)
                                 }
-                            }
+                            )
                         }
                 ) {
                     CellGridView(model)
                 }
             }
+        }
+    }
+}
+
+suspend fun PointerInputScope.detectAllGestures(drag: (Offset) -> Unit, zoom: (Float) -> Unit) {
+    forEachGesture {
+        awaitPointerEventScope {
+            awaitFirstDown(requireUnconsumed = false)
+            do {
+                val event = awaitPointerEvent()
+                when (event.changes.size) {
+                    1 -> {
+                        // Drag
+                        val dragValue: Offset = event.changes[0].position - event.changes[0].previousPosition
+                        drag(dragValue)
+                    }
+                    2 -> {
+                        // Zoom
+                        val previousDelta: Offset = event.changes[0].previousPosition - event.changes[1].previousPosition
+                        val currentDelta: Offset = event.changes[0].position - event.changes[1].position
+                        val zoomValue: Float = sqrt(currentDelta.getDistanceSquared() / previousDelta.getDistanceSquared())
+                        zoom(zoomValue)
+                    }
+                }
+            } while (event.changes.any { it.pressed })
         }
     }
 }
