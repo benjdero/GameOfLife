@@ -1,14 +1,10 @@
 package com.benjdero.gameoflife.ui.world
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -16,16 +12,10 @@ import androidx.compose.material.BottomAppBar
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.SkipNext
-import androidx.compose.material.icons.filled.ZoomIn
-import androidx.compose.material.icons.filled.ZoomOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,8 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
@@ -44,8 +32,6 @@ import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.World.Model
 import com.benjdero.gameoflife.ui.theme.MyTheme
 import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 @Composable
@@ -152,80 +138,6 @@ fun WorldView(component: World) {
                 ) {
                     CellGridView(model)
                 }
-            }
-        }
-    }
-}
-
-@Composable
-private fun RowScope.ControlView(model: Model, nextStep: () -> Unit, scale: Float, setScale: (Float) -> Unit, offset: Offset, setOffset: (Offset) -> Unit) {
-    IconButton(
-        onClick = nextStep,
-        enabled = !model.running
-    ) {
-        Icon(
-            imageVector = Icons.Default.SkipNext,
-            contentDescription = "next"
-        )
-    }
-    Spacer(
-        modifier = Modifier.weight(1f)
-    )
-    IconButton(
-        onClick = {
-            setScale(max(scale - 0.5f, 1f))
-            setOffset(offset)
-        },
-        enabled = scale > 1f
-    ) {
-        Icon(
-            imageVector = Icons.Default.ZoomOut,
-            contentDescription = "zoomOut"
-        )
-    }
-    Text(
-        text = "${(scale * 100).roundToInt()}%"
-    )
-    IconButton(
-        onClick = {
-            setScale(scale + 0.5f)
-        }
-    ) {
-        Icon(
-            imageVector = Icons.Default.ZoomIn,
-            contentDescription = "zoomIn"
-        )
-    }
-}
-
-private const val PADDING_HORIZONTAL = 1f
-private const val PADDING_VERTICAL = 1f
-
-@Composable
-private fun CellGridView(model: Model) {
-    val cellColor: Color = MaterialTheme.colors.secondary
-
-    Canvas(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        val cellWidth: Float = size.width / model.width
-        val cellHeight: Float = size.height / model.height
-        val cellSize: Float = min(cellWidth, cellHeight)
-
-        model.world.forEachIndexed { r: Int, row: Array<Boolean> ->
-            row.forEachIndexed { c: Int, cell: Boolean ->
-                drawRect(
-                    color = if (cell) cellColor else Color.White,
-                    topLeft = Offset(
-                        x = c * cellSize + PADDING_HORIZONTAL / 2,
-                        y = r * cellSize + PADDING_VERTICAL / 2
-                    ),
-                    size = Size(
-                        width = cellSize - PADDING_HORIZONTAL,
-                        height = cellSize - PADDING_VERTICAL
-                    )
-                )
             }
         }
     }
