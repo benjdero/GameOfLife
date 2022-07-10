@@ -9,12 +9,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
@@ -32,9 +30,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
-import com.benjdero.gameoflife.Greeting
 import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.ui.theme.MyTheme
 import kotlin.math.max
@@ -131,17 +127,7 @@ fun ControlView(modifier: Modifier, component: World) {
         Spacer(
             modifier = Modifier.weight(1f)
         )
-        Text(
-            modifier = Modifier.padding(
-                horizontal = 16.dp
-            ),
-            text = greet()
-        )
     }
-}
-
-fun greet(): String {
-    return Greeting().greeting()
 }
 
 @Composable

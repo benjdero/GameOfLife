@@ -14,8 +14,6 @@ struct ContentView: View {
         observableModel = ObservableValue(world.models)
     }
 
-    let greet = Greeting().greeting()
-
     var body: some View {
         VStack {
             LazyVGrid(
@@ -37,7 +35,6 @@ struct ContentView: View {
                     Text("Next")
                 }.disabled(model.running)
                 Spacer()
-                Text(greet)
             }.padding(16)
         }
     }
