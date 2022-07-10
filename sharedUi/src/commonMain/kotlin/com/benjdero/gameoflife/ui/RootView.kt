@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomAppBar
+import androidx.compose.material.FabPosition
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -56,22 +59,9 @@ fun RootView(component: World) {
             bottomBar = {
                 BottomAppBar(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    cutoutShape = CircleShape
                 ) {
-                    IconButton(
-                        onClick = component::runGame
-                    ) {
-                        Icon(
-                            imageVector = if (model.running)
-                                Icons.Default.Pause
-                            else
-                                Icons.Default.PlayArrow,
-                            contentDescription = if (model.running)
-                                "pause"
-                            else
-                                "run",
-                        )
-                    }
                     IconButton(
                         onClick = component::nextStep,
                         enabled = !model.running
@@ -108,6 +98,24 @@ fun RootView(component: World) {
                             contentDescription = "zoomIn"
                         )
                     }
+                }
+            },
+            isFloatingActionButtonDocked = true,
+            floatingActionButtonPosition = FabPosition.Center,
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = component::runGame
+                ) {
+                    Icon(
+                        imageVector = if (model.running)
+                            Icons.Default.Pause
+                        else
+                            Icons.Default.PlayArrow,
+                        contentDescription = if (model.running)
+                            "pause"
+                        else
+                            "run",
+                    )
                 }
             }
         ) { scaffoldPadding: PaddingValues ->
