@@ -36,6 +36,8 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.unit.IntSize
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.ui.theme.MyTheme
@@ -53,6 +55,7 @@ fun RootView(component: World) {
     val cellColor: Color = MaterialTheme.colors.secondary
     var scale: Float by remember { mutableStateOf(1f) }
     var offset: Offset by remember { mutableStateOf(Offset.Zero) }
+    var viewSize by remember { mutableStateOf(IntSize.Zero) }
 
     MyTheme {
         Scaffold(
@@ -77,6 +80,12 @@ fun RootView(component: World) {
                     IconButton(
                         onClick = {
                             scale = max(scale - 0.5f, 1f)
+                            val maxXOffset: Float = viewSize.width * (scale - 1f) / 2f
+                            val maxYOffset: Float = viewSize.height * (scale - 1f) / 2f
+                            offset = Offset(
+                                x = offset.x.coerceIn(-maxXOffset, maxXOffset),
+                                y = offset.y.coerceIn(-maxYOffset, maxYOffset),
+                            )
                         },
                         enabled = scale > 1f
                     ) {
@@ -126,6 +135,9 @@ fun RootView(component: World) {
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
+                        .onSizeChanged {
+                            viewSize = it
+                        }
                         .graphicsLayer(
                             scaleX = scale,
                             scaleY = scale,
@@ -157,6 +169,12 @@ fun RootView(component: World) {
                                                 val currentDelta: Offset = event.changes[0].position - event.changes[1].position
                                                 val zoom: Float = sqrt(currentDelta.getDistanceSquared() / previousDelta.getDistanceSquared())
                                                 scale = max(scale * zoom, 1f)
+                                                val maxXOffset: Float = viewSize.width * (scale - 1f) / 2f
+                                                val maxYOffset: Float = viewSize.height * (scale - 1f) / 2f
+                                                offset = Offset(
+                                                    x = offset.x.coerceIn(-maxXOffset, maxXOffset),
+                                                    y = offset.y.coerceIn(-maxYOffset, maxYOffset),
+                                                )
                                             }
                                         }
                                     } while (event.changes.any { it.pressed })
