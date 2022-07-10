@@ -51,11 +51,24 @@ private const val PADDING_VERTICAL = 1f
 
 @Composable
 fun RootView(component: World) {
+
     val model: World.Model by component.models.subscribeAsState()
     val cellColor: Color = MaterialTheme.colors.secondary
     var scale: Float by remember { mutableStateOf(1f) }
     var offset: Offset by remember { mutableStateOf(Offset.Zero) }
     var viewSize by remember { mutableStateOf(IntSize.Zero) }
+
+    /**
+     * Make sure the view content doesn't go out of bounds when moving or unzooming
+     */
+    fun coerceInOffset(newOffset: Offset): Offset {
+        val maxXOffset: Float = viewSize.width * (scale - 1f) / 2f
+        val maxYOffset: Float = viewSize.height * (scale - 1f) / 2f
+        return Offset(
+            x = newOffset.x.coerceIn(-maxXOffset, maxXOffset),
+            y = newOffset.y.coerceIn(-maxYOffset, maxYOffset),
+        )
+    }
 
     MyTheme {
         Scaffold(
@@ -80,12 +93,7 @@ fun RootView(component: World) {
                     IconButton(
                         onClick = {
                             scale = max(scale - 0.5f, 1f)
-                            val maxXOffset: Float = viewSize.width * (scale - 1f) / 2f
-                            val maxYOffset: Float = viewSize.height * (scale - 1f) / 2f
-                            offset = Offset(
-                                x = offset.x.coerceIn(-maxXOffset, maxXOffset),
-                                y = offset.y.coerceIn(-maxYOffset, maxYOffset),
-                            )
+                            offset = coerceInOffset(offset)
                         },
                         enabled = scale > 1f
                     ) {
@@ -153,15 +161,8 @@ fun RootView(component: World) {
                                         when (event.changes.size) {
                                             1 -> {
                                                 // Drag
-                                                val delta: Offset = event.changes[0].position - event.changes[0].previousPosition
-                                                val newOffset: Offset = offset + delta
-                                                // Make sure the view isn't dragged past its content
-                                                val maxXOffset: Float = size.width * (scale - 1f) / 2f
-                                                val maxYOffset: Float = size.height * (scale - 1f) / 2f
-                                                offset = Offset(
-                                                    x = newOffset.x.coerceIn(-maxXOffset, maxXOffset),
-                                                    y = newOffset.y.coerceIn(-maxYOffset, maxYOffset),
-                                                )
+                                                val translation: Offset = event.changes[0].position - event.changes[0].previousPosition
+                                                offset = coerceInOffset(offset + translation)
                                             }
                                             2 -> {
                                                 // Zoom
@@ -169,12 +170,7 @@ fun RootView(component: World) {
                                                 val currentDelta: Offset = event.changes[0].position - event.changes[1].position
                                                 val zoom: Float = sqrt(currentDelta.getDistanceSquared() / previousDelta.getDistanceSquared())
                                                 scale = max(scale * zoom, 1f)
-                                                val maxXOffset: Float = viewSize.width * (scale - 1f) / 2f
-                                                val maxYOffset: Float = viewSize.height * (scale - 1f) / 2f
-                                                offset = Offset(
-                                                    x = offset.x.coerceIn(-maxXOffset, maxXOffset),
-                                                    y = offset.y.coerceIn(-maxYOffset, maxYOffset),
-                                                )
+                                                offset = coerceInOffset(offset)
                                             }
                                         }
                                     } while (event.changes.any { it.pressed })
