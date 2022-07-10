@@ -5,13 +5,16 @@ import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
@@ -49,128 +52,134 @@ fun RootView(component: World) {
     var offset: Offset by remember { mutableStateOf(Offset.Zero) }
 
     MyTheme {
-        Column {
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .graphicsLayer(
-                        scaleX = scale,
-                        scaleY = scale,
-                        translationX = offset.x,
-                        translationY = offset.y
-                    )
-                    .pointerInput(Unit) {
-                        forEachGesture {
-                            awaitPointerEventScope {
-                                awaitFirstDown(requireUnconsumed = false)
-                                do {
-                                    val event = awaitPointerEvent()
-                                    when (event.changes.size) {
-                                        1 -> {
-                                            // Drag
-                                            val delta: Offset = event.changes[0].position - event.changes[0].previousPosition
-                                            val newOffset: Offset = offset + delta
-                                            // Make sure the view isn't dragged past its content
-                                            val maxXOffset: Float = size.width * (scale - 1f) / 2f
-                                            val maxYOffset: Float = size.height * (scale - 1f) / 2f
-                                            offset = Offset(
-                                                x = newOffset.x.coerceIn(-maxXOffset, maxXOffset),
-                                                y = newOffset.y.coerceIn(-maxYOffset, maxYOffset),
-                                            )
-                                        }
-                                        2 -> {
-                                            // Zoom
-                                            val previousDelta: Offset = event.changes[0].previousPosition - event.changes[1].previousPosition
-                                            val currentDelta: Offset = event.changes[0].position - event.changes[1].position
-                                            val zoom: Float = sqrt(currentDelta.getDistanceSquared() / previousDelta.getDistanceSquared())
-                                            scale = max(scale * zoom, 1f)
-                                        }
-                                    }
-                                } while (event.changes.any { it.pressed })
-                            }
-                        }
-                    }
-            ) {
-                Canvas(
+        Scaffold(
+            bottomBar = {
+                BottomAppBar(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
                 ) {
-                    val cellWidth: Float = size.width / model.width
-                    val cellHeight: Float = size.height / model.height
-                    val cellSize: Float = min(cellWidth, cellHeight)
-
-                    model.world.forEachIndexed { r: Int, row: Array<Boolean> ->
-                        row.forEachIndexed { c: Int, cell: Boolean ->
-                            drawRect(
-                                color = if (cell) cellColor else Color.White,
-                                topLeft = Offset(
-                                    x = c * cellSize + PADDING_HORIZONTAL / 2,
-                                    y = r * cellSize + PADDING_VERTICAL / 2
-                                ),
-                                size = Size(
-                                    width = cellSize - PADDING_HORIZONTAL,
-                                    height = cellSize - PADDING_VERTICAL
-                                )
-                            )
+                    IconButton(
+                        onClick = component::runGame
+                    ) {
+                        Icon(
+                            imageVector = if (model.running)
+                                Icons.Default.Pause
+                            else
+                                Icons.Default.PlayArrow,
+                            contentDescription = if (model.running)
+                                "pause"
+                            else
+                                "run",
+                        )
+                    }
+                    IconButton(
+                        onClick = component::nextStep,
+                        enabled = !model.running
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.SkipNext,
+                            contentDescription = "next"
+                        )
+                    }
+                    Spacer(
+                        modifier = Modifier.weight(1f)
+                    )
+                    IconButton(
+                        onClick = {
+                            scale = max(scale - 0.5f, 1f)
+                        },
+                        enabled = scale > 1f
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ZoomOut,
+                            contentDescription = "zoomOut"
+                        )
+                    }
+                    Text(
+                        text = "${(scale * 100).roundToInt()}%"
+                    )
+                    IconButton(
+                        onClick = {
+                            scale += 0.5f
                         }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ZoomIn,
+                            contentDescription = "zoomIn"
+                        )
                     }
                 }
             }
-
-            BottomAppBar(
-                modifier = Modifier
-                    .fillMaxWidth()
+        ) { scaffoldPadding: PaddingValues ->
+            Column(
+                modifier = Modifier.padding(scaffoldPadding)
             ) {
-                IconButton(
-                    onClick = component::runGame
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .graphicsLayer(
+                            scaleX = scale,
+                            scaleY = scale,
+                            translationX = offset.x,
+                            translationY = offset.y
+                        )
+                        .pointerInput(Unit) {
+                            forEachGesture {
+                                awaitPointerEventScope {
+                                    awaitFirstDown(requireUnconsumed = false)
+                                    do {
+                                        val event = awaitPointerEvent()
+                                        when (event.changes.size) {
+                                            1 -> {
+                                                // Drag
+                                                val delta: Offset = event.changes[0].position - event.changes[0].previousPosition
+                                                val newOffset: Offset = offset + delta
+                                                // Make sure the view isn't dragged past its content
+                                                val maxXOffset: Float = size.width * (scale - 1f) / 2f
+                                                val maxYOffset: Float = size.height * (scale - 1f) / 2f
+                                                offset = Offset(
+                                                    x = newOffset.x.coerceIn(-maxXOffset, maxXOffset),
+                                                    y = newOffset.y.coerceIn(-maxYOffset, maxYOffset),
+                                                )
+                                            }
+                                            2 -> {
+                                                // Zoom
+                                                val previousDelta: Offset = event.changes[0].previousPosition - event.changes[1].previousPosition
+                                                val currentDelta: Offset = event.changes[0].position - event.changes[1].position
+                                                val zoom: Float = sqrt(currentDelta.getDistanceSquared() / previousDelta.getDistanceSquared())
+                                                scale = max(scale * zoom, 1f)
+                                            }
+                                        }
+                                    } while (event.changes.any { it.pressed })
+                                }
+                            }
+                        }
                 ) {
-                    Icon(
-                        imageVector = if (model.running)
-                            Icons.Default.Pause
-                        else
-                            Icons.Default.PlayArrow,
-                        contentDescription = if (model.running)
-                            "pause"
-                        else
-                            "run",
-                    )
-                }
-                IconButton(
-                    onClick = component::nextStep,
-                    enabled = !model.running
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.SkipNext,
-                        contentDescription = "next"
-                    )
-                }
-                Spacer(
-                    modifier = Modifier.weight(1f)
-                )
-                IconButton(
-                    onClick = {
-                        scale = max(scale - 0.5f, 1f)
-                    },
-                    enabled = scale > 1f
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ZoomOut,
-                        contentDescription = "zoomOut"
-                    )
-                }
-                Text(
-                    text = "${(scale * 100).roundToInt()}%"
-                )
-                IconButton(
-                    onClick = {
-                        scale += 0.5f
+                    Canvas(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        val cellWidth: Float = size.width / model.width
+                        val cellHeight: Float = size.height / model.height
+                        val cellSize: Float = min(cellWidth, cellHeight)
+
+                        model.world.forEachIndexed { r: Int, row: Array<Boolean> ->
+                            row.forEachIndexed { c: Int, cell: Boolean ->
+                                drawRect(
+                                    color = if (cell) cellColor else Color.White,
+                                    topLeft = Offset(
+                                        x = c * cellSize + PADDING_HORIZONTAL / 2,
+                                        y = r * cellSize + PADDING_VERTICAL / 2
+                                    ),
+                                    size = Size(
+                                        width = cellSize - PADDING_HORIZONTAL,
+                                        height = cellSize - PADDING_VERTICAL
+                                    )
+                                )
+                            }
+                        }
                     }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ZoomIn,
-                        contentDescription = "zoomIn"
-                    )
                 }
             }
         }
