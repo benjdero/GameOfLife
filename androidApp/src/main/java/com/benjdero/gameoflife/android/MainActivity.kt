@@ -8,7 +8,7 @@ import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
 import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.WorldComponent
-import com.benjdero.gameoflife.ui.RootView
+import com.benjdero.gameoflife.ui.world.WorldView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         setContent {
-            RootView(component)
+            WorldView(component)
         }
     }
 }

@@ -10,7 +10,7 @@ import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
 import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.WorldComponent
-import com.benjdero.gameoflife.ui.RootView
+import com.benjdero.gameoflife.ui.world.WorldView
 
 @OptIn(ExperimentalDecomposeApi::class)
 fun main() {
@@ -31,7 +31,7 @@ fun main() {
             state = windowState
         ) {
             MaterialTheme {
-                RootView(
+                WorldView(
                     component = component
                 )
             }

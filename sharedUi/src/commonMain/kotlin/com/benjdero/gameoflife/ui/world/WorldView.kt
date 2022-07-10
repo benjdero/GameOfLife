@@ -1,4 +1,4 @@
-package com.benjdero.gameoflife.ui
+package com.benjdero.gameoflife.ui.world
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -6,6 +6,7 @@ import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,20 +41,16 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.benjdero.gameoflife.World
+import com.benjdero.gameoflife.World.Model
 import com.benjdero.gameoflife.ui.theme.MyTheme
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
-private const val PADDING_HORIZONTAL = 1f
-private const val PADDING_VERTICAL = 1f
-
 @Composable
-fun RootView(component: World) {
-
-    val model: World.Model by component.models.subscribeAsState()
-    val cellColor: Color = MaterialTheme.colors.secondary
+fun WorldView(component: World) {
+    val model: Model by component.models.subscribeAsState()
     var scale: Float by remember { mutableStateOf(1f) }
     var offset: Offset by remember { mutableStateOf(Offset.Zero) }
     var viewSize by remember { mutableStateOf(IntSize.Zero) }
@@ -78,43 +75,18 @@ fun RootView(component: World) {
                         .fillMaxWidth(),
                     cutoutShape = CircleShape
                 ) {
-                    IconButton(
-                        onClick = component::nextStep,
-                        enabled = !model.running
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.SkipNext,
-                            contentDescription = "next"
-                        )
-                    }
-                    Spacer(
-                        modifier = Modifier.weight(1f)
-                    )
-                    IconButton(
-                        onClick = {
-                            scale = max(scale - 0.5f, 1f)
-                            offset = coerceInOffset(offset)
+                    ControlView(
+                        model = model,
+                        nextStep = component::nextStep,
+                        scale = scale,
+                        setScale = {
+                            scale = it
                         },
-                        enabled = scale > 1f
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ZoomOut,
-                            contentDescription = "zoomOut"
-                        )
-                    }
-                    Text(
-                        text = "${(scale * 100).roundToInt()}%"
-                    )
-                    IconButton(
-                        onClick = {
-                            scale += 0.5f
+                        offset = offset,
+                        setOffset = {
+                            offset = coerceInOffset(it)
                         }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ZoomIn,
-                            contentDescription = "zoomIn"
-                        )
-                    }
+                    )
                 }
             },
             isFloatingActionButtonDocked = true,
@@ -178,31 +150,82 @@ fun RootView(component: World) {
                             }
                         }
                 ) {
-                    Canvas(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        val cellWidth: Float = size.width / model.width
-                        val cellHeight: Float = size.height / model.height
-                        val cellSize: Float = min(cellWidth, cellHeight)
-
-                        model.world.forEachIndexed { r: Int, row: Array<Boolean> ->
-                            row.forEachIndexed { c: Int, cell: Boolean ->
-                                drawRect(
-                                    color = if (cell) cellColor else Color.White,
-                                    topLeft = Offset(
-                                        x = c * cellSize + PADDING_HORIZONTAL / 2,
-                                        y = r * cellSize + PADDING_VERTICAL / 2
-                                    ),
-                                    size = Size(
-                                        width = cellSize - PADDING_HORIZONTAL,
-                                        height = cellSize - PADDING_VERTICAL
-                                    )
-                                )
-                            }
-                        }
-                    }
+                    CellGridView(model)
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun RowScope.ControlView(model: Model, nextStep: () -> Unit, scale: Float, setScale: (Float) -> Unit, offset: Offset, setOffset: (Offset) -> Unit) {
+    IconButton(
+        onClick = nextStep,
+        enabled = !model.running
+    ) {
+        Icon(
+            imageVector = Icons.Default.SkipNext,
+            contentDescription = "next"
+        )
+    }
+    Spacer(
+        modifier = Modifier.weight(1f)
+    )
+    IconButton(
+        onClick = {
+            setScale(max(scale - 0.5f, 1f))
+            setOffset(offset)
+        },
+        enabled = scale > 1f
+    ) {
+        Icon(
+            imageVector = Icons.Default.ZoomOut,
+            contentDescription = "zoomOut"
+        )
+    }
+    Text(
+        text = "${(scale * 100).roundToInt()}%"
+    )
+    IconButton(
+        onClick = {
+            setScale(scale + 0.5f)
+        }
+    ) {
+        Icon(
+            imageVector = Icons.Default.ZoomIn,
+            contentDescription = "zoomIn"
+        )
+    }
+}
+
+private const val PADDING_HORIZONTAL = 1f
+private const val PADDING_VERTICAL = 1f
+
+@Composable
+private fun CellGridView(model: Model) {
+    val cellColor: Color = MaterialTheme.colors.secondary
+
+    Canvas(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        val cellWidth: Float = size.width / model.width
+        val cellHeight: Float = size.height / model.height
+        val cellSize: Float = min(cellWidth, cellHeight)
+
+        model.world.forEachIndexed { r: Int, row: Array<Boolean> ->
+            row.forEachIndexed { c: Int, cell: Boolean ->
+                drawRect(
+                    color = if (cell) cellColor else Color.White,
+                    topLeft = Offset(
+                        x = c * cellSize + PADDING_HORIZONTAL / 2,
+                        y = r * cellSize + PADDING_VERTICAL / 2
+                    ),
+                    size = Size(
+                        width = cellSize - PADDING_HORIZONTAL,
+                        height = cellSize - PADDING_VERTICAL
+                    )
+                )
             }
         }
     }
