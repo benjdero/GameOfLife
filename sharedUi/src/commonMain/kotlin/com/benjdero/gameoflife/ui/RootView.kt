@@ -28,8 +28,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.unit.IntSize
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.ui.theme.MyTheme
@@ -132,17 +130,12 @@ fun ControlView(modifier: Modifier, component: World) {
 
 @Composable
 fun DragAndZoomView(modifier: Modifier, content: @Composable BoxScope.() -> Unit) {
-    var size: IntSize by remember { mutableStateOf(IntSize.Zero) }
     var scale: Float by remember { mutableStateOf(1f) }
     var offset: Offset by remember { mutableStateOf(Offset.Zero) }
 
     Box(
         modifier = modifier.then(
             Modifier
-                .onSizeChanged {
-                    // Listen to size changes
-                    size = it
-                }
                 .graphicsLayer(
                     scaleX = scale,
                     scaleY = scale,
