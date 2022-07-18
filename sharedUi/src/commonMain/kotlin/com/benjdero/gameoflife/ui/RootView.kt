@@ -3,7 +3,7 @@ package com.benjdero.gameoflife.ui
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ExperimentalDecomposeApi
-import com.arkivanov.decompose.extensions.compose.jetbrains.Children
+import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.benjdero.gameoflife.Root
 import com.benjdero.gameoflife.ui.game.GameView
 import com.benjdero.gameoflife.ui.menu.MenuView
@@ -13,7 +13,7 @@ import com.benjdero.gameoflife.ui.menu.MenuView
 fun RootView(component: Root) {
     MaterialTheme {
         Children(
-            routerState = component.routerState
+            stack = component.childStack
         ) {
             val child: Root.Child = it.instance
             when (child) {

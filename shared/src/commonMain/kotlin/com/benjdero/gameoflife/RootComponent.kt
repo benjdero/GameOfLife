@@ -1,9 +1,10 @@
 package com.benjdero.gameoflife
 
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.router.RouterState
-import com.arkivanov.decompose.router.push
-import com.arkivanov.decompose.router.router
+import com.arkivanov.decompose.router.stack.ChildStack
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
@@ -17,7 +18,9 @@ class RootComponent(
     storeFactory: StoreFactory
 ) : Root, ComponentContext by componentContext {
 
-    private val router = router<Configuration, Root.Child>(
+    private val navigation = StackNavigation<Configuration>()
+    private val stack = childStack(
+        source = navigation,
         initialConfiguration = Configuration.Menu,
         handleBackButton = true,
         childFactory = { configuration: Configuration, componentContext: ComponentContext ->
@@ -41,10 +44,10 @@ class RootComponent(
 
     private fun onMenuOutput(output: Menu.Output): Unit =
         when (output) {
-            Menu.Output.Start -> router.push(Configuration.Game)
+            Menu.Output.Start -> navigation.push(Configuration.Game)
         }
 
-    override val routerState: Value<RouterState<*, Root.Child>> = router.state
+    override val childStack: Value<ChildStack<*, Root.Child>> = stack
 
     private sealed class Configuration : Parcelable {
         @Parcelize
