@@ -1,39 +1,34 @@
-package com.benjdero.gameoflife
+package com.benjdero.gameoflife.menu
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.operator.map
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.benjdero.gameoflife.World.Model
-import com.benjdero.gameoflife.WorldStore.Intent
+import com.benjdero.gameoflife.asValue
+import com.benjdero.gameoflife.menu.Menu.Model
+import com.benjdero.gameoflife.menu.Menu.Output
 
-class WorldComponent(
+class MenuComponent(
     componentContext: ComponentContext,
-    storeFactory: StoreFactory
-) : World, ComponentContext by componentContext {
+    storeFactory: StoreFactory,
+    private val output: (Output) -> Unit
+) : Menu, ComponentContext by componentContext {
 
     private val store =
         instanceKeeper.getStore {
-            WorldStoreProvider(
+            MenuStoreProvider(
                 storeFactory = storeFactory
             ).provide()
         }
 
     override val models: Value<Model> = store.asValue().map {
         Model(
-            running = it.running,
-            width = it.width,
-            height = it.height,
-            world = it.world
+            unused = it.unused
         )
     }
 
-    override fun runGame() {
-        store.accept(Intent.RunGame)
-    }
-
-    override fun nextStep() {
-        store.accept(Intent.NextStep)
+    override fun onStart() {
+        output(Output.Start)
     }
 }

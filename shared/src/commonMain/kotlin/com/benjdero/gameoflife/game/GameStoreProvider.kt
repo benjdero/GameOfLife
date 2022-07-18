@@ -1,22 +1,20 @@
-package com.benjdero.gameoflife
+package com.benjdero.gameoflife.game
 
 import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
-import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
-import com.benjdero.gameoflife.WorldStore.Intent
-import com.benjdero.gameoflife.WorldStore.State
+import com.benjdero.gameoflife.game.GameStore.Intent
+import com.benjdero.gameoflife.game.GameStore.State
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-internal class WorldStoreProvider(
+internal class GameStoreProvider(
     private val storeFactory: StoreFactory
 ) {
-    fun provide(): WorldStore =
-        object : WorldStore, Store<Intent, State, Nothing> by storeFactory.create(
+    fun provide(): GameStore =
+        object : GameStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "WorldStore",
             initialState = State(),
             bootstrapper = SimpleBootstrapper(),

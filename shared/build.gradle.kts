@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("kotlin-parcelize")
 }
 
 kotlin {
@@ -34,7 +35,6 @@ kotlin {
                 api("com.arkivanov.mvikotlin:mvikotlin-timetravel:${Version.mvikotlin}")
                 implementation("com.arkivanov.mvikotlin:rx:${Version.mvikotlin}")
                 implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:${Version.mvikotlin}")
-                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-reaktive:${Version.mvikotlin}")
                 api("com.arkivanov.decompose:decompose:${Version.decompose}")
                 api("com.arkivanov.essenty:lifecycle:${Version.essenty}")
             }
