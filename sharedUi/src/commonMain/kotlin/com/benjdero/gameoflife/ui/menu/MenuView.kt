@@ -9,8 +9,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.menu.Menu
 import com.benjdero.gameoflife.ui.theme.MyTheme
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun MenuView(component: Menu) {
@@ -24,7 +26,9 @@ fun MenuView(component: Menu) {
                 Button(
                     onClick = component::onStart
                 ) {
-                    Text("Start")
+                    Text(
+                        text = stringResource(Res.strings.menu_start).uppercase()
+                    )
                 }
             }
         }

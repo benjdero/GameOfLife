@@ -17,7 +17,7 @@ struct MenuView: View {
     var body: some View {
         VStack {
             Button(action: component.onStart) {
-                Text("Start")
+                Text(Res.strings().menu_start.localized())
             }
         }
     }

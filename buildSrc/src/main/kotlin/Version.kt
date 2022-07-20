@@ -9,10 +9,11 @@ object Version {
     const val mvikotlin = "3.0.1"
     const val decompose = "0.8.0"
     const val essenty = "0.4.2"
+    const val mokoResources = "0.20.1"
 
     // SharedUi
     const val composeCompiler = "1.2.0"
-    const val compose = "1.2.0-alpha01-dev731"
+    const val compose = "1.2.0-alpha01-dev741"
 
     // Android
     const val activityCompose = "1.5.0"

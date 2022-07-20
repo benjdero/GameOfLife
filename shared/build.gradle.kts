@@ -2,6 +2,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("kotlin-parcelize")
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 kotlin {
@@ -23,6 +24,7 @@ kotlin {
             export("com.arkivanov.mvikotlin:mvikotlin-timetravel:${Version.mvikotlin}")
             export("com.arkivanov.decompose:decompose:${Version.decompose}")
             export("com.arkivanov.essenty:lifecycle:${Version.essenty}")
+            export("dev.icerock.moko:resources:${Version.mokoResources}")
         }
     }
 
@@ -37,11 +39,13 @@ kotlin {
                 implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:${Version.mvikotlin}")
                 api("com.arkivanov.decompose:decompose:${Version.decompose}")
                 api("com.arkivanov.essenty:lifecycle:${Version.essenty}")
+                api("dev.icerock.moko:resources:${Version.mokoResources}")
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation("dev.icerock.moko:resources-test:${Version.mokoResources}")
             }
         }
         val androidMain by getting
@@ -80,4 +84,9 @@ android {
         minSdk = Version.minSdk
         targetSdk = Version.targetSdk
     }
+}
+
+multiplatformResources {
+    multiplatformResourcesPackage = "com.benjdero.gameoflife"
+    multiplatformResourcesClassName = "Res"
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="menu_start">Start</string>
+    <string name="game_run">Run</string>
+    <string name="game_pause">Pause</string>
+    <string name="game_next_step">Next</string>
+    <string name="game_zoom_out">Zoom Out</string>
+    <string name="game_zoom_in">Zoom In</string>
+</resources>

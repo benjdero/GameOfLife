@@ -29,10 +29,14 @@ struct GameView: View {
             }
             HStack {
                 Button(action: component.runGame) {
-                    Text(model.running ? "Pause" : "Run")
+                    Text(
+                        model.running
+                        ? Res.strings().game_pause.localized()
+                        : Res.strings().game_run.localized()
+                    )
                 }
                 Button(action: component.nextStep) {
-                    Text("Next")
+                    Text(Res.strings().game_next_step.localized())
                 }.disabled(model.running)
                 Spacer()
             }.padding(16)
