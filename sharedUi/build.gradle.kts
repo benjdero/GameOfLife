@@ -1,4 +1,5 @@
 import org.jetbrains.compose.compose
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
@@ -46,4 +47,8 @@ android {
         minSdk = Version.minSdk
         targetSdk = Version.targetSdk
     }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "11"
 }

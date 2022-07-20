@@ -21,6 +21,15 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev/")
+    }
+
+    configurations.all {
+        resolutionStrategy.dependencySubstitution {
+            substitute(module("org.jetbrains.compose.compiler:compiler")).apply {
+                using(module("androidx.compose.compiler:compiler:${Version.composeCompiler}"))
+            }
+        }
     }
 }
 
