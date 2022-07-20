@@ -32,4 +32,8 @@ class DrawComponent(
     override fun onDraw(x: Int, y: Int) {
         store.accept(Intent.OnDraw(x, y))
     }
+
+    override fun onDrawValue(x: Int, y: Int, value: Boolean) {
+        store.accept(Intent.OnDrawValue(x, y, value))
+    }
 }

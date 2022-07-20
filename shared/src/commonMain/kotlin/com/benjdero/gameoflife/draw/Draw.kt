@@ -7,6 +7,8 @@ interface Draw {
 
     fun onDraw(x: Int, y: Int)
 
+    fun onDrawValue(x: Int, y: Int, value: Boolean)
+
     data class Model(
         val width: Int,
         val height: Int,

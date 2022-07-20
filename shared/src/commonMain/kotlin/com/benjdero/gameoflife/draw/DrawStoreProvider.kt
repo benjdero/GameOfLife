@@ -28,6 +28,7 @@ internal class DrawStoreProvider(
         override fun executeIntent(intent: Intent, getState: () -> State) {
             when (intent) {
                 is Intent.OnDraw -> onDraw(intent.x, intent.y, getState())
+                is Intent.OnDrawValue -> onDrawValue(intent.x, intent.y, intent.value, getState())
             }
         }
 
@@ -38,6 +39,20 @@ internal class DrawStoreProvider(
                     Array(state.width) { c ->
                         if (x == c && r == y)
                             !world[r][c]
+                        else
+                            world[r][c]
+                    }
+                }
+            dispatch(Msg.WorldUpdate(newWorld))
+        }
+
+        private fun onDrawValue(x: Int, y: Int, value: Boolean, state: State) {
+            val world: Array<Array<Boolean>> = state.world
+            val newWorld: Array<Array<Boolean>> =
+                Array(state.height) { r ->
+                    Array(state.width) { c ->
+                        if (x == c && r == y)
+                            value
                         else
                             world[r][c]
                     }
