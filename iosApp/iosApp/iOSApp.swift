@@ -8,7 +8,7 @@ struct iOSApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(rootHolder.root)
+            RootView(component: rootHolder.component)
                 .onAppear { LifecycleRegistryExtKt.resume(self.rootHolder.lifecycle) }
                 .onDisappear { LifecycleRegistryExtKt.stop(self.rootHolder.lifecycle) }
         }
@@ -17,12 +17,12 @@ struct iOSApp: App {
 
 private class RootHolder: ObservableObject {
     let lifecycle: LifecycleRegistry
-    let root: World
+    let component: Root
 
     init() {
         lifecycle = LifecycleRegistryKt.LifecycleRegistry()
 
-        root = WorldComponent(
+        component = RootComponent(
             componentContext: DefaultComponentContext(lifecycle: lifecycle),
             storeFactory: LoggingStoreFactory(delegate: TimeTravelStoreFactory())
         )
