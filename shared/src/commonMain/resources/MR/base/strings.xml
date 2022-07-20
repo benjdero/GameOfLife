@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
-    <string name="menu_start">Start</string>
+    <string name="menu_start_draw">Draw</string>
+    <string name="menu_start_game">Play</string>
     <string name="game_run">Run</string>
     <string name="game_pause">Pause</string>
     <string name="game_next_step">Next</string>

@@ -24,10 +24,17 @@ fun MenuView(component: Menu) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(
-                    onClick = component::onStart
+                    onClick = component::onStartDraw
                 ) {
                     Text(
-                        text = stringResource(Res.strings.menu_start).uppercase()
+                        text = stringResource(Res.strings.menu_start_draw).uppercase()
+                    )
+                }
+                Button(
+                    onClick = component::onStartGame
+                ) {
+                    Text(
+                        text = stringResource(Res.strings.menu_start_game).uppercase()
                     )
                 }
             }

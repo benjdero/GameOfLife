@@ -1,4 +1,4 @@
-package com.benjdero.gameoflife.menu
+package com.benjdero.gameoflife.draw
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.Value
@@ -6,33 +6,30 @@ import com.arkivanov.decompose.value.operator.map
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.benjdero.gameoflife.asValue
-import com.benjdero.gameoflife.menu.Menu.Model
-import com.benjdero.gameoflife.menu.Menu.Output
+import com.benjdero.gameoflife.draw.Draw.Model
+import com.benjdero.gameoflife.draw.DrawStore.Intent
 
-class MenuComponent(
+class DrawComponent(
     componentContext: ComponentContext,
-    storeFactory: StoreFactory,
-    private val output: (Output) -> Unit
-) : Menu, ComponentContext by componentContext {
+    storeFactory: StoreFactory
+) : Draw, ComponentContext by componentContext {
 
     private val store =
         instanceKeeper.getStore {
-            MenuStoreProvider(
+            DrawStoreProvider(
                 storeFactory = storeFactory
             ).provide()
         }
 
     override val models: Value<Model> = store.asValue().map {
         Model(
-            unused = it.unused
+            width = it.width,
+            height = it.height,
+            world = it.world
         )
     }
 
-    override fun onStartDraw() {
-        output(Output.StartDraw)
-    }
-
-    override fun onStartGame() {
-        output(Output.StartGame)
+    override fun onDraw(x: Int, y: Int) {
+        store.accept(Intent.OnDraw(x, y))
     }
 }

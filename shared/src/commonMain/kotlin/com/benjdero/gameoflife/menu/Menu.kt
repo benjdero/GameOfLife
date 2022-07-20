@@ -5,13 +5,16 @@ import com.arkivanov.decompose.value.Value
 interface Menu {
     val models: Value<Model>
 
-    fun onStart()
+    fun onStartDraw()
+
+    fun onStartGame()
 
     data class Model(
         val unused: Int
     )
 
     sealed class Output {
-        object Start : Output()
+        object StartDraw : Output()
+        object StartGame : Output()
     }
 }

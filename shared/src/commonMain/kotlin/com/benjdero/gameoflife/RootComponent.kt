@@ -9,6 +9,7 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 import com.arkivanov.mvikotlin.core.store.StoreFactory
+import com.benjdero.gameoflife.draw.DrawComponent
 import com.benjdero.gameoflife.game.GameComponent
 import com.benjdero.gameoflife.menu.Menu
 import com.benjdero.gameoflife.menu.MenuComponent
@@ -25,17 +26,23 @@ class RootComponent(
         handleBackButton = true,
         childFactory = { configuration: Configuration, componentContext: ComponentContext ->
             when (configuration) {
-                Configuration.Game -> Root.Child.ChildGame(
-                    component = GameComponent(
-                        componentContext = componentContext,
-                        storeFactory = storeFactory
-                    )
-                )
                 Configuration.Menu -> Root.Child.ChildMenu(
                     component = MenuComponent(
                         componentContext = componentContext,
                         storeFactory = storeFactory,
                         output = ::onMenuOutput
+                    )
+                )
+                Configuration.Draw -> Root.Child.ChildDraw(
+                    component = DrawComponent(
+                        componentContext = componentContext,
+                        storeFactory = storeFactory
+                    )
+                )
+                Configuration.Game -> Root.Child.ChildGame(
+                    component = GameComponent(
+                        componentContext = componentContext,
+                        storeFactory = storeFactory
                     )
                 )
             }
@@ -44,16 +51,20 @@ class RootComponent(
 
     private fun onMenuOutput(output: Menu.Output): Unit =
         when (output) {
-            Menu.Output.Start -> navigation.push(Configuration.Game)
+            Menu.Output.StartDraw -> navigation.push(Configuration.Draw)
+            Menu.Output.StartGame -> navigation.push(Configuration.Game)
         }
 
     override val childStack: Value<ChildStack<*, Root.Child>> = stack
 
     private sealed class Configuration : Parcelable {
         @Parcelize
-        object Game : Configuration()
+        object Menu : Configuration()
 
         @Parcelize
-        object Menu : Configuration()
+        object Draw : Configuration()
+
+        @Parcelize
+        object Game : Configuration()
     }
 }
