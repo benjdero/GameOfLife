@@ -25,8 +25,6 @@ class DrawComponent(
 
     override val models: Value<Model> = store.asValue().map {
         Model(
-            width = it.width,
-            height = it.height,
             world = it.world
         )
     }

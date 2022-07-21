@@ -66,7 +66,7 @@ fun DrawView(component: Draw) {
                         )
                     }
                     Text(
-                        text = model.width.toString()
+                        text = model.world.width.toString()
                     )
                     Icon(
                         modifier = Modifier.rotate(90f),
@@ -93,7 +93,7 @@ fun DrawView(component: Draw) {
                         )
                     }
                     Text(
-                        text = model.height.toString()
+                        text = model.world.height.toString()
                     )
                     Icon(
                         imageVector = Icons.Default.Height,
@@ -131,13 +131,14 @@ fun DrawView(component: Draw) {
                         .pointerInput(Unit) {
                             detectDragGestures(
                                 onDragStart = { offset: Offset ->
-                                    val cellPosition: IntOffset = getCellFromOffset(size, model.width, model.height, offset)
-                                    firstCellDragValue = model.world[cellPosition.y * model.width + cellPosition.x]
+                                    val cellPosition: IntOffset = getCellFromOffset(size, model.world.width, model.world.height, offset)
+                                    firstCellDragValue = model.world.get(cellPosition.x, cellPosition.y)
                                     component.onDrawValue(cellPosition.x, cellPosition.y, !firstCellDragValue)
                                 },
                                 onDrag = { change: PointerInputChange, dragAmount: Offset ->
-                                    val previousCellPosition: IntOffset = getCellFromOffset(size, model.width, model.height, change.previousPosition)
-                                    val currentCellPosition: IntOffset = getCellFromOffset(size, model.width, model.height, change.position)
+                                    val previousCellPosition: IntOffset =
+                                        getCellFromOffset(size, model.world.width, model.world.height, change.previousPosition)
+                                    val currentCellPosition: IntOffset = getCellFromOffset(size, model.world.width, model.world.height, change.position)
                                     if (previousCellPosition != currentCellPosition)
                                         component.onDrawValue(currentCellPosition.x, currentCellPosition.y, !firstCellDragValue)
                                 }
@@ -145,7 +146,7 @@ fun DrawView(component: Draw) {
                         }
                         .pointerInput(Unit) {
                             detectTapGestures { offset: Offset ->
-                                val cellPosition: IntOffset = getCellFromOffset(size, model.width, model.height, offset)
+                                val cellPosition: IntOffset = getCellFromOffset(size, model.world.width, model.world.height, offset)
                                 component.onDraw(cellPosition.x, cellPosition.y)
                             }
                         }

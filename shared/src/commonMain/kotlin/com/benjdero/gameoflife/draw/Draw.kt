@@ -1,6 +1,7 @@
 package com.benjdero.gameoflife.draw
 
 import com.arkivanov.decompose.value.Value
+import com.benjdero.gameoflife.World
 
 interface Draw {
     val models: Value<Model>
@@ -20,11 +21,9 @@ interface Draw {
     fun finish()
 
     data class Model(
-        val width: Int,
-        val height: Int,
-        val world: Array<Boolean>
+        val world: World
     ) {
-        val flatWorld: List<FlatWorldElement> = world.mapIndexed { index: Int, value: Boolean ->
+        val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, value: Boolean ->
             FlatWorldElement(
                 id = index,
                 cell = value

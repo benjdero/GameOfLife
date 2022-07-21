@@ -42,7 +42,7 @@ internal class DrawStoreProvider(
         private fun onDraw(xD: Int, yD: Int, state: State) {
             dispatch(
                 Msg.WorldUpdate(
-                    state.arrayMapIndexed { x: Int, y: Int, value: Boolean ->
+                    state.world.mapIndexed { x: Int, y: Int, value: Boolean ->
                         if (x == xD && y == yD)
                             !value
                         else
@@ -55,7 +55,7 @@ internal class DrawStoreProvider(
         private fun onDrawValue(xD: Int, yD: Int, valueD: Boolean, state: State) {
             dispatch(
                 Msg.WorldUpdate(
-                    state.arrayMapIndexed { x: Int, y: Int, value: Boolean ->
+                    state.world.mapIndexed { x: Int, y: Int, value: Boolean ->
                         if (x == xD && y == yD)
                             valueD
                         else
@@ -66,55 +66,63 @@ internal class DrawStoreProvider(
         }
 
         fun decreaseWidth(state: State) {
-            val newWidth: Int = max(state.width - 1, 1)
-            val newWorld: Array<Boolean> =
-                Array(newWidth * state.height) { index: Int ->
-                    state.world[index + index / newWidth]
-                }
-            dispatch(Msg.WidthChanged(newWidth, newWorld))
+            state.world.apply {
+                val newWidth: Int = max(width - 1, 1)
+                val newWorld: Array<Boolean> =
+                    Array(newWidth * height) { index: Int ->
+                        cells[index + index / newWidth]
+                    }
+                dispatch(Msg.WidthChanged(newWidth, newWorld))
+            }
         }
 
         fun increaseWidth(state: State) {
-            val newWidth: Int = state.width + 1
-            val newWorld: Array<Boolean> =
-                Array(newWidth * state.height) { index: Int ->
-                    val i: Int = index
-                    if (i % newWidth == state.width)
-                        false
-                    else
-                        state.world[i - i / newWidth]
-                }
-            dispatch(Msg.WidthChanged(newWidth, newWorld))
+            state.world.apply {
+                val newWidth: Int = width + 1
+                val newWorld: Array<Boolean> =
+                    Array(newWidth * height) { index: Int ->
+                        val i: Int = index
+                        if (i % newWidth == width)
+                            false
+                        else
+                            cells[i - i / newWidth]
+                    }
+                dispatch(Msg.WidthChanged(newWidth, newWorld))
+            }
         }
 
         fun decreaseHeight(state: State) {
-            val newHeight: Int = max(state.height - 1, 1)
-            val newWorld: Array<Boolean> =
-                Array(state.width * newHeight) { index: Int ->
-                    state.world[index]
-                }
-            dispatch(Msg.HeightChanged(newHeight, newWorld))
+            state.world.apply {
+                val newHeight: Int = max(height - 1, 1)
+                val newWorld: Array<Boolean> =
+                    Array(width * newHeight) { index: Int ->
+                        cells[index]
+                    }
+                dispatch(Msg.HeightChanged(newHeight, newWorld))
+            }
         }
 
         fun increaseHeight(state: State) {
-            val newHeight: Int = state.height + 1
-            val newWorld: Array<Boolean> =
-                Array(state.width * newHeight) { index: Int ->
-                    if (index / state.width == state.height)
-                        false
-                    else
-                        state.world[index]
-                }
-            dispatch(Msg.HeightChanged(newHeight, newWorld))
+            state.world.apply {
+                val newHeight: Int = height + 1
+                val newWorld: Array<Boolean> =
+                    Array(width * newHeight) { index: Int ->
+                        if (index / width == height)
+                            false
+                        else
+                            cells[index]
+                    }
+                dispatch(Msg.HeightChanged(newHeight, newWorld))
+            }
         }
     }
 
     private object ReducerImpl : Reducer<State, Msg> {
         override fun State.reduce(msg: Msg): State =
             when (msg) {
-                is Msg.WorldUpdate -> copy(world = msg.world)
-                is Msg.WidthChanged -> copy(width = msg.width, world = msg.world)
-                is Msg.HeightChanged -> copy(height = msg.height, world = msg.world)
+                is Msg.WorldUpdate -> copy(world = world.copy(cells = msg.world))
+                is Msg.WidthChanged -> copy(world = world.copy(width = msg.width, cells = msg.world))
+                is Msg.HeightChanged -> copy(world = world.copy(height = msg.height, cells = msg.world))
             }
     }
 }
