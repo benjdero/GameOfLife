@@ -5,6 +5,7 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.operator.map
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
+import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.asValue
 import com.benjdero.gameoflife.game.Game.Model
 import com.benjdero.gameoflife.game.GameStore.Intent
@@ -12,17 +13,13 @@ import com.benjdero.gameoflife.game.GameStore.Intent
 class GameComponent(
     componentContext: ComponentContext,
     storeFactory: StoreFactory,
-    width: Int,
-    height: Int,
-    world: Array<Array<Boolean>>
+    world: World
 ) : Game, ComponentContext by componentContext {
 
     private val store =
         instanceKeeper.getStore {
             GameStoreProvider(
                 storeFactory = storeFactory,
-                width = width,
-                height = height,
                 world = world
             ).provide()
         }
@@ -30,8 +27,6 @@ class GameComponent(
     override val models: Value<Model> = store.asValue().map {
         Model(
             running = it.running,
-            width = it.width,
-            height = it.height,
             world = it.world
         )
     }

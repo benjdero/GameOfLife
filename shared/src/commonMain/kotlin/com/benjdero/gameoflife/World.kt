@@ -21,6 +21,10 @@ data class World(
             )
     }
 
+    fun isWithinBounds(x: Int, y: Int): Boolean =
+        x in 0 until width &&
+                y in 0 until height
+
     fun get(x: Int, y: Int) =
         cells[x + y * width]
 

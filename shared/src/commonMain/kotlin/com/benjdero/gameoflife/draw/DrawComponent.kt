@@ -54,8 +54,6 @@ class DrawComponent(
     }
 
     override fun finish() {
-        store.state.run {
-//            output(Output.Finish(width, height, world))
-        }
+        output(Output.Finish(store.state.world))
     }
 }

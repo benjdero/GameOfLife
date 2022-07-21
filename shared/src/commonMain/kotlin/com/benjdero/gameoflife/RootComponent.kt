@@ -14,7 +14,6 @@ import com.benjdero.gameoflife.draw.DrawComponent
 import com.benjdero.gameoflife.game.GameComponent
 import com.benjdero.gameoflife.menu.Menu
 import com.benjdero.gameoflife.menu.MenuComponent
-import kotlin.random.Random
 
 class RootComponent(
     componentContext: ComponentContext,
@@ -46,8 +45,6 @@ class RootComponent(
                     component = GameComponent(
                         componentContext = componentContext,
                         storeFactory = storeFactory,
-                        width = configuration.width,
-                        height = configuration.height,
                         world = configuration.world
                     )
                 )
@@ -58,16 +55,12 @@ class RootComponent(
     private fun onMenuOutput(output: Menu.Output): Unit =
         when (output) {
             Menu.Output.StartDraw -> navigation.push(Configuration.Draw)
-            Menu.Output.StartGame -> navigation.push(Configuration.Game(15, 10, Array(10) {
-                Array(15) {
-                    Random.nextBoolean()
-                }
-            }))
+            Menu.Output.StartGame -> navigation.push(Configuration.Game(World.random(15, 10)))
         }
 
     private fun onDrawOutput(output: Draw.Output): Unit =
         when (output) {
-            is Draw.Output.Finish -> navigation.push(Configuration.Game(output.width, output.height, output.world))
+            is Draw.Output.Finish -> navigation.push(Configuration.Game(output.world))
         }
 
     override val childStack: Value<ChildStack<*, Root.Child>> = stack
@@ -80,6 +73,6 @@ class RootComponent(
         object Draw : Configuration()
 
         @Parcelize
-        data class Game(val width: Int, val height: Int, val world: Array<Array<Boolean>>) : Configuration()
+        data class Game(val world: World) : Configuration()
     }
 }

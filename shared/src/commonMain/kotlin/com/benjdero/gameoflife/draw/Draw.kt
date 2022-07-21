@@ -37,6 +37,6 @@ interface Draw {
     )
 
     sealed class Output {
-        data class Finish(val width: Int, val height: Int, val world: Array<Array<Boolean>>) : Output()
+        data class Finish(val world: World) : Output()
     }
 }
