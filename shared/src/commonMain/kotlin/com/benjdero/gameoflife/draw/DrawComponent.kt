@@ -36,4 +36,20 @@ class DrawComponent(
     override fun onDrawValue(x: Int, y: Int, value: Boolean) {
         store.accept(Intent.OnDrawValue(x, y, value))
     }
+
+    override fun decreaseWidth() {
+        store.accept(Intent.DecreaseWidth)
+    }
+
+    override fun increaseWidth() {
+        store.accept(Intent.IncreaseWidth)
+    }
+
+    override fun decreaseHeight() {
+        store.accept(Intent.DecreaseHeight)
+    }
+
+    override fun increaseHeight() {
+        store.accept(Intent.IncreaseHeight)
+    }
 }

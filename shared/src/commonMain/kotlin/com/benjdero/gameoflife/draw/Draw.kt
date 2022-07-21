@@ -9,6 +9,14 @@ interface Draw {
 
     fun onDrawValue(x: Int, y: Int, value: Boolean)
 
+    fun decreaseWidth()
+
+    fun increaseWidth()
+
+    fun decreaseHeight()
+
+    fun increaseHeight()
+
     data class Model(
         val width: Int,
         val height: Int,
