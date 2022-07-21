@@ -22,24 +22,22 @@ internal fun CellGridView(model: Model) {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        val cellWidth: Float = size.width / model.width
-        val cellHeight: Float = size.height / model.height
+        val cellWidth: Float = size.width / model.world.width
+        val cellHeight: Float = size.height / model.world.height
         val cellSize: Float = min(cellWidth, cellHeight)
 
-        model.world.forEachIndexed { r: Int, row: Array<Boolean> ->
-            row.forEachIndexed { c: Int, cell: Boolean ->
-                drawRect(
-                    color = if (cell) cellColor else Color.White,
-                    topLeft = Offset(
-                        x = c * cellSize + PADDING_HORIZONTAL / 2,
-                        y = r * cellSize + PADDING_VERTICAL / 2
-                    ),
-                    size = Size(
-                        width = cellSize - PADDING_HORIZONTAL,
-                        height = cellSize - PADDING_VERTICAL
-                    )
+        model.world.forEachIndexed { x: Int, y: Int, cell: Boolean ->
+            drawRect(
+                color = if (cell) cellColor else Color.White,
+                topLeft = Offset(
+                    x = x * cellSize + PADDING_HORIZONTAL / 2,
+                    y = y * cellSize + PADDING_VERTICAL / 2
+                ),
+                size = Size(
+                    width = cellSize - PADDING_HORIZONTAL,
+                    height = cellSize - PADDING_VERTICAL
                 )
-            }
+            )
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.benjdero.gameoflife.game
 
 import com.arkivanov.decompose.value.Value
+import com.benjdero.gameoflife.World
 
 interface Game {
     val models: Value<Model>
@@ -11,14 +12,12 @@ interface Game {
 
     data class Model(
         val running: Boolean,
-        val width: Int,
-        val height: Int,
-        val world: Array<Array<Boolean>>
+        val world: World
     ) {
-        val flatWorld: List<FlatWorldElement> = world.flatten().mapIndexed { index: Int, value: Boolean ->
+        val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, cell: Boolean ->
             FlatWorldElement(
                 id = index,
-                cell = value
+                cell = cell
             )
         }
     }

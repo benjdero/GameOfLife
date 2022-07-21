@@ -1,13 +1,14 @@
 package com.benjdero.gameoflife.draw
 
 import com.arkivanov.decompose.value.Value
+import com.benjdero.gameoflife.World
 
 interface Draw {
     val models: Value<Model>
 
     fun onDraw(x: Int, y: Int)
 
-    fun onDrawValue(x: Int, y: Int, value: Boolean)
+    fun onDrawValue(x: Int, y: Int, cell: Boolean)
 
     fun decreaseWidth()
 
@@ -20,14 +21,12 @@ interface Draw {
     fun finish()
 
     data class Model(
-        val width: Int,
-        val height: Int,
-        val world: Array<Array<Boolean>>
+        val world: World
     ) {
-        val flatWorld: List<FlatWorldElement> = world.flatten().mapIndexed { index: Int, value: Boolean ->
+        val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, cell: Boolean ->
             FlatWorldElement(
                 id = index,
-                cell = value
+                cell = cell
             )
         }
     }
@@ -38,6 +37,6 @@ interface Draw {
     )
 
     sealed class Output {
-        data class Finish(val width: Int, val height: Int, val world: Array<Array<Boolean>>) : Output()
+        data class Finish(val world: World) : Output()
     }
 }

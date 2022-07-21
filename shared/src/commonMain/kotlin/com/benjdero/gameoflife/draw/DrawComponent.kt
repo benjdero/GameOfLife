@@ -25,8 +25,6 @@ class DrawComponent(
 
     override val models: Value<Model> = store.asValue().map {
         Model(
-            width = it.width,
-            height = it.height,
             world = it.world
         )
     }
@@ -35,8 +33,8 @@ class DrawComponent(
         store.accept(Intent.OnDraw(x, y))
     }
 
-    override fun onDrawValue(x: Int, y: Int, value: Boolean) {
-        store.accept(Intent.OnDrawValue(x, y, value))
+    override fun onDrawValue(x: Int, y: Int, cell: Boolean) {
+        store.accept(Intent.OnDrawValue(x, y, cell))
     }
 
     override fun decreaseWidth() {
@@ -56,8 +54,6 @@ class DrawComponent(
     }
 
     override fun finish() {
-        store.state.run {
-            output(Output.Finish(width, height, world))
-        }
+        output(Output.Finish(store.state.world))
     }
 }
