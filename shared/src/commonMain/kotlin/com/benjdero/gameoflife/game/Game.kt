@@ -14,10 +14,10 @@ interface Game {
         val running: Boolean,
         val world: World
     ) {
-        val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, value: Boolean ->
+        val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, cell: Boolean ->
             FlatWorldElement(
                 id = index,
-                cell = value
+                cell = cell
             )
         }
     }

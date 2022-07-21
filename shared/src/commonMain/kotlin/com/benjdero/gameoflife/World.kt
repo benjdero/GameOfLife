@@ -28,12 +28,12 @@ data class World(
     fun get(x: Int, y: Int) =
         cells[x + y * width]
 
-    internal fun mapIndexed(transform: (x: Int, y: Int, value: Boolean) -> Boolean): Array<Boolean> =
+    internal fun mapIndexed(transform: (x: Int, y: Int, cell: Boolean) -> Boolean): Array<Boolean> =
         Array(width * height) { index: Int ->
             transform(index % width, index / width, cells[index])
         }
 
-    fun forEachIndexed(action: (x: Int, y: Int, value: Boolean) -> Unit) {
+    fun forEachIndexed(action: (x: Int, y: Int, cell: Boolean) -> Unit) {
         for (index in cells.indices) {
             action(index % width, index / width, cells[index])
         }

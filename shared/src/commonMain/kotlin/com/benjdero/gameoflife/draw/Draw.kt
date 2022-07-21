@@ -8,7 +8,7 @@ interface Draw {
 
     fun onDraw(x: Int, y: Int)
 
-    fun onDrawValue(x: Int, y: Int, value: Boolean)
+    fun onDrawValue(x: Int, y: Int, cell: Boolean)
 
     fun decreaseWidth()
 
@@ -23,10 +23,10 @@ interface Draw {
     data class Model(
         val world: World
     ) {
-        val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, value: Boolean ->
+        val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, cell: Boolean ->
             FlatWorldElement(
                 id = index,
-                cell = value
+                cell = cell
             )
         }
     }

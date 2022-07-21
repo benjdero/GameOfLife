@@ -22,16 +22,16 @@ internal class DrawStoreProvider(
         ) {}
 
     private sealed class Msg {
-        data class WorldUpdate(val world: Array<Boolean>) : Msg()
-        data class WidthChanged(val width: Int, val world: Array<Boolean>) : Msg()
-        data class HeightChanged(val height: Int, val world: Array<Boolean>) : Msg()
+        data class WorldUpdate(val cells: Array<Boolean>) : Msg()
+        data class WidthChanged(val width: Int, val cells: Array<Boolean>) : Msg()
+        data class HeightChanged(val height: Int, val cells: Array<Boolean>) : Msg()
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {
         override fun executeIntent(intent: Intent, getState: () -> State) {
             when (intent) {
                 is Intent.OnDraw -> onDraw(intent.x, intent.y, getState())
-                is Intent.OnDrawValue -> onDrawValue(intent.x, intent.y, intent.value, getState())
+                is Intent.OnDrawValue -> onDrawValue(intent.x, intent.y, intent.cell, getState())
                 Intent.DecreaseWidth -> decreaseWidth(getState())
                 Intent.IncreaseWidth -> increaseWidth(getState())
                 Intent.DecreaseHeight -> decreaseHeight(getState())
@@ -42,24 +42,24 @@ internal class DrawStoreProvider(
         private fun onDraw(xD: Int, yD: Int, state: State) {
             dispatch(
                 Msg.WorldUpdate(
-                    state.world.mapIndexed { x: Int, y: Int, value: Boolean ->
+                    state.world.mapIndexed { x: Int, y: Int, cell: Boolean ->
                         if (x == xD && y == yD)
-                            !value
+                            !cell
                         else
-                            value
+                            cell
                     }
                 )
             )
         }
 
-        private fun onDrawValue(xD: Int, yD: Int, valueD: Boolean, state: State) {
+        private fun onDrawValue(xD: Int, yD: Int, cellD: Boolean, state: State) {
             dispatch(
                 Msg.WorldUpdate(
-                    state.world.mapIndexed { x: Int, y: Int, value: Boolean ->
+                    state.world.mapIndexed { x: Int, y: Int, cell: Boolean ->
                         if (x == xD && y == yD)
-                            valueD
+                            cellD
                         else
-                            value
+                            cell
                     }
                 )
             )
@@ -120,9 +120,9 @@ internal class DrawStoreProvider(
     private object ReducerImpl : Reducer<State, Msg> {
         override fun State.reduce(msg: Msg): State =
             when (msg) {
-                is Msg.WorldUpdate -> copy(world = world.copy(cells = msg.world))
-                is Msg.WidthChanged -> copy(world = world.copy(width = msg.width, cells = msg.world))
-                is Msg.HeightChanged -> copy(world = world.copy(height = msg.height, cells = msg.world))
+                is Msg.WorldUpdate -> copy(world = world.copy(cells = msg.cells))
+                is Msg.WidthChanged -> copy(world = world.copy(width = msg.width, cells = msg.cells))
+                is Msg.HeightChanged -> copy(world = world.copy(height = msg.height, cells = msg.cells))
             }
     }
 }

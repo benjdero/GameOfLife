@@ -8,7 +8,7 @@ import com.benjdero.gameoflife.draw.DrawStore.State
 internal interface DrawStore : Store<Intent, State, Nothing> {
     sealed class Intent {
         data class OnDraw(val x: Int, val y: Int) : Intent()
-        data class OnDrawValue(val x: Int, val y: Int, val value: Boolean) : Intent()
+        data class OnDrawValue(val x: Int, val y: Int, val cell: Boolean) : Intent()
         object DecreaseWidth : Intent()
         object IncreaseWidth : Intent()
         object DecreaseHeight : Intent()
