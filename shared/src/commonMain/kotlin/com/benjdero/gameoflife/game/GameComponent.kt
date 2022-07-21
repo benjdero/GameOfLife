@@ -11,13 +11,19 @@ import com.benjdero.gameoflife.game.GameStore.Intent
 
 class GameComponent(
     componentContext: ComponentContext,
-    storeFactory: StoreFactory
+    storeFactory: StoreFactory,
+    width: Int,
+    height: Int,
+    world: Array<Array<Boolean>>
 ) : Game, ComponentContext by componentContext {
 
     private val store =
         instanceKeeper.getStore {
             GameStoreProvider(
-                storeFactory = storeFactory
+                storeFactory = storeFactory,
+                width = width,
+                height = height,
+                world = world
             ).provide()
         }
 

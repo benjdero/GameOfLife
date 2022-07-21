@@ -9,10 +9,12 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 import com.arkivanov.mvikotlin.core.store.StoreFactory
+import com.benjdero.gameoflife.draw.Draw
 import com.benjdero.gameoflife.draw.DrawComponent
 import com.benjdero.gameoflife.game.GameComponent
 import com.benjdero.gameoflife.menu.Menu
 import com.benjdero.gameoflife.menu.MenuComponent
+import kotlin.random.Random
 
 class RootComponent(
     componentContext: ComponentContext,
@@ -36,13 +38,17 @@ class RootComponent(
                 Configuration.Draw -> Root.Child.ChildDraw(
                     component = DrawComponent(
                         componentContext = componentContext,
-                        storeFactory = storeFactory
+                        storeFactory = storeFactory,
+                        output = ::onDrawOutput
                     )
                 )
-                Configuration.Game -> Root.Child.ChildGame(
+                is Configuration.Game -> Root.Child.ChildGame(
                     component = GameComponent(
                         componentContext = componentContext,
-                        storeFactory = storeFactory
+                        storeFactory = storeFactory,
+                        width = configuration.width,
+                        height = configuration.height,
+                        world = configuration.world
                     )
                 )
             }
@@ -52,7 +58,16 @@ class RootComponent(
     private fun onMenuOutput(output: Menu.Output): Unit =
         when (output) {
             Menu.Output.StartDraw -> navigation.push(Configuration.Draw)
-            Menu.Output.StartGame -> navigation.push(Configuration.Game)
+            Menu.Output.StartGame -> navigation.push(Configuration.Game(15, 10, Array(10) {
+                Array(15) {
+                    Random.nextBoolean()
+                }
+            }))
+        }
+
+    private fun onDrawOutput(output: Draw.Output): Unit =
+        when (output) {
+            is Draw.Output.Finish -> navigation.push(Configuration.Game(output.width, output.height, output.world))
         }
 
     override val childStack: Value<ChildStack<*, Root.Child>> = stack
@@ -65,6 +80,6 @@ class RootComponent(
         object Draw : Configuration()
 
         @Parcelize
-        object Game : Configuration()
+        data class Game(val width: Int, val height: Int, val world: Array<Array<Boolean>>) : Configuration()
     }
 }

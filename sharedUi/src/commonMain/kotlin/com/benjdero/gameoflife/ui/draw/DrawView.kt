@@ -106,6 +106,17 @@ fun DrawView(component: Draw) {
                             contentDescription = null
                         )
                     }
+                    Spacer(
+                        modifier = Modifier.weight(1f)
+                    )
+                    IconButton(
+                        onClick = component::finish
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Done,
+                            contentDescription = null
+                        )
+                    }
                 }
             }
         ) { scaffoldPadding: PaddingValues ->

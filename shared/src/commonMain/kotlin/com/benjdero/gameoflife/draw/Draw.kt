@@ -17,6 +17,8 @@ interface Draw {
 
     fun increaseHeight()
 
+    fun finish()
+
     data class Model(
         val width: Int,
         val height: Int,
@@ -34,4 +36,8 @@ interface Draw {
         val id: Int,
         val cell: Boolean
     )
+
+    sealed class Output {
+        data class Finish(val width: Int, val height: Int, val world: Array<Array<Boolean>>) : Output()
+    }
 }

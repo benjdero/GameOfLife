@@ -11,12 +11,19 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 internal class GameStoreProvider(
-    private val storeFactory: StoreFactory
+    private val storeFactory: StoreFactory,
+    val width: Int,
+    val height: Int,
+    val world: Array<Array<Boolean>>
 ) {
     fun provide(): GameStore =
         object : GameStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "WorldStore",
-            initialState = State(),
+            initialState = State(
+                width = width,
+                height = height,
+                world = world
+            ),
             bootstrapper = SimpleBootstrapper(),
             executorFactory = ::ExecutorImpl,
             reducer = ReducerImpl

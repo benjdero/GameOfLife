@@ -7,11 +7,13 @@ import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.benjdero.gameoflife.asValue
 import com.benjdero.gameoflife.draw.Draw.Model
+import com.benjdero.gameoflife.draw.Draw.Output
 import com.benjdero.gameoflife.draw.DrawStore.Intent
 
 class DrawComponent(
     componentContext: ComponentContext,
-    storeFactory: StoreFactory
+    storeFactory: StoreFactory,
+    private val output: (Output) -> Unit
 ) : Draw, ComponentContext by componentContext {
 
     private val store =
@@ -51,5 +53,11 @@ class DrawComponent(
 
     override fun increaseHeight() {
         store.accept(Intent.IncreaseHeight)
+    }
+
+    override fun finish() {
+        store.state.run {
+            output(Output.Finish(width, height, world))
+        }
     }
 }
