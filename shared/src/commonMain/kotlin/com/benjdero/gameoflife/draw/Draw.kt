@@ -22,9 +22,9 @@ interface Draw {
     data class Model(
         val width: Int,
         val height: Int,
-        val world: Array<Array<Boolean>>
+        val world: Array<Boolean>
     ) {
-        val flatWorld: List<FlatWorldElement> = world.flatten().mapIndexed { index: Int, value: Boolean ->
+        val flatWorld: List<FlatWorldElement> = world.mapIndexed { index: Int, value: Boolean ->
             FlatWorldElement(
                 id = index,
                 cell = value

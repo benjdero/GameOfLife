@@ -18,10 +18,13 @@ internal interface DrawStore : Store<Intent, State, Nothing> {
     data class State(
         val width: Int = 15,
         val height: Int = 10,
-        val world: Array<Array<Boolean>> = Array(height) {
-            Array(width) {
-                Random.nextBoolean()
-            }
+        val world: Array<Boolean> = Array(width * height) {
+            Random.nextBoolean()
         }
-    )
+    ) {
+        internal fun arrayMapIndexed(transform: (x: Int, y: Int, value: Boolean) -> Boolean): Array<Boolean> =
+            Array(world.size) { index: Int ->
+                transform(index % width, index / width, world[index])
+            }
+    }
 }

@@ -54,6 +54,7 @@ fun DrawView(component: Draw) {
 
     MyTheme {
         Scaffold(
+            backgroundColor = androidx.compose.ui.graphics.Color.Black,
             bottomBar = {
                 BottomAppBar {
                     IconButton(
@@ -131,7 +132,7 @@ fun DrawView(component: Draw) {
                             detectDragGestures(
                                 onDragStart = { offset: Offset ->
                                     val cellPosition: IntOffset = getCellFromOffset(size, model.width, model.height, offset)
-                                    firstCellDragValue = model.world[cellPosition.y][cellPosition.x]
+                                    firstCellDragValue = model.world[cellPosition.y * model.width + cellPosition.x]
                                     component.onDrawValue(cellPosition.x, cellPosition.y, !firstCellDragValue)
                                 },
                                 onDrag = { change: PointerInputChange, dragAmount: Offset ->
