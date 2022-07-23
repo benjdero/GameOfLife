@@ -5,7 +5,7 @@ import kotlin.random.Random
 data class World(
     val width: Int,
     val height: Int,
-    val cells: Array<Boolean>
+    val cells: BooleanArray
 ) {
     companion object {
         fun random(): World =
@@ -15,7 +15,7 @@ data class World(
             World(
                 width = width,
                 height = height,
-                cells = Array(width * height) {
+                cells = BooleanArray(width * height) {
                     Random.nextBoolean()
                 }
             )
@@ -28,8 +28,8 @@ data class World(
     fun get(x: Int, y: Int) =
         cells[x + y * width]
 
-    internal fun mapIndexed(transform: (x: Int, y: Int, cell: Boolean) -> Boolean): Array<Boolean> =
-        Array(width * height) { index: Int ->
+    internal fun mapIndexed(transform: (x: Int, y: Int, cell: Boolean) -> Boolean): BooleanArray =
+        BooleanArray(width * height) { index: Int ->
             transform(index % width, index / width, cells[index])
         }
 

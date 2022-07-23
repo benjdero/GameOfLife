@@ -28,7 +28,7 @@ internal class GameStoreProvider(
 
     private sealed class Msg {
         data class RunGame(val running: Boolean) : Msg()
-        data class WorldUpdate(val cells: Array<Boolean>) : Msg()
+        data class WorldUpdate(val cells: BooleanArray) : Msg()
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {
@@ -56,11 +56,11 @@ internal class GameStoreProvider(
         }
 
         private fun nextStep(state: State) {
-            val nextWorld: Array<Boolean> = calcNextWorld(state)
+            val nextWorld: BooleanArray = calcNextWorld(state)
             dispatch(Msg.WorldUpdate(nextWorld))
         }
 
-        private fun calcNextWorld(state: State): Array<Boolean> =
+        private fun calcNextWorld(state: State): BooleanArray =
             state.world.mapIndexed { x: Int, y: Int, cell: Boolean ->
                 val neighborsCount: Int = countNeighbors(x, y, state.world)
                 if (cell)

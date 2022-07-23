@@ -22,9 +22,9 @@ internal class DrawStoreProvider(
         ) {}
 
     private sealed class Msg {
-        data class WorldUpdate(val cells: Array<Boolean>) : Msg()
-        data class WidthChanged(val width: Int, val cells: Array<Boolean>) : Msg()
-        data class HeightChanged(val height: Int, val cells: Array<Boolean>) : Msg()
+        data class WorldUpdate(val cells: BooleanArray) : Msg()
+        data class WidthChanged(val width: Int, val cells: BooleanArray) : Msg()
+        data class HeightChanged(val height: Int, val cells: BooleanArray) : Msg()
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {
@@ -68,8 +68,8 @@ internal class DrawStoreProvider(
         fun decreaseWidth(state: State) {
             state.world.apply {
                 val newWidth: Int = max(width - 1, 1)
-                val newWorld: Array<Boolean> =
-                    Array(newWidth * height) { index: Int ->
+                val newWorld =
+                    BooleanArray(newWidth * height) { index: Int ->
                         cells[index + index / newWidth]
                     }
                 dispatch(Msg.WidthChanged(newWidth, newWorld))
@@ -79,8 +79,8 @@ internal class DrawStoreProvider(
         fun increaseWidth(state: State) {
             state.world.apply {
                 val newWidth: Int = width + 1
-                val newWorld: Array<Boolean> =
-                    Array(newWidth * height) { index: Int ->
+                val newWorld =
+                    BooleanArray(newWidth * height) { index: Int ->
                         val i: Int = index
                         if (i % newWidth == width)
                             false
@@ -94,8 +94,8 @@ internal class DrawStoreProvider(
         fun decreaseHeight(state: State) {
             state.world.apply {
                 val newHeight: Int = max(height - 1, 1)
-                val newWorld: Array<Boolean> =
-                    Array(width * newHeight) { index: Int ->
+                val newWorld =
+                    BooleanArray(width * newHeight) { index: Int ->
                         cells[index]
                     }
                 dispatch(Msg.HeightChanged(newHeight, newWorld))
@@ -105,8 +105,8 @@ internal class DrawStoreProvider(
         fun increaseHeight(state: State) {
             state.world.apply {
                 val newHeight: Int = height + 1
-                val newWorld: Array<Boolean> =
-                    Array(width * newHeight) { index: Int ->
+                val newWorld =
+                    BooleanArray(width * newHeight) { index: Int ->
                         if (index / width == height)
                             false
                         else
