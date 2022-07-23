@@ -29,12 +29,14 @@ internal class GameStoreProvider(
     private sealed class Msg {
         data class RunGame(val running: Boolean) : Msg()
         data class WorldUpdate(val cells: BooleanArray) : Msg()
+        object WorldRollback : Msg()
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {
         override fun executeIntent(intent: Intent, getState: () -> State) {
             when (intent) {
                 Intent.RunGame -> runGame(getState)
+                Intent.PrevStep -> prevStep()
                 Intent.NextStep -> nextStep(getState())
             }
         }
@@ -53,6 +55,10 @@ internal class GameStoreProvider(
                     }
                 }
             }
+        }
+
+        private fun prevStep() {
+            dispatch(Msg.WorldRollback)
         }
 
         private fun nextStep(state: State) {
@@ -90,7 +96,29 @@ internal class GameStoreProvider(
         override fun State.reduce(msg: Msg): State =
             when (msg) {
                 is Msg.RunGame -> copy(running = msg.running)
-                is Msg.WorldUpdate -> copy(world = world.copy(cells = msg.cells))
+                is Msg.WorldUpdate -> worldUpdate(cells = msg.cells)
+                is Msg.WorldRollback -> worldRollback()
             }
+
+        private fun State.worldUpdate(cells: BooleanArray) =
+            copy(
+                world = world.copy(
+                    cells = cells
+                ),
+                history = history.plus(world.cells).let {
+                    if (it.size > 10)
+                        it.drop(1)
+                    else
+                        it
+                }
+            )
+
+        private fun State.worldRollback(): State =
+            copy(
+                world = world.copy(
+                    cells = history.last()
+                ),
+                history = history.dropLast(1)
+            )
     }
 }

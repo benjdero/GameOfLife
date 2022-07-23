@@ -8,11 +8,13 @@ import com.benjdero.gameoflife.game.GameStore.State
 internal interface GameStore : Store<Intent, State, Nothing> {
     sealed class Intent {
         object RunGame : Intent()
+        object PrevStep : Intent()
         object NextStep : Intent()
     }
 
     data class State(
         val running: Boolean = false,
-        val world: World
+        val world: World,
+        val history: List<BooleanArray> = emptyList()
     )
 }

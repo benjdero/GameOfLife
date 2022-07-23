@@ -4,6 +4,7 @@
     <string name="menu_start_game">Jouer</string>
     <string name="game_run">Démarrer</string>
     <string name="game_pause">Pause</string>
+    <string name="game_prev_step">Précédent</string>
     <string name="game_next_step">Suivant</string>
     <string name="game_zoom_out">Dézoomer</string>
     <string name="game_zoom_in">Zoomer</string>

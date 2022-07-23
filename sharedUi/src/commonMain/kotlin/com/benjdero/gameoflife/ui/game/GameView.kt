@@ -66,6 +66,7 @@ fun GameView(component: Game) {
                 ) {
                     ControlView(
                         model = model,
+                        prevStep = component::prevStep,
                         nextStep = component::nextStep,
                         scale = scale,
                         setScale = {

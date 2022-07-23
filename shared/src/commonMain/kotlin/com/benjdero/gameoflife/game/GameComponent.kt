@@ -27,12 +27,17 @@ class GameComponent(
     override val models: Value<Model> = store.asValue().map {
         Model(
             running = it.running,
-            world = it.world
+            world = it.world,
+            history = it.history
         )
     }
 
     override fun runGame() {
         store.accept(Intent.RunGame)
+    }
+
+    override fun prevStep() {
+        store.accept(Intent.PrevStep)
     }
 
     override fun nextStep() {

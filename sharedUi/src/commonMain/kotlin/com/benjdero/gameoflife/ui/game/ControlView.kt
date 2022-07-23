@@ -7,6 +7,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.SkipNext
+import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material.icons.filled.ZoomIn
 import androidx.compose.material.icons.filled.ZoomOut
 import androidx.compose.runtime.Composable
@@ -21,12 +22,22 @@ import kotlin.math.roundToInt
 @Composable
 internal fun RowScope.ControlView(
     model: Game.Model,
+    prevStep: () -> Unit,
     nextStep: () -> Unit,
     scale: Float,
     setScale: (Float) -> Unit,
     offset: Offset,
     setOffset: (Offset) -> Unit
 ) {
+    IconButton(
+        onClick = prevStep,
+        enabled = !model.running && model.history.isNotEmpty()
+    ) {
+        Icon(
+            imageVector = Icons.Default.SkipPrevious,
+            contentDescription = stringResource(Res.strings.game_prev_step)
+        )
+    }
     IconButton(
         onClick = nextStep,
         enabled = !model.running

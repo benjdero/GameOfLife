@@ -8,11 +8,14 @@ interface Game {
 
     fun runGame()
 
+    fun prevStep()
+
     fun nextStep()
 
     data class Model(
         val running: Boolean,
-        val world: World
+        val world: World,
+        val history: List<BooleanArray>
     ) {
         val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, cell: Boolean ->
             FlatWorldElement(
