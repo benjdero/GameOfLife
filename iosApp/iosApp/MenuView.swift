@@ -16,8 +16,8 @@ struct MenuView: View {
 
     var body: some View {
         VStack {
-            Button(action: component.onStart) {
-                Text(Res.strings().menu_start.localized())
+            Button(action: component.onStartGame) {
+                Text(Res.strings().menu_start_game.localized())
             }
         }
     }
@@ -38,5 +38,7 @@ class MenuPreview: shared.Menu {
         )
     )
 
-    func onStart() {}
+    func onStartDraw() {}
+
+    func onStartGame() {}
 }

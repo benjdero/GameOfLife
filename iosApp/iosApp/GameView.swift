@@ -17,7 +17,7 @@ struct GameView: View {
     var body: some View {
         VStack {
             LazyVGrid(
-                columns: (1...model.width).map { _ in
+                columns: (1...model.world.width).map { _ in
                     GridItem(.flexible(), spacing: 1)
                 },
                 spacing: 1
@@ -56,13 +56,13 @@ class GamePreview: Game {
     let models: Value<GameModel> = valueOf(
         GameModel(
             running: false,
-            width: 10,
-            height: 15,
-            world: KotlinArray(size: 10) { _ in
-                KotlinArray(size: 15) { _ in
+            world: World(
+                width: 10,
+                height: 15,
+                cells: KotlinBooleanArray(size: 150) { index in
                     true
                 }
-            }
+            )
         )
     )
 
