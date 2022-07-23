@@ -31,8 +31,8 @@ struct GameView: View {
                 Button(action: component.runGame) {
                     Text(
                         model.running
-                        ? Res.strings().game_pause.localized()
-                        : Res.strings().game_run.localized()
+                            ? Res.strings().game_pause.localized()
+                            : Res.strings().game_run.localized()
                     )
                 }
                 Button(action: component.nextStep) {
