@@ -20,6 +20,8 @@ internal interface DrawStore : Store<Intent, State, Nothing> {
     }
 
     data class State(
-        val world: World = World.random()
+        val world: World = World.random(),
+        val allowDecreaseWidth: Boolean = world.width > 1,
+        val allowDecreaseHeight: Boolean = world.height > 1
     )
 }

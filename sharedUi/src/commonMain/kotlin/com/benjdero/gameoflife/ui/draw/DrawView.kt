@@ -122,7 +122,8 @@ fun DrawView(component: Draw) {
                         )
                         WorldSizeButton(
                             imageVector = Icons.Outlined.ArrowCircleRight,
-                            onClick = component::decreaseLeft
+                            onClick = component::decreaseLeft,
+                            enabled = model.allowDecreaseWidth
                         )
                     }
                     Row(
@@ -139,7 +140,8 @@ fun DrawView(component: Draw) {
                         )
                         WorldSizeButton(
                             imageVector = Icons.Outlined.ArrowCircleDown,
-                            onClick = component::decreaseTop
+                            onClick = component::decreaseTop,
+                            enabled = model.allowDecreaseHeight
                         )
                     }
                     Column(
@@ -156,7 +158,8 @@ fun DrawView(component: Draw) {
                         )
                         WorldSizeButton(
                             imageVector = Icons.Outlined.ArrowCircleLeft,
-                            onClick = component::decreaseRight
+                            onClick = component::decreaseRight,
+                            enabled = model.allowDecreaseWidth
                         )
                     }
                     Row(
@@ -173,7 +176,8 @@ fun DrawView(component: Draw) {
                         )
                         WorldSizeButton(
                             imageVector = Icons.Outlined.ArrowCircleUp,
-                            onClick = component::decreaseBottom
+                            onClick = component::decreaseBottom,
+                            enabled = model.allowDecreaseHeight
                         )
                     }
                 }
@@ -183,11 +187,12 @@ fun DrawView(component: Draw) {
 }
 
 @Composable
-private fun WorldSizeButton(imageVector: ImageVector, onClick: () -> Unit) {
+private fun WorldSizeButton(imageVector: ImageVector, onClick: () -> Unit, enabled: Boolean = true) {
     Button(
         modifier = Modifier.size(36.dp),
         shape = CircleShape,
         contentPadding = PaddingValues(all = 0.dp),
+        enabled = enabled,
         onClick = onClick
     ) {
         Icon(

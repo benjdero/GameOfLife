@@ -25,7 +25,9 @@ class DrawComponent(
 
     override val models: Value<Model> = store.asValue().map {
         Model(
-            world = it.world
+            world = it.world,
+            allowDecreaseWidth = it.allowDecreaseWidth,
+            allowDecreaseHeight = it.allowDecreaseHeight
         )
     }
 

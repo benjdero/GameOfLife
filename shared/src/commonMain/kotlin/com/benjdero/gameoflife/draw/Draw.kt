@@ -29,7 +29,9 @@ interface Draw {
     fun finish()
 
     data class Model(
-        val world: World
+        val world: World,
+        val allowDecreaseWidth: Boolean,
+        val allowDecreaseHeight: Boolean,
     ) {
         val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, cell: Boolean ->
             FlatWorldElement(

@@ -7,7 +7,6 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.benjdero.gameoflife.draw.DrawStore.Intent
 import com.benjdero.gameoflife.draw.DrawStore.State
-import kotlin.math.max
 
 internal class DrawStoreProvider(
     private val storeFactory: StoreFactory
@@ -86,7 +85,9 @@ internal class DrawStoreProvider(
 
         fun decreaseLeft(state: State) {
             state.world.apply {
-                val newWidth: Int = max(width - 1, 1)
+                if (width == 1)
+                    return
+                val newWidth: Int = width - 1
                 val newWorld =
                     BooleanArray(newWidth * height) { index: Int ->
                         cells[index + 1 + index / newWidth]
@@ -111,7 +112,9 @@ internal class DrawStoreProvider(
 
         fun decreaseTop(state: State) {
             state.world.apply {
-                val newHeight: Int = max(height - 1, 1)
+                if (height == 1)
+                    return
+                val newHeight: Int = height - 1
                 val newWorld =
                     BooleanArray(width * newHeight) { index: Int ->
                         cells[index + width]
@@ -137,7 +140,9 @@ internal class DrawStoreProvider(
 
         fun decreaseRight(state: State) {
             state.world.apply {
-                val newWidth: Int = max(width - 1, 1)
+                if (width == 1)
+                    return
+                val newWidth: Int = width - 1
                 val newWorld =
                     BooleanArray(newWidth * height) { index: Int ->
                         cells[index + index / newWidth]
@@ -162,7 +167,9 @@ internal class DrawStoreProvider(
 
         fun decreaseBottom(state: State) {
             state.world.apply {
-                val newHeight: Int = max(height - 1, 1)
+                if (height == 1)
+                    return
+                val newHeight: Int = height - 1
                 val newWorld =
                     BooleanArray(width * newHeight) { index: Int ->
                         cells[index]
@@ -176,8 +183,20 @@ internal class DrawStoreProvider(
         override fun State.reduce(msg: Msg): State =
             when (msg) {
                 is Msg.WorldUpdate -> copy(world = world.copy(cells = msg.cells))
-                is Msg.WidthChanged -> copy(world = world.copy(width = msg.width, cells = msg.cells))
-                is Msg.HeightChanged -> copy(world = world.copy(height = msg.height, cells = msg.cells))
+                is Msg.WidthChanged -> widthChanged(msg.width, msg.cells)
+                is Msg.HeightChanged -> heightChanged(msg.height, msg.cells)
             }
+
+        private fun State.widthChanged(width: Int, cells: BooleanArray) =
+            copy(
+                world = world.copy(width = width, cells = cells),
+                allowDecreaseWidth = width > 1
+            )
+
+        private fun State.heightChanged(height: Int, cells: BooleanArray) =
+            copy(
+                world = world.copy(height = height, cells = cells),
+                allowDecreaseHeight = height > 1
+            )
     }
 }
