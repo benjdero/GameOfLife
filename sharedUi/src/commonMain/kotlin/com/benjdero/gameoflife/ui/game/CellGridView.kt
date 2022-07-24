@@ -25,13 +25,15 @@ internal fun CellGridView(model: Model) {
         val cellWidth: Float = size.width / model.world.width
         val cellHeight: Float = size.height / model.world.height
         val cellSize: Float = min(cellWidth, cellHeight)
+        val outsidePaddingHorizontal: Float = size.width - (model.world.width * cellSize)
+        val outsidePaddingVertical: Float = size.height - (model.world.height * cellSize)
 
         model.world.forEachIndexed { x: Int, y: Int, cell: Boolean ->
             drawRect(
                 color = if (cell) cellColor else Color.White,
                 topLeft = Offset(
-                    x = x * cellSize + PADDING_HORIZONTAL / 2,
-                    y = y * cellSize + PADDING_VERTICAL / 2
+                    x = x * cellSize + (PADDING_HORIZONTAL + outsidePaddingHorizontal) / 2,
+                    y = y * cellSize + (PADDING_VERTICAL + outsidePaddingVertical) / 2
                 ),
                 size = Size(
                     width = cellSize - PADDING_HORIZONTAL,
