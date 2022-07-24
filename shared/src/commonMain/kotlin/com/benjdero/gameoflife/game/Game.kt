@@ -14,6 +14,7 @@ interface Game {
 
     data class Model(
         val running: Boolean,
+        val generation: Int,
         val world: World,
         val history: List<BooleanArray>
     ) {

@@ -27,6 +27,7 @@ class GameComponent(
     override val models: Value<Model> = store.asValue().map {
         Model(
             running = it.running,
+            generation = it.generation,
             world = it.world,
             history = it.history
         )

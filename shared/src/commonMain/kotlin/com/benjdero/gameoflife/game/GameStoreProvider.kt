@@ -102,6 +102,7 @@ internal class GameStoreProvider(
 
         private fun State.worldUpdate(cells: BooleanArray) =
             copy(
+                generation = generation + 1,
                 world = world.copy(
                     cells = cells
                 ),
@@ -115,6 +116,7 @@ internal class GameStoreProvider(
 
         private fun State.worldRollback(): State =
             copy(
+                generation = generation - 1,
                 world = world.copy(
                     cells = history.last()
                 ),

@@ -2,17 +2,21 @@ package com.benjdero.gameoflife.ui.game
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountTree
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material.icons.filled.ZoomIn
 import androidx.compose.material.icons.filled.ZoomOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.unit.dp
 import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.game.Game
 import dev.icerock.moko.resources.compose.stringResource
@@ -47,6 +51,20 @@ internal fun RowScope.ControlView(
             contentDescription = stringResource(Res.strings.game_next_step)
         )
     }
+    Spacer(
+        modifier = Modifier.width(16.dp)
+    )
+    Icon(
+        modifier = Modifier.rotate(-90f),
+        imageVector = Icons.Default.AccountTree,
+        contentDescription = null
+    )
+    Spacer(
+        modifier = Modifier.width(4.dp)
+    )
+    Text(
+        text = model.generation.toString()
+    )
     Spacer(
         modifier = Modifier.weight(1f)
     )
