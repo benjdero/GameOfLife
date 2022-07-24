@@ -35,6 +35,9 @@ struct GameView: View {
                             : Res.strings().game_run.localized()
                     )
                 }
+                Button(action: component.prevStep) {
+                    Text(Res.strings().game_prev_step.localized())
+                }.disabled(model.running || model.history.count == 0)
                 Button(action: component.nextStep) {
                     Text(Res.strings().game_next_step.localized())
                 }.disabled(model.running)
@@ -62,9 +65,12 @@ class GamePreview: Game {
                 cells: KotlinBooleanArray(size: 150) { index in
                     true
                 }
-            )
+            ),
+            history: []
         )
     )
+
+    func prevStep() {}
 
     func nextStep() {}
 
