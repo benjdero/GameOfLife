@@ -16,15 +16,38 @@ struct GameView: View {
 
     var body: some View {
         VStack {
-            LazyVGrid(
-                columns: (1...model.world.width).map { _ in
-                    GridItem(.flexible(), spacing: 1)
-                },
-                spacing: 1
-            ) {
-                ForEach(model.flatWorld, id: \.id) { item in
-                    Rectangle()
-                        .fill(item.cell ? .green : .white)
+            if #available(iOS 15.0, *) {
+                Canvas { context, size in
+                    let cellWidth: CGFloat = size.width / CGFloat(model.world.width)
+                    let cellHeight: CGFloat = size.height / CGFloat(model.world.height)
+                    let cellSize: Int = Int(min(cellWidth, cellHeight))
+
+                    let c = context
+                    model.world.forEachIndexed { x, y, cell in
+                        c.fill(
+                            Path(
+                                CGRect(
+                                    x: Int(x) * cellSize,
+                                    y: Int(y) * cellSize,
+                                    width: cellSize,
+                                    height: cellSize
+                                )
+                            ),
+                            with: .color(Bool(cell) ? .green : .white)
+                        )
+                    }
+                }
+            } else {
+                LazyVGrid(
+                    columns: (1...model.world.width).map { _ in
+                        GridItem(.flexible(), spacing: 1)
+                    },
+                    spacing: 1
+                ) {
+                    ForEach(model.flatWorld, id: \.id) { item in
+                        Rectangle()
+                            .fill(item.cell ? .green : .white)
+                    }
                 }
             }
             HStack {
