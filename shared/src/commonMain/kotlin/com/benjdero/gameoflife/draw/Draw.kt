@@ -10,13 +10,21 @@ interface Draw {
 
     fun onDrawValue(x: Int, y: Int, cell: Boolean)
 
-    fun decreaseWidth()
+    fun increaseLeft()
 
-    fun increaseWidth()
+    fun decreaseLeft()
 
-    fun decreaseHeight()
+    fun increaseTop()
 
-    fun increaseHeight()
+    fun decreaseTop()
+
+    fun increaseRight()
+
+    fun decreaseRight()
+
+    fun increaseBottom()
+
+    fun decreaseBottom()
 
     fun finish()
 

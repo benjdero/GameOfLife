@@ -5,28 +5,34 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomAppBar
+import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.DoNotDisturbOn
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.filled.Height
+import androidx.compose.material.icons.outlined.ArrowCircleDown
+import androidx.compose.material.icons.outlined.ArrowCircleLeft
+import androidx.compose.material.icons.outlined.ArrowCircleRight
+import androidx.compose.material.icons.outlined.ArrowCircleUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
@@ -57,56 +63,6 @@ fun DrawView(component: Draw) {
             backgroundColor = androidx.compose.ui.graphics.Color.Black,
             bottomBar = {
                 BottomAppBar {
-                    IconButton(
-                        onClick = component::decreaseWidth
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.DoNotDisturbOn,
-                            contentDescription = null
-                        )
-                    }
-                    Text(
-                        text = model.world.width.toString()
-                    )
-                    Icon(
-                        modifier = Modifier.rotate(90f),
-                        imageVector = Icons.Default.Height,
-                        contentDescription = null
-                    )
-                    IconButton(
-                        onClick = component::increaseWidth
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.AddCircle,
-                            contentDescription = null
-                        )
-                    }
-                    Spacer(
-                        modifier = Modifier.width(16.dp)
-                    )
-                    IconButton(
-                        onClick = component::decreaseHeight
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.DoNotDisturbOn,
-                            contentDescription = null
-                        )
-                    }
-                    Text(
-                        text = model.world.height.toString()
-                    )
-                    Icon(
-                        imageVector = Icons.Default.Height,
-                        contentDescription = null
-                    )
-                    IconButton(
-                        onClick = component::increaseHeight
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.AddCircle,
-                            contentDescription = null
-                        )
-                    }
                     Spacer(
                         modifier = Modifier.weight(1f)
                     )
@@ -152,8 +108,91 @@ fun DrawView(component: Draw) {
                         }
                 ) {
                     CellGridView(model)
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .padding(start = 16.dp)
+                    ) {
+                        WorldSizeButton(
+                            imageVector = Icons.Outlined.ArrowCircleLeft,
+                            onClick = component::increaseLeft
+                        )
+                        Spacer(
+                            modifier = Modifier.height(8.dp)
+                        )
+                        WorldSizeButton(
+                            imageVector = Icons.Outlined.ArrowCircleRight,
+                            onClick = component::decreaseLeft
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .align(Alignment.TopCenter)
+                            .padding(top = 16.dp)
+                    ) {
+                        WorldSizeButton(
+                            imageVector = Icons.Outlined.ArrowCircleUp,
+                            onClick = component::increaseTop
+                        )
+                        Spacer(
+                            modifier = Modifier.width(8.dp)
+                        )
+                        WorldSizeButton(
+                            imageVector = Icons.Outlined.ArrowCircleDown,
+                            onClick = component::decreaseTop
+                        )
+                    }
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 16.dp)
+                    ) {
+                        WorldSizeButton(
+                            imageVector = Icons.Outlined.ArrowCircleRight,
+                            onClick = component::increaseRight
+                        )
+                        Spacer(
+                            modifier = Modifier.height(8.dp)
+                        )
+                        WorldSizeButton(
+                            imageVector = Icons.Outlined.ArrowCircleLeft,
+                            onClick = component::decreaseRight
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = 16.dp)
+                    ) {
+                        WorldSizeButton(
+                            imageVector = Icons.Outlined.ArrowCircleDown,
+                            onClick = component::increaseBottom
+                        )
+                        Spacer(
+                            modifier = Modifier.width(8.dp)
+                        )
+                        WorldSizeButton(
+                            imageVector = Icons.Outlined.ArrowCircleUp,
+                            onClick = component::decreaseBottom
+                        )
+                    }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun WorldSizeButton(imageVector: ImageVector, onClick: () -> Unit) {
+    Button(
+        modifier = Modifier.size(36.dp),
+        shape = CircleShape,
+        contentPadding = PaddingValues(all = 0.dp),
+        onClick = onClick
+    ) {
+        Icon(
+            imageVector = imageVector,
+            contentDescription = null
+        )
     }
 }

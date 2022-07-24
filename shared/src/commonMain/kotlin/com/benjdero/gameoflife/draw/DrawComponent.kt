@@ -37,20 +37,36 @@ class DrawComponent(
         store.accept(Intent.OnDrawValue(x, y, cell))
     }
 
-    override fun decreaseWidth() {
-        store.accept(Intent.DecreaseWidth)
+    override fun increaseLeft() {
+        store.accept(Intent.IncreaseLeft)
     }
 
-    override fun increaseWidth() {
-        store.accept(Intent.IncreaseWidth)
+    override fun decreaseLeft() {
+        store.accept(Intent.DecreaseLeft)
     }
 
-    override fun decreaseHeight() {
-        store.accept(Intent.DecreaseHeight)
+    override fun increaseTop() {
+        store.accept(Intent.IncreaseTop)
     }
 
-    override fun increaseHeight() {
-        store.accept(Intent.IncreaseHeight)
+    override fun decreaseTop() {
+        store.accept(Intent.DecreaseTop)
+    }
+
+    override fun increaseRight() {
+        store.accept(Intent.IncreaseRight)
+    }
+
+    override fun decreaseRight() {
+        store.accept(Intent.DecreaseRight)
+    }
+
+    override fun increaseBottom() {
+        store.accept(Intent.IncreaseBottom)
+    }
+
+    override fun decreaseBottom() {
+        store.accept(Intent.DecreaseBottom)
     }
 
     override fun finish() {

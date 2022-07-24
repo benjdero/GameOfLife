@@ -32,10 +32,14 @@ internal class DrawStoreProvider(
             when (intent) {
                 is Intent.OnDraw -> onDraw(intent.x, intent.y, getState())
                 is Intent.OnDrawValue -> onDrawValue(intent.x, intent.y, intent.cell, getState())
-                Intent.DecreaseWidth -> decreaseWidth(getState())
-                Intent.IncreaseWidth -> increaseWidth(getState())
-                Intent.DecreaseHeight -> decreaseHeight(getState())
-                Intent.IncreaseHeight -> increaseHeight(getState())
+                Intent.IncreaseLeft -> increaseLeft(getState())
+                Intent.DecreaseLeft -> decreaseLeft(getState())
+                Intent.IncreaseTop -> increaseTop(getState())
+                Intent.DecreaseTop -> decreaseTop(getState())
+                Intent.IncreaseRight -> increaseRight(getState())
+                Intent.DecreaseRight -> decreaseRight(getState())
+                Intent.IncreaseBottom -> increaseBottom(getState())
+                Intent.DecreaseBottom -> decreaseBottom(getState())
             }
         }
 
@@ -65,18 +69,58 @@ internal class DrawStoreProvider(
             )
         }
 
-        fun decreaseWidth(state: State) {
+        fun increaseLeft(state: State) {
             state.world.apply {
-                val newWidth: Int = max(width - 1, 1)
+                val newWidth: Int = width + 1
                 val newWorld =
                     BooleanArray(newWidth * height) { index: Int ->
-                        cells[index + index / newWidth]
+                        val i: Int = index
+                        if (i % newWidth == 0)
+                            false
+                        else
+                            cells[i - 1 - i / newWidth]
                     }
                 dispatch(Msg.WidthChanged(newWidth, newWorld))
             }
         }
 
-        fun increaseWidth(state: State) {
+        fun decreaseLeft(state: State) {
+            state.world.apply {
+                val newWidth: Int = max(width - 1, 1)
+                val newWorld =
+                    BooleanArray(newWidth * height) { index: Int ->
+                        cells[index + 1 + index / newWidth]
+                    }
+                dispatch(Msg.WidthChanged(newWidth, newWorld))
+            }
+        }
+
+        fun increaseTop(state: State) {
+            state.world.apply {
+                val newHeight: Int = height + 1
+                val newWorld =
+                    BooleanArray(width * newHeight) { index: Int ->
+                        if (index / width == 0)
+                            false
+                        else
+                            cells[index - width]
+                    }
+                dispatch(Msg.HeightChanged(newHeight, newWorld))
+            }
+        }
+
+        fun decreaseTop(state: State) {
+            state.world.apply {
+                val newHeight: Int = max(height - 1, 1)
+                val newWorld =
+                    BooleanArray(width * newHeight) { index: Int ->
+                        cells[index + width]
+                    }
+                dispatch(Msg.HeightChanged(newHeight, newWorld))
+            }
+        }
+
+        fun increaseRight(state: State) {
             state.world.apply {
                 val newWidth: Int = width + 1
                 val newWorld =
@@ -91,18 +135,18 @@ internal class DrawStoreProvider(
             }
         }
 
-        fun decreaseHeight(state: State) {
+        fun decreaseRight(state: State) {
             state.world.apply {
-                val newHeight: Int = max(height - 1, 1)
+                val newWidth: Int = max(width - 1, 1)
                 val newWorld =
-                    BooleanArray(width * newHeight) { index: Int ->
-                        cells[index]
+                    BooleanArray(newWidth * height) { index: Int ->
+                        cells[index + index / newWidth]
                     }
-                dispatch(Msg.HeightChanged(newHeight, newWorld))
+                dispatch(Msg.WidthChanged(newWidth, newWorld))
             }
         }
 
-        fun increaseHeight(state: State) {
+        fun increaseBottom(state: State) {
             state.world.apply {
                 val newHeight: Int = height + 1
                 val newWorld =
@@ -111,6 +155,17 @@ internal class DrawStoreProvider(
                             false
                         else
                             cells[index]
+                    }
+                dispatch(Msg.HeightChanged(newHeight, newWorld))
+            }
+        }
+
+        fun decreaseBottom(state: State) {
+            state.world.apply {
+                val newHeight: Int = max(height - 1, 1)
+                val newWorld =
+                    BooleanArray(width * newHeight) { index: Int ->
+                        cells[index]
                     }
                 dispatch(Msg.HeightChanged(newHeight, newWorld))
             }
