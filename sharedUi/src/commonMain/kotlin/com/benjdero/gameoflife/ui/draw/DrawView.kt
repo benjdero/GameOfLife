@@ -53,8 +53,10 @@ fun DrawView(component: Draw) {
         val cellWidth: Float = canvasSize.width.toFloat() / worldWidth
         val cellHeight: Float = canvasSize.height.toFloat() / worldHeight
         val cellSize: Float = min(cellWidth, cellHeight)
-        val x: Int = (offset.x / cellSize).toInt()
-        val y: Int = (offset.y / cellSize).toInt()
+        val outsidePaddingHorizontal: Float = canvasSize.width.toFloat() - (worldWidth * cellSize)
+        val outsidePaddingVertical: Float = canvasSize.height.toFloat() - (worldHeight * cellSize)
+        val x: Int = ((offset.x - outsidePaddingHorizontal / 2) / cellSize).toInt()
+        val y: Int = ((offset.y - outsidePaddingVertical / 2) / cellSize).toInt()
         return IntOffset(x, y)
     }
 
