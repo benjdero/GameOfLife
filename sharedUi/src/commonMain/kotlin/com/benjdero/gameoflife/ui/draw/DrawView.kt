@@ -120,7 +120,7 @@ fun DrawView(component: Draw) {
                             detectDragGestures(
                                 onDragStart = { offset: Offset ->
                                     val cellPosition: IntOffset = getCellFromOffset(size, model.world.width, model.world.height, offset)
-                                    firstCellDragValue = model.world.get(cellPosition.x, cellPosition.y)
+                                    firstCellDragValue = model.world.isAlive(cellPosition.x, cellPosition.y)
                                     component.onDrawValue(cellPosition.x, cellPosition.y, !firstCellDragValue)
                                 },
                                 onDrag = { change: PointerInputChange, dragAmount: Offset ->
