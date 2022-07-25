@@ -2,7 +2,7 @@ object Version {
     // Global
     const val checker = "0.42.0"
     const val gradle = "7.2.1"
-    const val kotlin = "1.7.0"
+    const val kotlin = "1.7.10"
 
     // Shared
     const val coroutines = "1.6.4"
@@ -12,8 +12,8 @@ object Version {
     const val mokoResources = "0.20.1"
 
     // SharedUi
-    const val composeCompiler = "1.2.0"
-    const val compose = "1.2.0-alpha01-dev741"
+    const val composeCompiler = "1.3.0-beta01"
+    const val compose = "1.2.0-alpha01-dev750"
 
     // Android
     const val activityCompose = "1.5.0"
