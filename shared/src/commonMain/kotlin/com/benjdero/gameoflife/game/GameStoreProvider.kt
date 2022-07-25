@@ -84,7 +84,7 @@ internal class GameStoreProvider(
                     if (
                         world.isWithinBounds(yX, yD) &&
                         (yD != y || yX != x) &&
-                        world.get(yX, yD)
+                        world.isAlive(yX, yD)
                     ) {
                         count++
                     }
