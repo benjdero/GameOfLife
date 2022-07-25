@@ -26,6 +26,7 @@ class DrawComponent(
     override val models: Value<Model> = store.asValue().map {
         Model(
             world = it.world,
+            showGrid = it.showGrid,
             allowDecreaseWidth = it.allowDecreaseWidth,
             allowDecreaseHeight = it.allowDecreaseHeight
         )
@@ -37,6 +38,10 @@ class DrawComponent(
 
     override fun onDrawValue(x: Int, y: Int, cell: Boolean) {
         store.accept(Intent.OnDrawValue(x, y, cell))
+    }
+
+    override fun toggleGrid() {
+        store.accept(Intent.ShowGrid)
     }
 
     override fun increaseLeft() {

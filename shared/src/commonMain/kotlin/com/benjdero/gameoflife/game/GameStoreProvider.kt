@@ -30,6 +30,7 @@ internal class GameStoreProvider(
         data class RunGame(val running: Boolean) : Msg()
         data class WorldUpdate(val cells: BooleanArray) : Msg()
         object WorldRollback : Msg()
+        object ToggleShowGrid : Msg()
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {
@@ -38,6 +39,7 @@ internal class GameStoreProvider(
                 Intent.RunGame -> runGame(getState)
                 Intent.PrevStep -> prevStep()
                 Intent.NextStep -> nextStep(getState())
+                Intent.ShowGrid -> showGrid()
             }
         }
 
@@ -90,6 +92,10 @@ internal class GameStoreProvider(
             }
             return count
         }
+
+        private fun showGrid() {
+            dispatch(Msg.ToggleShowGrid)
+        }
     }
 
     private object ReducerImpl : Reducer<State, Msg> {
@@ -98,6 +104,7 @@ internal class GameStoreProvider(
                 is Msg.RunGame -> copy(running = msg.running)
                 is Msg.WorldUpdate -> worldUpdate(cells = msg.cells)
                 is Msg.WorldRollback -> worldRollback()
+                Msg.ToggleShowGrid -> copy(showGrid = !showGrid)
             }
 
         private fun State.worldUpdate(cells: BooleanArray) =

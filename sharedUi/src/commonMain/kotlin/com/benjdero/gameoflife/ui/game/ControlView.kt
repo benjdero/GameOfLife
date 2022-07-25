@@ -19,6 +19,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
 import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.game.Game
+import com.benjdero.gameoflife.ui.common.ToggleGridButton
 import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.max
 import kotlin.math.roundToInt
@@ -28,6 +29,8 @@ internal fun RowScope.ControlView(
     model: Game.Model,
     prevStep: () -> Unit,
     nextStep: () -> Unit,
+    showGrid: Boolean,
+    toggleGrid: () -> Unit,
     scale: Float,
     setScale: (Float) -> Unit,
     offset: Offset,
@@ -67,6 +70,13 @@ internal fun RowScope.ControlView(
     )
     Spacer(
         modifier = Modifier.weight(1f)
+    )
+    ToggleGridButton(
+        showGrid = showGrid,
+        toggleGrid = toggleGrid
+    )
+    Spacer(
+        modifier = Modifier.width(16.dp)
     )
     IconButton(
         onClick = {

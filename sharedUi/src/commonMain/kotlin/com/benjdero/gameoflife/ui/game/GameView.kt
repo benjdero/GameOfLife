@@ -68,6 +68,8 @@ fun GameView(component: Game) {
                         model = model,
                         prevStep = component::prevStep,
                         nextStep = component::nextStep,
+                        showGrid = model.showGrid,
+                        toggleGrid = component::toggleGrid,
                         scale = scale,
                         setScale = {
                             scale = it

@@ -24,6 +24,7 @@ internal class DrawStoreProvider(
         data class WorldUpdate(val cells: BooleanArray) : Msg()
         data class WidthChanged(val width: Int, val cells: BooleanArray) : Msg()
         data class HeightChanged(val height: Int, val cells: BooleanArray) : Msg()
+        object ToggleShowGrid : Msg()
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {
@@ -31,6 +32,7 @@ internal class DrawStoreProvider(
             when (intent) {
                 is Intent.OnDraw -> onDraw(intent.x, intent.y, getState())
                 is Intent.OnDrawValue -> onDrawValue(intent.x, intent.y, intent.cell, getState())
+                Intent.ShowGrid -> showGrid()
                 Intent.IncreaseLeft -> increaseLeft(getState())
                 Intent.DecreaseLeft -> decreaseLeft(getState())
                 Intent.IncreaseTop -> increaseTop(getState())
@@ -68,7 +70,11 @@ internal class DrawStoreProvider(
             )
         }
 
-        fun increaseLeft(state: State) {
+        private fun showGrid() {
+            dispatch(Msg.ToggleShowGrid)
+        }
+
+        private fun increaseLeft(state: State) {
             state.world.apply {
                 val newWidth: Int = width + 1
                 val newWorld =
@@ -83,7 +89,7 @@ internal class DrawStoreProvider(
             }
         }
 
-        fun decreaseLeft(state: State) {
+        private fun decreaseLeft(state: State) {
             state.world.apply {
                 if (width == 1)
                     return
@@ -96,7 +102,7 @@ internal class DrawStoreProvider(
             }
         }
 
-        fun increaseTop(state: State) {
+        private fun increaseTop(state: State) {
             state.world.apply {
                 val newHeight: Int = height + 1
                 val newWorld =
@@ -110,7 +116,7 @@ internal class DrawStoreProvider(
             }
         }
 
-        fun decreaseTop(state: State) {
+        private fun decreaseTop(state: State) {
             state.world.apply {
                 if (height == 1)
                     return
@@ -123,7 +129,7 @@ internal class DrawStoreProvider(
             }
         }
 
-        fun increaseRight(state: State) {
+        private fun increaseRight(state: State) {
             state.world.apply {
                 val newWidth: Int = width + 1
                 val newWorld =
@@ -138,7 +144,7 @@ internal class DrawStoreProvider(
             }
         }
 
-        fun decreaseRight(state: State) {
+        private fun decreaseRight(state: State) {
             state.world.apply {
                 if (width == 1)
                     return
@@ -151,7 +157,7 @@ internal class DrawStoreProvider(
             }
         }
 
-        fun increaseBottom(state: State) {
+        private fun increaseBottom(state: State) {
             state.world.apply {
                 val newHeight: Int = height + 1
                 val newWorld =
@@ -165,7 +171,7 @@ internal class DrawStoreProvider(
             }
         }
 
-        fun decreaseBottom(state: State) {
+        private fun decreaseBottom(state: State) {
             state.world.apply {
                 if (height == 1)
                     return
@@ -185,6 +191,7 @@ internal class DrawStoreProvider(
                 is Msg.WorldUpdate -> copy(world = world.copy(cells = msg.cells))
                 is Msg.WidthChanged -> widthChanged(msg.width, msg.cells)
                 is Msg.HeightChanged -> heightChanged(msg.height, msg.cells)
+                Msg.ToggleShowGrid -> copy(showGrid = !showGrid)
             }
 
         private fun State.widthChanged(width: Int, cells: BooleanArray) =

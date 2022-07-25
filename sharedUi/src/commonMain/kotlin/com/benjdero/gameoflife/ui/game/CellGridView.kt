@@ -1,6 +1,7 @@
 package com.benjdero.gameoflife.ui.game
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -21,6 +22,12 @@ internal fun CellGridView(model: Model) {
     Canvas(
         modifier = Modifier
             .fillMaxSize()
+            .background(
+                if (model.showGrid)
+                    Color.Black
+                else
+                    Color.White
+            )
     ) {
         val cellWidth: Float = size.width / model.world.width
         val cellHeight: Float = size.height / model.world.height

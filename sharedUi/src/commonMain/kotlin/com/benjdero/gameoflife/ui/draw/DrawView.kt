@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.benjdero.gameoflife.draw.Draw
+import com.benjdero.gameoflife.ui.common.ToggleGridButton
 import com.benjdero.gameoflife.ui.theme.MyTheme
 import kotlin.math.min
 
@@ -65,6 +66,13 @@ fun DrawView(component: Draw) {
                 BottomAppBar {
                     Spacer(
                         modifier = Modifier.weight(1f)
+                    )
+                    ToggleGridButton(
+                        showGrid = model.showGrid,
+                        toggleGrid = component::toggleGrid
+                    )
+                    Spacer(
+                        modifier = Modifier.width(16.dp)
                     )
                     IconButton(
                         onClick = component::finish

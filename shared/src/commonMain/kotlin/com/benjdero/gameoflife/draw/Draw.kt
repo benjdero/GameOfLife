@@ -10,6 +10,8 @@ interface Draw {
 
     fun onDrawValue(x: Int, y: Int, cell: Boolean)
 
+    fun toggleGrid()
+
     fun increaseLeft()
 
     fun decreaseLeft()
@@ -30,6 +32,7 @@ interface Draw {
 
     data class Model(
         val world: World,
+        val showGrid: Boolean,
         val allowDecreaseWidth: Boolean,
         val allowDecreaseHeight: Boolean,
     ) {

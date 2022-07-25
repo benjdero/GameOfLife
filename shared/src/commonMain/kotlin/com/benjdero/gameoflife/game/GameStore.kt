@@ -10,12 +10,14 @@ internal interface GameStore : Store<Intent, State, Nothing> {
         object RunGame : Intent()
         object PrevStep : Intent()
         object NextStep : Intent()
+        object ShowGrid : Intent()
     }
 
     data class State(
         val running: Boolean = false,
         val generation: Int = 1,
         val world: World,
+        val showGrid: Boolean = false,
         val history: List<BooleanArray> = emptyList()
     )
 }

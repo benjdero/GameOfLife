@@ -12,10 +12,13 @@ interface Game {
 
     fun nextStep()
 
+    fun toggleGrid()
+
     data class Model(
         val running: Boolean,
         val generation: Int,
         val world: World,
+        val showGrid: Boolean,
         val history: List<BooleanArray>
     ) {
         val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, cell: Boolean ->

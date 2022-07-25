@@ -29,6 +29,7 @@ class GameComponent(
             running = it.running,
             generation = it.generation,
             world = it.world,
+            showGrid = it.showGrid,
             history = it.history
         )
     }
@@ -43,5 +44,9 @@ class GameComponent(
 
     override fun nextStep() {
         store.accept(Intent.NextStep)
+    }
+
+    override fun toggleGrid() {
+        store.accept(Intent.ShowGrid)
     }
 }
