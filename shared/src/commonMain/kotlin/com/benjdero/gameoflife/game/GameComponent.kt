@@ -8,12 +8,14 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.asValue
 import com.benjdero.gameoflife.game.Game.Model
+import com.benjdero.gameoflife.game.Game.Output
 import com.benjdero.gameoflife.game.GameStore.Intent
 
 class GameComponent(
     componentContext: ComponentContext,
     storeFactory: StoreFactory,
-    world: World
+    world: World,
+    private val output: (Output) -> Unit
 ) : Game, ComponentContext by componentContext {
 
     private val store =
@@ -48,5 +50,9 @@ class GameComponent(
 
     override fun toggleGrid() {
         store.accept(Intent.ShowGrid)
+    }
+
+    override fun goBack() {
+        output(Output.GoBack)
     }
 }

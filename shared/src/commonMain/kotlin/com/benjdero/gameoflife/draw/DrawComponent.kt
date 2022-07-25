@@ -87,4 +87,8 @@ class DrawComponent(
     override fun finish() {
         output(Output.Finish(store.state.world))
     }
+
+    override fun goBack() {
+        output(Output.GoBack)
+    }
 }

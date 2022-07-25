@@ -34,6 +34,8 @@ interface Draw {
 
     fun finish()
 
+    fun goBack()
+
     data class Model(
         val world: World,
         val showGrid: Boolean,
@@ -55,5 +57,6 @@ interface Draw {
 
     sealed class Output {
         data class Finish(val world: World) : Output()
+        object GoBack : Output()
     }
 }

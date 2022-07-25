@@ -66,6 +66,7 @@ fun GameView(component: Game) {
                 ) {
                     ControlView(
                         model = model,
+                        goBack = component::goBack,
                         prevStep = component::prevStep,
                         nextStep = component::nextStep,
                         showGrid = model.showGrid,

@@ -8,6 +8,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountTree
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material.icons.filled.ZoomIn
@@ -27,6 +28,7 @@ import kotlin.math.roundToInt
 @Composable
 internal fun RowScope.ControlView(
     model: Game.Model,
+    goBack: () -> Unit,
     prevStep: () -> Unit,
     nextStep: () -> Unit,
     showGrid: Boolean,
@@ -36,6 +38,17 @@ internal fun RowScope.ControlView(
     offset: Offset,
     setOffset: (Offset) -> Unit
 ) {
+    IconButton(
+        onClick = goBack
+    ) {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = null
+        )
+    }
+    Spacer(
+        modifier = Modifier.width(16.dp)
+    )
     IconButton(
         onClick = prevStep,
         enabled = !model.running && model.history.isNotEmpty()

@@ -14,6 +14,8 @@ interface Game {
 
     fun toggleGrid()
 
+    fun goBack()
+
     data class Model(
         val running: Boolean,
         val generation: Int,
@@ -33,4 +35,8 @@ interface Game {
         val id: Int,
         val cell: Boolean
     )
+
+    sealed class Output {
+        object GoBack : Output()
+    }
 }

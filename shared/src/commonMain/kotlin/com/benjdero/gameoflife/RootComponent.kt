@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.parcelable.Parcelable
@@ -11,6 +12,7 @@ import com.arkivanov.essenty.parcelable.Parcelize
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.benjdero.gameoflife.draw.Draw
 import com.benjdero.gameoflife.draw.DrawComponent
+import com.benjdero.gameoflife.game.Game
 import com.benjdero.gameoflife.game.GameComponent
 import com.benjdero.gameoflife.menu.Menu
 import com.benjdero.gameoflife.menu.MenuComponent
@@ -45,7 +47,8 @@ class RootComponent(
                     component = GameComponent(
                         componentContext = componentContext,
                         storeFactory = storeFactory,
-                        world = configuration.world
+                        world = configuration.world,
+                        output = ::onGameOutput
                     )
                 )
             }
@@ -61,6 +64,12 @@ class RootComponent(
     private fun onDrawOutput(output: Draw.Output): Unit =
         when (output) {
             is Draw.Output.Finish -> navigation.push(Configuration.Game(output.world))
+            Draw.Output.GoBack -> navigation.pop()
+        }
+
+    private fun onGameOutput(output: Game.Output): Unit =
+        when (output) {
+            Game.Output.GoBack -> navigation.pop()
         }
 
     override val childStack: Value<ChildStack<*, Root.Child>> = stack

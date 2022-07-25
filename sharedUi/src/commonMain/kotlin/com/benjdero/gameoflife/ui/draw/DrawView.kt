@@ -19,6 +19,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.BorderClear
 import androidx.compose.material.icons.filled.Casino
 import androidx.compose.material.icons.filled.Done
@@ -68,6 +69,14 @@ fun DrawView(component: Draw) {
             backgroundColor = androidx.compose.ui.graphics.Color.Black,
             bottomBar = {
                 BottomAppBar {
+                    IconButton(
+                        onClick = component::goBack
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = null
+                        )
+                    }
                     Spacer(
                         modifier = Modifier.weight(1f)
                     )
