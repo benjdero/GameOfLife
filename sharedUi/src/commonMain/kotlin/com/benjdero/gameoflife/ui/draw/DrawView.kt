@@ -19,6 +19,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BorderClear
+import androidx.compose.material.icons.filled.Casino
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.outlined.ArrowCircleDown
 import androidx.compose.material.icons.outlined.ArrowCircleLeft
@@ -66,6 +68,28 @@ fun DrawView(component: Draw) {
                 BottomAppBar {
                     Spacer(
                         modifier = Modifier.weight(1f)
+                    )
+                    IconButton(
+                        onClick = component::clearWorld
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.BorderClear,
+                            contentDescription = null
+                        )
+                    }
+                    Spacer(
+                        modifier = Modifier.width(4.dp)
+                    )
+                    IconButton(
+                        onClick = component::randomWorld
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Casino,
+                            contentDescription = null
+                        )
+                    }
+                    Spacer(
+                        modifier = Modifier.width(16.dp)
                     )
                     ToggleGridButton(
                         showGrid = model.showGrid,

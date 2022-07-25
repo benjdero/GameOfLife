@@ -5,6 +5,7 @@ import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.draw.DrawStore.Intent
 import com.benjdero.gameoflife.draw.DrawStore.State
 
@@ -32,6 +33,8 @@ internal class DrawStoreProvider(
             when (intent) {
                 is Intent.OnDraw -> onDraw(intent.x, intent.y, getState())
                 is Intent.OnDrawValue -> onDrawValue(intent.x, intent.y, intent.cell, getState())
+                Intent.ClearWorld -> clearWorld(getState())
+                Intent.RandomWorld -> randomWorld(getState())
                 Intent.ShowGrid -> showGrid()
                 Intent.IncreaseLeft -> increaseLeft(getState())
                 Intent.DecreaseLeft -> decreaseLeft(getState())
@@ -68,6 +71,16 @@ internal class DrawStoreProvider(
                     }
                 )
             )
+        }
+
+        private fun clearWorld(state: State) {
+            val clearWorld = BooleanArray(state.world.width * state.world.height) { false }
+            dispatch(Msg.WorldUpdate(clearWorld))
+        }
+
+        private fun randomWorld(state: State) {
+            val randomWorld = World.random(state.world.width, state.world.height)
+            dispatch(Msg.WorldUpdate(randomWorld.cells))
         }
 
         private fun showGrid() {

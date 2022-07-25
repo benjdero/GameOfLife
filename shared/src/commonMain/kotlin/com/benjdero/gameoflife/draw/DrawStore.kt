@@ -9,6 +9,8 @@ internal interface DrawStore : Store<Intent, State, Nothing> {
     sealed class Intent {
         data class OnDraw(val x: Int, val y: Int) : Intent()
         data class OnDrawValue(val x: Int, val y: Int, val cell: Boolean) : Intent()
+        object ClearWorld : Intent()
+        object RandomWorld : Intent()
         object ShowGrid : Intent()
         object IncreaseLeft : Intent()
         object DecreaseLeft : Intent()

@@ -40,6 +40,14 @@ class DrawComponent(
         store.accept(Intent.OnDrawValue(x, y, cell))
     }
 
+    override fun clearWorld() {
+        store.accept(Intent.ClearWorld)
+    }
+
+    override fun randomWorld() {
+        store.accept(Intent.RandomWorld)
+    }
+
     override fun toggleGrid() {
         store.accept(Intent.ShowGrid)
     }

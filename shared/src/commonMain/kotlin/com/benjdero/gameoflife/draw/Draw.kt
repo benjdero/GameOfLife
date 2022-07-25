@@ -10,6 +10,10 @@ interface Draw {
 
     fun onDrawValue(x: Int, y: Int, cell: Boolean)
 
+    fun clearWorld()
+
+    fun randomWorld()
+
     fun toggleGrid()
 
     fun increaseLeft()
