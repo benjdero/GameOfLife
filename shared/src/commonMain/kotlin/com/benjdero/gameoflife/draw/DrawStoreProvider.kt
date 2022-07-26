@@ -9,25 +9,23 @@ import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.draw.DrawStore.Intent
 import com.benjdero.gameoflife.draw.DrawStore.State
 import com.benjdero.gameoflife.model.dao.DaoService
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 internal class DrawStoreProvider(
     private val storeFactory: StoreFactory,
-    private val daoService: DaoService
+    private val daoService: DaoService,
+    private val world: World?
 ) {
     fun provide(): DrawStore =
         object : DrawStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "DrawStore",
-            initialState = State(),
+            initialState = State(world ?: World.random()),
             bootstrapper = SimpleBootstrapper(),
             executorFactory = ::ExecutorImpl,
             reducer = ReducerImpl
         ) {}
 
     private sealed class Msg {
-        data class CompleteWorldUpdate(val world: World) : Msg()
         data class WorldUpdate(val cells: BooleanArray) : Msg()
         data class WidthChanged(val width: Int, val cells: BooleanArray) : Msg()
         data class HeightChanged(val height: Int, val cells: BooleanArray) : Msg()
@@ -50,7 +48,6 @@ internal class DrawStoreProvider(
                 Intent.DecreaseRight -> decreaseRight(getState())
                 Intent.IncreaseBottom -> increaseBottom(getState())
                 Intent.DecreaseBottom -> decreaseBottom(getState())
-                Intent.Load -> load(getState())
                 Intent.Save -> save(getState())
             }
         }
@@ -205,15 +202,6 @@ internal class DrawStoreProvider(
             }
         }
 
-        private fun load(state: State) {
-            scope.launch {
-                val newWorld: World = daoService.findAllWorld().last()
-                withContext(Dispatchers.Main) {
-                    dispatch(Msg.CompleteWorldUpdate(newWorld))
-                }
-            }
-        }
-
         private fun save(state: State) {
             scope.launch {
                 daoService.insertWorld(state.world)
@@ -224,7 +212,6 @@ internal class DrawStoreProvider(
     private object ReducerImpl : Reducer<State, Msg> {
         override fun State.reduce(msg: Msg): State =
             when (msg) {
-                is Msg.CompleteWorldUpdate -> copy(world = msg.world)
                 is Msg.WorldUpdate -> copy(world = world.copy(cells = msg.cells))
                 is Msg.WidthChanged -> widthChanged(msg.width, msg.cells)
                 is Msg.HeightChanged -> heightChanged(msg.height, msg.cells)

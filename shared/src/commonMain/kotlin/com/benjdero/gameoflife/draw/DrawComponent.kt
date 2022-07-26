@@ -5,6 +5,7 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.operator.map
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.StoreFactory
+import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.asValue
 import com.benjdero.gameoflife.draw.Draw.Model
 import com.benjdero.gameoflife.draw.Draw.Output
@@ -15,6 +16,7 @@ class DrawComponent(
     componentContext: ComponentContext,
     storeFactory: StoreFactory,
     daoService: DaoService,
+    world: World?,
     private val output: (Output) -> Unit
 ) : Draw, ComponentContext by componentContext {
 
@@ -22,7 +24,8 @@ class DrawComponent(
         instanceKeeper.getStore {
             DrawStoreProvider(
                 storeFactory = storeFactory,
-                daoService = daoService
+                daoService = daoService,
+                world = world
             ).provide()
         }
 
@@ -88,7 +91,7 @@ class DrawComponent(
     }
 
     override fun load() {
-        store.accept(Intent.Load)
+        output(Output.Load)
     }
 
     override fun save() {

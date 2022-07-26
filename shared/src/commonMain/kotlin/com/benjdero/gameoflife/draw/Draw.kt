@@ -62,5 +62,6 @@ interface Draw {
     sealed class Output {
         data class Finish(val world: World) : Output()
         object GoBack : Output()
+        object Load : Output()
     }
 }
