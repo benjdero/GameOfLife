@@ -9,17 +9,20 @@ import com.benjdero.gameoflife.asValue
 import com.benjdero.gameoflife.draw.Draw.Model
 import com.benjdero.gameoflife.draw.Draw.Output
 import com.benjdero.gameoflife.draw.DrawStore.Intent
+import com.benjdero.gameoflife.model.dao.DaoService
 
 class DrawComponent(
     componentContext: ComponentContext,
     storeFactory: StoreFactory,
+    daoService: DaoService,
     private val output: (Output) -> Unit
 ) : Draw, ComponentContext by componentContext {
 
     private val store =
         instanceKeeper.getStore {
             DrawStoreProvider(
-                storeFactory = storeFactory
+                storeFactory = storeFactory,
+                daoService = daoService
             ).provide()
         }
 
@@ -82,6 +85,14 @@ class DrawComponent(
 
     override fun decreaseBottom() {
         store.accept(Intent.DecreaseBottom)
+    }
+
+    override fun load() {
+        store.accept(Intent.Load)
+    }
+
+    override fun save() {
+        store.accept(Intent.Save)
     }
 
     override fun finish() {

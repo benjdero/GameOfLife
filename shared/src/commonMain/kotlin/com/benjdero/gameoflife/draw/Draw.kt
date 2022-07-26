@@ -32,6 +32,10 @@ interface Draw {
 
     fun decreaseBottom()
 
+    fun load()
+
+    fun save()
+
     fun finish()
 
     fun goBack()

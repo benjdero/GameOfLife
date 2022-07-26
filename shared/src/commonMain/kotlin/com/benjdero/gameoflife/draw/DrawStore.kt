@@ -20,6 +20,8 @@ internal interface DrawStore : Store<Intent, State, Nothing> {
         object DecreaseRight : Intent()
         object IncreaseBottom : Intent()
         object DecreaseBottom : Intent()
+        object Load : Intent()
+        object Save : Intent()
     }
 
     data class State(

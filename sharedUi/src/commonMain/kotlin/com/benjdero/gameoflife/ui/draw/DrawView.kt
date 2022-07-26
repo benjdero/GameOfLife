@@ -21,8 +21,10 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.BorderClear
+import androidx.compose.material.icons.filled.BrowserUpdated
 import androidx.compose.material.icons.filled.Casino
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.outlined.ArrowCircleDown
 import androidx.compose.material.icons.outlined.ArrowCircleLeft
 import androidx.compose.material.icons.outlined.ArrowCircleRight
@@ -106,6 +108,28 @@ fun DrawView(component: Draw) {
                         showGrid = model.showGrid,
                         toggleGrid = component::toggleGrid
                     )
+                    Spacer(
+                        modifier = Modifier.width(16.dp)
+                    )
+                    IconButton(
+                        onClick = component::load
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.BrowserUpdated,
+                            contentDescription = null
+                        )
+                    }
+                    Spacer(
+                        modifier = Modifier.width(8.dp)
+                    )
+                    IconButton(
+                        onClick = component::save
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Save,
+                            contentDescription = null
+                        )
+                    }
                     Spacer(
                         modifier = Modifier.width(16.dp)
                     )

@@ -1,0 +1,14 @@
+CREATE TABLE World (
+    id INTEGER NOT NULL PRIMARY KEY,
+    width INTEGER AS Int NOT NULL,
+    height INTEGER AS Int NOT NULL,
+    cells BLOB NOT NULL
+);
+
+insert:
+INSERT INTO World(width, height, cells)
+VALUES (?, ?, ?);
+
+findAll:
+SELECT *
+FROM World;

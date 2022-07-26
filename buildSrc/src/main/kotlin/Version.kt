@@ -9,6 +9,7 @@ object Version {
     const val mvikotlin = "3.0.1"
     const val decompose = "0.8.0"
     const val essenty = "0.4.2"
+    const val sqldelight = "1.5.3"
     const val mokoResources = "0.20.1"
 
     // SharedUi

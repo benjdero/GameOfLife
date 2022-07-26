@@ -14,6 +14,7 @@ buildscript {
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.kotlin}")
         classpath("com.android.tools.build:gradle:${Version.gradle}")
+        classpath("com.squareup.sqldelight:gradle-plugin:${Version.sqldelight}")
         classpath("dev.icerock.moko:resources-generator:${Version.mokoResources}")
     }
 }

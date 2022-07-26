@@ -16,10 +16,12 @@ import com.benjdero.gameoflife.game.Game
 import com.benjdero.gameoflife.game.GameComponent
 import com.benjdero.gameoflife.menu.Menu
 import com.benjdero.gameoflife.menu.MenuComponent
+import com.benjdero.gameoflife.model.dao.DaoService
 
 class RootComponent(
     componentContext: ComponentContext,
-    storeFactory: StoreFactory
+    storeFactory: StoreFactory,
+    daoService: DaoService
 ) : Root, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<Configuration>()
@@ -40,6 +42,7 @@ class RootComponent(
                     component = DrawComponent(
                         componentContext = componentContext,
                         storeFactory = storeFactory,
+                        daoService = daoService,
                         output = ::onDrawOutput
                     )
                 )
