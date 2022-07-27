@@ -26,8 +26,6 @@ import androidx.compose.material.icons.filled.Casino
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.outlined.ArrowCircleDown
-import androidx.compose.material.icons.outlined.ArrowCircleLeft
-import androidx.compose.material.icons.outlined.ArrowCircleRight
 import androidx.compose.material.icons.outlined.ArrowCircleUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerInputChange
@@ -181,14 +180,16 @@ fun DrawView(component: Draw) {
                             .padding(start = 16.dp)
                     ) {
                         WorldSizeButton(
-                            imageVector = Icons.Outlined.ArrowCircleLeft,
+                            modifier = Modifier.rotate(-90f),
+                            imageVector = Icons.Outlined.ArrowCircleUp,
                             onClick = component::increaseLeft
                         )
                         Spacer(
                             modifier = Modifier.height(8.dp)
                         )
                         WorldSizeButton(
-                            imageVector = Icons.Outlined.ArrowCircleRight,
+                            modifier = Modifier.rotate(90f),
+                            imageVector = Icons.Outlined.ArrowCircleUp,
                             onClick = component::decreaseLeft,
                             enabled = model.allowDecreaseWidth
                         )
@@ -217,14 +218,16 @@ fun DrawView(component: Draw) {
                             .padding(end = 16.dp)
                     ) {
                         WorldSizeButton(
-                            imageVector = Icons.Outlined.ArrowCircleRight,
+                            modifier = Modifier.rotate(90f),
+                            imageVector = Icons.Outlined.ArrowCircleUp,
                             onClick = component::increaseRight
                         )
                         Spacer(
                             modifier = Modifier.height(8.dp)
                         )
                         WorldSizeButton(
-                            imageVector = Icons.Outlined.ArrowCircleLeft,
+                            modifier = Modifier.rotate(-90f),
+                            imageVector = Icons.Outlined.ArrowCircleUp,
                             onClick = component::decreaseRight,
                             enabled = model.allowDecreaseWidth
                         )
@@ -254,9 +257,11 @@ fun DrawView(component: Draw) {
 }
 
 @Composable
-private fun WorldSizeButton(imageVector: ImageVector, onClick: () -> Unit, enabled: Boolean = true) {
+private fun WorldSizeButton(modifier: Modifier = Modifier, imageVector: ImageVector, onClick: () -> Unit, enabled: Boolean = true) {
     Button(
-        modifier = Modifier.size(36.dp),
+        modifier = Modifier
+            .size(36.dp)
+            .then(modifier),
         shape = CircleShape,
         contentPadding = PaddingValues(all = 0.dp),
         enabled = enabled,
