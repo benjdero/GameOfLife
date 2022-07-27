@@ -13,11 +13,11 @@ object Version {
     const val mokoResources = "0.20.1"
 
     // SharedUi
-    const val composeCompiler = "1.3.0-beta01"
-    const val compose = "1.2.0-alpha01-dev750"
+    const val composeCompiler = "1.3.0-rc01"
+    const val compose = "1.2.0-alpha01-dev753"
 
     // Android
-    const val activityCompose = "1.5.0"
+    const val activityCompose = "1.5.1"
     const val appcompat = "1.4.2"
     const val material = "1.6.1"
 
