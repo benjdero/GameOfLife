@@ -6,6 +6,9 @@
     <application
         android:allowBackup="false"
         android:supportsRtl="true"
+        android:label="Game of Life"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
 
         <activity
@@ -14,6 +17,7 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

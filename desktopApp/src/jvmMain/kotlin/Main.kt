@@ -1,4 +1,5 @@
 import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
@@ -31,7 +32,9 @@ fun main() {
 
         Window(
             onCloseRequest = ::exitApplication,
-            state = windowState
+            state = windowState,
+            title = "Game of Life",
+            icon = painterResource("drawable/icon.svg")
         ) {
             MaterialTheme {
                 RootView(
