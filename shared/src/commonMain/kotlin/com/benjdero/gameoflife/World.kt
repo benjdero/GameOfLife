@@ -1,12 +1,15 @@
 package com.benjdero.gameoflife
 
+import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.essenty.parcelable.Parcelize
 import kotlin.random.Random
 
+@Parcelize
 data class World(
     val width: Int,
     val height: Int,
     val cells: BooleanArray
-) {
+) : Parcelable {
     companion object {
         fun random(): World =
             random(15, 10)
