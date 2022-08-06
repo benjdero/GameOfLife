@@ -7,7 +7,9 @@ import com.benjdero.gameoflife.load.LoadStore.Intent
 import com.benjdero.gameoflife.load.LoadStore.State
 
 internal interface LoadStore : Store<Intent, State, Action> {
-    sealed class Intent
+    sealed class Intent {
+        data class DeleteWorld(val id: Long) : Intent()
+    }
 
     data class State(
         val worldList: List<World> = emptyList()

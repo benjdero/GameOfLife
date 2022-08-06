@@ -1,5 +1,5 @@
 CREATE TABLE World (
-    id INTEGER NOT NULL PRIMARY KEY,
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     width INTEGER AS Int NOT NULL,
     height INTEGER AS Int NOT NULL,
     cells BLOB NOT NULL
@@ -8,6 +8,15 @@ CREATE TABLE World (
 insert:
 INSERT INTO World(width, height, cells)
 VALUES (?, ?, ?);
+
+update:
+UPDATE World
+SET width = ?, height = ?, cells = ?
+WHERE id = ?;
+
+deleteById:
+DELETE FROM World
+WHERE id = ?;
 
 findAll:
 SELECT *

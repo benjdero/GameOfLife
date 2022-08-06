@@ -204,7 +204,7 @@ internal class DrawStoreProvider(
 
         private fun save(state: State) {
             scope.launch {
-                daoService.insertWorld(state.world)
+                daoService.saveWorld(state.world)
             }
         }
     }

@@ -9,6 +9,7 @@ import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.asValue
 import com.benjdero.gameoflife.load.Load.Model
 import com.benjdero.gameoflife.load.Load.Output
+import com.benjdero.gameoflife.load.LoadStore.Intent
 import com.benjdero.gameoflife.model.dao.DaoService
 
 class LoadComponent(
@@ -34,5 +35,12 @@ class LoadComponent(
 
     override fun onWorldSelected(world: World) {
         output(Output.WorldSelected(world))
+    }
+
+    override fun deleteWorld(world: World) {
+        world.saved.let {
+            if (it is World.Saved.AsWorld)
+                store.accept(Intent.DeleteWorld(it.id))
+        }
     }
 }

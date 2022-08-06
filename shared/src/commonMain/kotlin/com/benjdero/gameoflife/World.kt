@@ -6,6 +6,7 @@ import kotlin.random.Random
 
 @Parcelize
 data class World(
+    val saved: Saved,
     val width: Int,
     val height: Int,
     val cells: BooleanArray
@@ -16,6 +17,7 @@ data class World(
 
         fun random(width: Int, height: Int): World =
             World(
+                saved = Saved.Not,
                 width = width,
                 height = height,
                 cells = BooleanArray(width * height) {
@@ -39,5 +41,10 @@ data class World(
         for (index in cells.indices) {
             action(index % width, index / width, cells[index])
         }
+    }
+
+    sealed class Saved {
+        object Not : Saved()
+        data class AsWorld(val id: Long) : Saved()
     }
 }

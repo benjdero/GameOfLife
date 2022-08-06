@@ -13,22 +13,42 @@ class DaoService(
 
     private val database: Database = Database(driver)
 
-    fun insertWorld(world: GolWorld) {
-        val byteArray: ByteArray = ByteArray(world.width * world.height) { index: Int ->
-            if (world.cells[index]) 1 else 0
+    fun saveWorld(world: GolWorld) {
+        val byteArray = booleanArrayToByteArray(world.cells, world.width * world.height)
+        when (world.saved) {
+            GolWorld.Saved.Not ->
+                database.worldQueries.insert(world.width, world.height, byteArray)
+            is GolWorld.Saved.AsWorld ->
+                database.worldQueries.update(world.width, world.height, byteArray, world.saved.id)
         }
-        database.worldQueries.insert(world.width, world.height, byteArray)
+    }
+
+    fun deleteById(id: Long) {
+        database.worldQueries.deleteById(id)
     }
 
     fun findAllWorld(): List<GolWorld> =
-        database.worldQueries.findAll { _: Long, width: Int, height: Int, cells: ByteArray ->
-            val booleanArray: BooleanArray = BooleanArray(width * height) { index: Int ->
-                cells[index].toInt() == 1
-            }
+        database.worldQueries.findAll { id: Long, width: Int, height: Int, cells: ByteArray ->
+            val booleanArray = byteArrayToBooleanArray(cells, width * height)
             GolWorld(
+                saved = GolWorld.Saved.AsWorld(id),
                 width = width,
                 height = height,
                 cells = booleanArray
             )
         }.executeAsList()
+
+    /**
+     * World cells are converted to ByteArray to be saved in the database
+     * TODO: Could be hardly optimized
+     */
+    private fun booleanArrayToByteArray(array: BooleanArray, size: Int) =
+        ByteArray(size) { index: Int ->
+            if (array[index]) 1 else 0
+        }
+
+    private fun byteArrayToBooleanArray(array: ByteArray, size: Int) =
+        BooleanArray(size) { index: Int ->
+            array[index].toInt() == 1
+        }
 }

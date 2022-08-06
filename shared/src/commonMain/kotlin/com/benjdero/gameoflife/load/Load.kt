@@ -8,6 +8,8 @@ interface Load {
 
     fun onWorldSelected(world: World)
 
+    fun deleteWorld(world: World)
+
     data class Model(
         val worldList: List<World>
     )

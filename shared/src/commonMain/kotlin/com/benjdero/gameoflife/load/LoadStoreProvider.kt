@@ -44,13 +44,25 @@ internal class LoadStoreProvider(
 
         override fun executeIntent(intent: Intent, getState: () -> State) {
             when (intent) {
-                else -> {}
+                is Intent.DeleteWorld -> deleteWorld(intent.id, getState())
             }
         }
 
         private fun initialize() {
             scope.launch {
                 val worldList: List<World> = daoService.findAllWorld()
+                withContext(Dispatchers.Main) {
+                    dispatch(Msg.WorldListUpdate(worldList))
+                }
+            }
+        }
+
+        private fun deleteWorld(id: Long, state: State) {
+            scope.launch {
+                daoService.deleteById(id)
+                val worldList: List<World> = state.worldList.filterNot { world: World ->
+                    world.saved is World.Saved.AsWorld && world.saved.id == id
+                }
                 withContext(Dispatchers.Main) {
                     dispatch(Msg.WorldListUpdate(worldList))
                 }
