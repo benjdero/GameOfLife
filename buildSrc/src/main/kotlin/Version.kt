@@ -1,28 +1,28 @@
 object Version {
     // Global
-    const val checker = "0.42.0"
-    const val gradle = "7.2.2"
-    const val kotlin = "1.7.10"
+    const val checker = "0.46.0"
+    const val gradle = "8.0.0"
+    const val kotlin = "1.8.20"
 
     // Shared
     const val coroutines = "1.6.4"
-    const val mvikotlin = "3.0.1"
-    const val decompose = "0.8.0"
-    const val essenty = "0.5.1"
-    const val sqldelight = "1.5.3"
-    const val mokoResources = "0.20.1"
+    const val mvikotlin = "3.2.0"
+    const val decompose = "1.0.0"
+    const val essenty = "1.1.0"
+    const val sqldelight = "1.5.5"
+    const val mokoResources = "0.22.0"
 
     // SharedUi
-    const val composeCompiler = "1.3.0-rc02"
-    const val compose = "1.2.0-alpha01-dev753"
+    const val composeCompiler = "1.4.6"
+    const val compose = "1.4.0"
 
     // Android
-    const val activityCompose = "1.5.1"
-    const val appcompat = "1.4.2"
-    const val material = "1.6.1"
+    const val activityCompose = "1.7.1"
+    const val appcompat = "1.6.1"
+    const val material = "1.8.0"
 
     // Android SDK
-    const val compileSdk = 32
+    const val compileSdk = 33
     const val minSdk = 21
-    const val targetSdk = 32
+    const val targetSdk = 33
 }

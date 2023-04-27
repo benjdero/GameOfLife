@@ -1,6 +1,3 @@
-import org.jetbrains.compose.compose
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose") version Version.compose
@@ -11,7 +8,7 @@ kotlin {
     android()
     jvm("desktop") {
         compilations.all {
-            kotlinOptions.jvmTarget = "11"
+            kotlinOptions.jvmTarget = "18"
         }
     }
 
@@ -44,12 +41,14 @@ kotlin {
 android {
     compileSdk = Version.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    namespace = "com.benjdero.gameoflife.sharedui"
     defaultConfig {
         minSdk = Version.minSdk
         targetSdk = Version.targetSdk
     }
-}
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
+    }
 }

@@ -10,7 +10,7 @@ kotlin {
     android()
     jvm("desktop") {
         compilations.all {
-            kotlinOptions.jvmTarget = "11"
+            kotlinOptions.jvmTarget = "18"
         }
     }
     listOf(
@@ -90,9 +90,15 @@ kotlin {
 android {
     compileSdk = Version.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    namespace = "com.benjdero.gameoflife"
     defaultConfig {
         minSdk = Version.minSdk
         targetSdk = Version.targetSdk
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
     }
 }
 
