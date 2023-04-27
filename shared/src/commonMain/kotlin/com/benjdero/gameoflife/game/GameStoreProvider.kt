@@ -5,18 +5,22 @@ import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.game.GameStore.Intent
 import com.benjdero.gameoflife.game.GameStore.State
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 internal class GameStoreProvider(
-    private val storeFactory: StoreFactory
+    private val storeFactory: StoreFactory,
+    val world: World
 ) {
     fun provide(): GameStore =
         object : GameStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "WorldStore",
-            initialState = State(),
+            initialState = State(
+                world = world
+            ),
             bootstrapper = SimpleBootstrapper(),
             executorFactory = ::ExecutorImpl,
             reducer = ReducerImpl
@@ -24,14 +28,18 @@ internal class GameStoreProvider(
 
     private sealed class Msg {
         data class RunGame(val running: Boolean) : Msg()
-        data class WorldUpdate(val world: Array<Array<Boolean>>) : Msg()
+        data class WorldUpdate(val cells: BooleanArray) : Msg()
+        object WorldRollback : Msg()
+        object ToggleShowGrid : Msg()
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {
         override fun executeIntent(intent: Intent, getState: () -> State) {
             when (intent) {
                 Intent.RunGame -> runGame(getState)
+                Intent.PrevStep -> prevStep()
                 Intent.NextStep -> nextStep(getState())
+                Intent.ShowGrid -> showGrid()
             }
         }
 
@@ -51,31 +59,32 @@ internal class GameStoreProvider(
             }
         }
 
+        private fun prevStep() {
+            dispatch(Msg.WorldRollback)
+        }
+
         private fun nextStep(state: State) {
-            val nextWorld: Array<Array<Boolean>> = calcNextWorld(state)
+            val nextWorld: BooleanArray = calcNextWorld(state)
             dispatch(Msg.WorldUpdate(nextWorld))
         }
 
-        private fun calcNextWorld(state: State): Array<Array<Boolean>> =
-            Array(state.height) { r ->
-                Array(state.width) { c ->
-                    val neighborsCount: Int = countNeighbors(r, c, state.height, state.width, state.world)
-                    if (state.world[r][c])
-                        neighborsCount in 2..3
-                    else
-                        neighborsCount == 3
-                }
+        private fun calcNextWorld(state: State): BooleanArray =
+            state.world.mapIndexed { x: Int, y: Int, cell: Boolean ->
+                val neighborsCount: Int = countNeighbors(x, y, state.world)
+                if (cell)
+                    neighborsCount in 2..3
+                else
+                    neighborsCount == 3
             }
 
-        private fun countNeighbors(row: Int, col: Int, height: Int, width: Int, world: Array<Array<Boolean>>): Int {
+        private fun countNeighbors(x: Int, y: Int, world: World): Int {
             var count = 0
-            for (r in row - 1..row + 1) {
-                for (c in col - 1..col + 1) {
+            for (yD in y - 1..y + 1) {
+                for (yX in x - 1..x + 1) {
                     if (
-                        r in 0 until height &&
-                        c in 0 until width &&
-                        (r != row || c != col) &&
-                        world[r][c]
+                        world.isWithinBounds(yX, yD) &&
+                        (yD != y || yX != x) &&
+                        world.isAlive(yX, yD)
                     ) {
                         count++
                     }
@@ -83,13 +92,42 @@ internal class GameStoreProvider(
             }
             return count
         }
+
+        private fun showGrid() {
+            dispatch(Msg.ToggleShowGrid)
+        }
     }
 
     private object ReducerImpl : Reducer<State, Msg> {
         override fun State.reduce(msg: Msg): State =
             when (msg) {
                 is Msg.RunGame -> copy(running = msg.running)
-                is Msg.WorldUpdate -> copy(world = msg.world)
+                is Msg.WorldUpdate -> worldUpdate(cells = msg.cells)
+                is Msg.WorldRollback -> worldRollback()
+                Msg.ToggleShowGrid -> copy(showGrid = !showGrid)
             }
+
+        private fun State.worldUpdate(cells: BooleanArray) =
+            copy(
+                generation = generation + 1,
+                world = world.copy(
+                    cells = cells
+                ),
+                history = history.plus(world.cells).let {
+                    if (it.size > 10)
+                        it.drop(1)
+                    else
+                        it
+                }
+            )
+
+        private fun State.worldRollback(): State =
+            copy(
+                generation = generation - 1,
+                world = world.copy(
+                    cells = history.last()
+                ),
+                history = history.dropLast(1)
+            )
     }
 }

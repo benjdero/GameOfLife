@@ -2,40 +2,94 @@ package com.benjdero.gameoflife.ui.game
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountTree
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.SkipNext
+import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material.icons.filled.ZoomIn
 import androidx.compose.material.icons.filled.ZoomOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.unit.dp
+import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.game.Game
+import com.benjdero.gameoflife.ui.common.ToggleGridButton
+import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.max
 import kotlin.math.roundToInt
 
 @Composable
 internal fun RowScope.ControlView(
     model: Game.Model,
+    goBack: () -> Unit,
+    prevStep: () -> Unit,
     nextStep: () -> Unit,
+    showGrid: Boolean,
+    toggleGrid: () -> Unit,
     scale: Float,
     setScale: (Float) -> Unit,
     offset: Offset,
     setOffset: (Offset) -> Unit
 ) {
     IconButton(
+        onClick = goBack
+    ) {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = null
+        )
+    }
+    Spacer(
+        modifier = Modifier.width(16.dp)
+    )
+    IconButton(
+        onClick = prevStep,
+        enabled = !model.running && model.history.isNotEmpty()
+    ) {
+        Icon(
+            imageVector = Icons.Default.SkipPrevious,
+            contentDescription = stringResource(Res.strings.game_prev_step)
+        )
+    }
+    IconButton(
         onClick = nextStep,
         enabled = !model.running
     ) {
         Icon(
             imageVector = Icons.Default.SkipNext,
-            contentDescription = "next"
+            contentDescription = stringResource(Res.strings.game_next_step)
         )
     }
     Spacer(
+        modifier = Modifier.width(16.dp)
+    )
+    Icon(
+        modifier = Modifier.rotate(-90f),
+        imageVector = Icons.Default.AccountTree,
+        contentDescription = null
+    )
+    Spacer(
+        modifier = Modifier.width(4.dp)
+    )
+    Text(
+        text = model.generation.toString()
+    )
+    Spacer(
         modifier = Modifier.weight(1f)
+    )
+    ToggleGridButton(
+        showGrid = showGrid,
+        toggleGrid = toggleGrid
+    )
+    Spacer(
+        modifier = Modifier.width(16.dp)
     )
     IconButton(
         onClick = {
@@ -46,7 +100,7 @@ internal fun RowScope.ControlView(
     ) {
         Icon(
             imageVector = Icons.Default.ZoomOut,
-            contentDescription = "zoomOut"
+            contentDescription = stringResource(Res.strings.game_zoom_out)
         )
     }
     Text(
@@ -59,7 +113,7 @@ internal fun RowScope.ControlView(
     ) {
         Icon(
             imageVector = Icons.Default.ZoomIn,
-            contentDescription = "zoomIn"
+            contentDescription = stringResource(Res.strings.game_zoom_in)
         )
     }
 }

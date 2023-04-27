@@ -5,6 +5,7 @@ plugins {
 
 android {
     compileSdk = Version.compileSdk
+    namespace = "com.benjdero.gameoflife.android"
 
     defaultConfig {
         applicationId = "com.benjdero.gameoflife.android"
@@ -21,12 +22,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
     }
 
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "18"
     }
 
     buildFeatures {
@@ -34,7 +35,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Version.compose
+        kotlinCompilerExtensionVersion = Version.composeCompiler
     }
 }
 

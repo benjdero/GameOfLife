@@ -1,4 +1,5 @@
 import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
@@ -10,6 +11,8 @@ import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
 import com.benjdero.gameoflife.Root
 import com.benjdero.gameoflife.RootComponent
+import com.benjdero.gameoflife.model.dao.DaoService
+import com.benjdero.gameoflife.model.dao.buildSqlDriver
 import com.benjdero.gameoflife.ui.RootView
 
 @OptIn(ExperimentalDecomposeApi::class)
@@ -19,7 +22,8 @@ fun main() {
         componentContext = DefaultComponentContext(
             lifecycle = lifecycle
         ),
-        storeFactory = LoggingStoreFactory(TimeTravelStoreFactory())
+        storeFactory = LoggingStoreFactory(TimeTravelStoreFactory()),
+        daoService = DaoService(buildSqlDriver())
     )
 
     application {
@@ -28,7 +32,9 @@ fun main() {
 
         Window(
             onCloseRequest = ::exitApplication,
-            state = windowState
+            state = windowState,
+            title = "Game of Life",
+            icon = painterResource("drawable/icon.svg")
         ) {
             MaterialTheme {
                 RootView(

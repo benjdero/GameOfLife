@@ -28,7 +28,11 @@ class MenuComponent(
         )
     }
 
-    override fun onStart() {
-        output(Output.Start)
+    override fun onStartDraw() {
+        output(Output.StartDraw)
+    }
+
+    override fun onStartGame() {
+        output(Output.StartGame)
     }
 }

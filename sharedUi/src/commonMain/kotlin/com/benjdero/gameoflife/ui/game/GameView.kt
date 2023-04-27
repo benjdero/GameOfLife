@@ -29,9 +29,11 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.game.Game
 import com.benjdero.gameoflife.game.Game.Model
 import com.benjdero.gameoflife.ui.theme.MyTheme
+import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -40,7 +42,7 @@ fun GameView(component: Game) {
     val model: Model by component.models.subscribeAsState()
     var scale: Float by remember { mutableStateOf(1f) }
     var offset: Offset by remember { mutableStateOf(Offset.Zero) }
-    var viewSize by remember { mutableStateOf(IntSize.Zero) }
+    var viewSize: IntSize by remember { mutableStateOf(IntSize.Zero) }
 
     /**
      * Make sure the view content doesn't go out of bounds when moving or unzooming
@@ -64,7 +66,11 @@ fun GameView(component: Game) {
                 ) {
                     ControlView(
                         model = model,
+                        goBack = component::goBack,
+                        prevStep = component::prevStep,
                         nextStep = component::nextStep,
+                        showGrid = model.showGrid,
+                        toggleGrid = component::toggleGrid,
                         scale = scale,
                         setScale = {
                             scale = it
@@ -88,9 +94,9 @@ fun GameView(component: Game) {
                         else
                             Icons.Default.PlayArrow,
                         contentDescription = if (model.running)
-                            "pause"
+                            stringResource(Res.strings.game_pause)
                         else
-                            "run",
+                            stringResource(Res.strings.game_run),
                     )
                 }
             }

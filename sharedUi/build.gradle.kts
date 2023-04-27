@@ -1,5 +1,3 @@
-import org.jetbrains.compose.compose
-
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose") version Version.compose
@@ -10,7 +8,7 @@ kotlin {
     android()
     jvm("desktop") {
         compilations.all {
-            kotlinOptions.jvmTarget = "11"
+            kotlinOptions.jvmTarget = "18"
         }
     }
 
@@ -25,6 +23,7 @@ kotlin {
                 implementation(compose.uiTooling)
                 implementation(compose.materialIconsExtended)
                 api("com.arkivanov.decompose:extensions-compose-jetbrains:${Version.decompose}")
+                implementation("dev.icerock.moko:resources-compose:${Version.mokoResources}")
             }
         }
         val commonTest by getting {
@@ -42,8 +41,14 @@ kotlin {
 android {
     compileSdk = Version.compileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    namespace = "com.benjdero.gameoflife.sharedui"
     defaultConfig {
         minSdk = Version.minSdk
         targetSdk = Version.targetSdk
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
     }
 }
