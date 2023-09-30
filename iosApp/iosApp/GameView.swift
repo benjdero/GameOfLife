@@ -82,20 +82,27 @@ class GamePreview: Game {
     let models: Value<GameModel> = valueOf(
         GameModel(
             running: false,
+            generation: 0,
             world: World(
+                saved: World.SavedNot(),
                 width: 10,
                 height: 15,
                 cells: KotlinBooleanArray(size: 150) { index in
                     true
                 }
             ),
+            showGrid: false,
             history: []
         )
     )
+
+    func runGame() {}
 
     func prevStep() {}
 
     func nextStep() {}
 
-    func runGame() {}
+    func toggleGrid() {}
+
+    func goBack() {}
 }

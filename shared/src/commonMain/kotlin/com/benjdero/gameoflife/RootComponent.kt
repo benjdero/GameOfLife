@@ -97,13 +97,13 @@ class RootComponent(
 
     private sealed class Configuration : Parcelable {
         @Parcelize
-        object Menu : Configuration()
+        data object Menu : Configuration()
 
         @Parcelize
         data class Draw(val world: World?) : Configuration()
 
         @Parcelize
-        object Load : Configuration()
+        data object Load : Configuration()
 
         @Parcelize
         data class Game(val world: World) : Configuration()

@@ -25,7 +25,7 @@ private class RootHolder: ObservableObject {
         component = RootComponent(
             componentContext: DefaultComponentContext(lifecycle: lifecycle),
             storeFactory: LoggingStoreFactory(delegate: TimeTravelStoreFactory()),
-            daoService: DaoService(sqlDriver: buildSqlDriver())
+            daoService: DaoService(sqlDriver: BuildSqlDriverKt.buildSqlDriver())
         )
 
         lifecycle.onCreate()

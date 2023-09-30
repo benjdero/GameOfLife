@@ -8,7 +8,10 @@ import androidx.compose.material.icons.filled.GridOn
 import androidx.compose.runtime.Composable
 
 @Composable
-fun ToggleGridButton(showGrid: Boolean, toggleGrid: () -> Unit) {
+fun ToggleGridButton(
+    showGrid: Boolean,
+    toggleGrid: () -> Unit
+) {
     IconButton(
         onClick = toggleGrid,
     ) {

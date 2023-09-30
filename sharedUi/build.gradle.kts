@@ -1,11 +1,11 @@
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose") version Version.compose
+    id("org.jetbrains.compose") version libs.versions.compose.get()
     id("com.android.library")
 }
 
 kotlin {
-    android()
+    androidTarget()
     jvm("desktop") {
         compilations.all {
             kotlinOptions.jvmTarget = "18"
@@ -22,8 +22,8 @@ kotlin {
                 implementation(compose.animation)
                 implementation(compose.uiTooling)
                 implementation(compose.materialIconsExtended)
-                api("com.arkivanov.decompose:extensions-compose-jetbrains:${Version.decompose}")
-                implementation("dev.icerock.moko:resources-compose:${Version.mokoResources}")
+                api("com.arkivanov.decompose:extensions-compose-jetbrains:${libs.versions.decompose.get()}")
+                implementation("dev.icerock.moko:resources-compose:${libs.versions.mokoResources.get()}")
             }
         }
         val commonTest by getting {
@@ -32,23 +32,32 @@ kotlin {
             }
         }
         val androidMain by getting
-        val androidTest by getting
-        val desktopMain by getting
+        val androidUnitTest by getting
+        val desktopMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+            }
+        }
         val desktopTest by getting
     }
 }
 
 android {
-    compileSdk = Version.compileSdk
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    compileSdk = libs.versions.compileSdk.get().toInt()
     namespace = "com.benjdero.gameoflife.sharedui"
+
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+
     defaultConfig {
-        minSdk = Version.minSdk
-        targetSdk = Version.targetSdk
+        minSdk = libs.versions.minSdk.get().toInt()
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_18
         targetCompatibility = JavaVersion.VERSION_18
+    }
+
+    kotlin {
+        jvmToolchain(18)
     }
 }

@@ -1,5 +1,6 @@
 package com.benjdero.gameoflife.ui.draw
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +19,7 @@ import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -26,6 +29,8 @@ import androidx.compose.material.icons.filled.Casino
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.outlined.ArrowCircleDown
+import androidx.compose.material.icons.outlined.ArrowCircleLeft
+import androidx.compose.material.icons.outlined.ArrowCircleRight
 import androidx.compose.material.icons.outlined.ArrowCircleUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,8 +39,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
@@ -44,12 +49,16 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.benjdero.gameoflife.draw.Draw
+import com.benjdero.gameoflife.draw.Draw.Model
+import com.benjdero.gameoflife.ui.common.CellGridView
 import com.benjdero.gameoflife.ui.common.ToggleGridButton
 import com.benjdero.gameoflife.ui.theme.MyTheme
 import kotlin.math.min
 
 @Composable
-fun DrawView(component: Draw) {
+fun DrawView(
+    component: Draw
+) {
 
     fun getCellFromOffset(canvasSize: IntSize, worldWidth: Int, worldHeight: Int, offset: Offset): IntOffset {
         val cellWidth: Float = canvasSize.width.toFloat() / worldWidth
@@ -62,12 +71,12 @@ fun DrawView(component: Draw) {
         return IntOffset(x, y)
     }
 
-    val model: Draw.Model by component.models.subscribeAsState()
+    val model: Model by component.models.subscribeAsState()
     var firstCellDragValue: Boolean by remember { mutableStateOf(false) }
 
     MyTheme {
         Scaffold(
-            backgroundColor = androidx.compose.ui.graphics.Color.Black,
+            backgroundColor = Color.Black,
             bottomBar = {
                 BottomAppBar {
                     IconButton(
@@ -157,7 +166,7 @@ fun DrawView(component: Draw) {
                                     firstCellDragValue = model.world.isAlive(cellPosition.x, cellPosition.y)
                                     component.onDrawValue(cellPosition.x, cellPosition.y, !firstCellDragValue)
                                 },
-                                onDrag = { change: PointerInputChange, dragAmount: Offset ->
+                                onDrag = { change: PointerInputChange, _: Offset ->
                                     val previousCellPosition: IntOffset =
                                         getCellFromOffset(size, model.world.width, model.world.height, change.previousPosition)
                                     val currentCellPosition: IntOffset = getCellFromOffset(size, model.world.width, model.world.height, change.position)
@@ -173,23 +182,31 @@ fun DrawView(component: Draw) {
                             }
                         }
                 ) {
-                    CellGridView(model)
+                    CellGridView(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                if (model.showGrid)
+                                    MaterialTheme.colors.onBackground
+                                else
+                                    MaterialTheme.colors.background
+                            ),
+                        world = model.world
+                    )
                     Column(
                         modifier = Modifier
                             .align(Alignment.CenterStart)
                             .padding(start = 16.dp)
                     ) {
                         WorldSizeButton(
-                            modifier = Modifier.rotate(-90f),
-                            imageVector = Icons.Outlined.ArrowCircleUp,
+                            imageVector = Icons.Outlined.ArrowCircleLeft,
                             onClick = component::increaseLeft
                         )
                         Spacer(
                             modifier = Modifier.height(8.dp)
                         )
                         WorldSizeButton(
-                            modifier = Modifier.rotate(90f),
-                            imageVector = Icons.Outlined.ArrowCircleUp,
+                            imageVector = Icons.Outlined.ArrowCircleRight,
                             onClick = component::decreaseLeft,
                             enabled = model.allowDecreaseWidth
                         )
@@ -218,16 +235,14 @@ fun DrawView(component: Draw) {
                             .padding(end = 16.dp)
                     ) {
                         WorldSizeButton(
-                            modifier = Modifier.rotate(90f),
-                            imageVector = Icons.Outlined.ArrowCircleUp,
+                            imageVector = Icons.Outlined.ArrowCircleRight,
                             onClick = component::increaseRight
                         )
                         Spacer(
                             modifier = Modifier.height(8.dp)
                         )
                         WorldSizeButton(
-                            modifier = Modifier.rotate(-90f),
-                            imageVector = Icons.Outlined.ArrowCircleUp,
+                            imageVector = Icons.Outlined.ArrowCircleLeft,
                             onClick = component::decreaseRight,
                             enabled = model.allowDecreaseWidth
                         )
@@ -257,11 +272,14 @@ fun DrawView(component: Draw) {
 }
 
 @Composable
-private fun WorldSizeButton(modifier: Modifier = Modifier, imageVector: ImageVector, onClick: () -> Unit, enabled: Boolean = true) {
+private fun WorldSizeButton(
+    imageVector: ImageVector,
+    onClick: () -> Unit,
+    enabled: Boolean = true
+) {
     Button(
         modifier = Modifier
-            .size(36.dp)
-            .then(modifier),
+            .size(36.dp),
         shape = CircleShape,
         contentPadding = PaddingValues(all = 0.dp),
         enabled = enabled,

@@ -1,43 +1,38 @@
-package com.benjdero.gameoflife.ui.draw
+package com.benjdero.gameoflife.ui.common
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import com.benjdero.gameoflife.draw.Draw.Model
+import com.benjdero.gameoflife.World
 import kotlin.math.min
 
 private const val PADDING_HORIZONTAL = 1f
 private const val PADDING_VERTICAL = 1f
 
 @Composable
-internal fun CellGridView(model: Model) {
-    val cellColor: Color = MaterialTheme.colors.secondary
+internal fun CellGridView(
+    modifier: Modifier = Modifier,
+    world: World
+) {
+    val aliveCellColor: Color = MaterialTheme.colors.secondary
+    val deadCellColor: Color = MaterialTheme.colors.background
 
     Canvas(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                if (model.showGrid)
-                    Color.Black
-                else
-                    Color.White
-            )
+        modifier = modifier
     ) {
-        val cellWidth: Float = size.width / model.world.width
-        val cellHeight: Float = size.height / model.world.height
+        val cellWidth: Float = size.width / world.width
+        val cellHeight: Float = size.height / world.height
         val cellSize: Float = min(cellWidth, cellHeight)
-        val outsidePaddingHorizontal: Float = size.width - (model.world.width * cellSize)
-        val outsidePaddingVertical: Float = size.height - (model.world.height * cellSize)
+        val outsidePaddingHorizontal: Float = size.width - (world.width * cellSize)
+        val outsidePaddingVertical: Float = size.height - (world.height * cellSize)
 
-        model.world.forEachIndexed { x: Int, y: Int, cell: Boolean ->
+        world.forEachIndexed { x: Int, y: Int, cell: Boolean ->
             drawRect(
-                color = if (cell) cellColor else Color.White,
+                color = if (cell) aliveCellColor else deadCellColor,
                 topLeft = Offset(
                     x = x * cellSize + (PADDING_HORIZONTAL + outsidePaddingHorizontal) / 2,
                     y = y * cellSize + (PADDING_VERTICAL + outsidePaddingVertical) / 2

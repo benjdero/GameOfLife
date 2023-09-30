@@ -16,6 +16,6 @@ internal interface LoadStore : Store<Intent, State, Action> {
     )
 
     sealed class Action {
-        object Initialize : Action()
+        data object Initialize : Action()
     }
 }

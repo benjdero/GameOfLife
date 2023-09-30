@@ -1,10 +1,12 @@
 package com.benjdero.gameoflife.ui.game
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -12,6 +14,7 @@ import androidx.compose.material.BottomAppBar
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
@@ -32,13 +35,16 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.game.Game
 import com.benjdero.gameoflife.game.Game.Model
+import com.benjdero.gameoflife.ui.common.CellGridView
 import com.benjdero.gameoflife.ui.theme.MyTheme
 import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.max
 import kotlin.math.sqrt
 
 @Composable
-fun GameView(component: Game) {
+fun GameView(
+    component: Game
+) {
     val model: Model by component.models.subscribeAsState()
     var scale: Float by remember { mutableStateOf(1f) }
     var offset: Offset by remember { mutableStateOf(Offset.Zero) }
@@ -130,7 +136,17 @@ fun GameView(component: Game) {
                             )
                         }
                 ) {
-                    CellGridView(model)
+                    CellGridView(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                if (model.showGrid)
+                                    MaterialTheme.colors.onBackground
+                                else
+                                    MaterialTheme.colors.background
+                            ),
+                        world = model.world
+                    )
                 }
             }
         }
