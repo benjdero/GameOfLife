@@ -18,7 +18,8 @@ internal fun CellGridView(
     modifier: Modifier = Modifier,
     world: World
 ) {
-    val cellColor: Color = MaterialTheme.colors.secondary
+    val aliveCellColor: Color = MaterialTheme.colors.secondary
+    val deadCellColor: Color = MaterialTheme.colors.background
 
     Canvas(
         modifier = modifier
@@ -31,7 +32,7 @@ internal fun CellGridView(
 
         world.forEachIndexed { x: Int, y: Int, cell: Boolean ->
             drawRect(
-                color = if (cell) cellColor else Color.White,
+                color = if (cell) aliveCellColor else deadCellColor,
                 topLeft = Offset(
                     x = x * cellSize + (PADDING_HORIZONTAL + outsidePaddingHorizontal) / 2,
                     y = y * cellSize + (PADDING_VERTICAL + outsidePaddingVertical) / 2

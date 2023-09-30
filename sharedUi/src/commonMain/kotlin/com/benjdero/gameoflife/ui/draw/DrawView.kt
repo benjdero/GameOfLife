@@ -19,6 +19,7 @@ import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -185,9 +186,9 @@ fun DrawView(
                             .fillMaxSize()
                             .background(
                                 if (model.showGrid)
-                                    Color.Black
+                                    MaterialTheme.colors.onBackground
                                 else
-                                    Color.White
+                                    MaterialTheme.colors.background
                             ),
                         world = model.world
                     )

@@ -14,6 +14,7 @@ import androidx.compose.material.BottomAppBar
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
@@ -25,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerInputScope
 import androidx.compose.ui.input.pointer.pointerInput
@@ -141,9 +141,9 @@ fun GameView(
                             .fillMaxSize()
                             .background(
                                 if (model.showGrid)
-                                    Color.Black
+                                    MaterialTheme.colors.onBackground
                                 else
-                                    Color.White
+                                    MaterialTheme.colors.background
                             ),
                         world = model.world
                     )

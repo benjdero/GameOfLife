@@ -2,6 +2,7 @@ package com.benjdero.gameoflife.ui.load
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -23,6 +25,7 @@ import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.load.Load
 import com.benjdero.gameoflife.load.Load.Model
 import com.benjdero.gameoflife.ui.common.CellGridView
+import com.benjdero.gameoflife.ui.theme.MyTheme
 
 @Composable
 fun LoadView(
@@ -30,43 +33,49 @@ fun LoadView(
 ) {
     val model: Model by component.models.subscribeAsState()
 
-    LazyColumn {
-        items(model.worldList) { world: World ->
-            Column(
-                modifier =
-                Modifier
-                    .padding(all = 16.dp)
-                    .clickable {
-                        component.onWorldSelected(world)
-                    }
+    MyTheme {
+        Scaffold { scaffoldPadding: PaddingValues ->
+            LazyColumn(
+                modifier = Modifier.padding(scaffoldPadding)
             ) {
-                Row {
-                    Text(
-                        text = "World"
-                    )
-                    Spacer(
-                        modifier = Modifier.weight(1f)
-                    )
-                    IconButton(
-                        onClick = {
-                            component.deleteWorld(world)
-                        }
+                items(model.worldList) { world: World ->
+                    Column(
+                        modifier =
+                        Modifier
+                            .padding(all = 16.dp)
+                            .clickable {
+                                component.onWorldSelected(world)
+                            }
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = null
+                        Row {
+                            Text(
+                                text = "World"
+                            )
+                            Spacer(
+                                modifier = Modifier.weight(1f)
+                            )
+                            IconButton(
+                                onClick = {
+                                    component.deleteWorld(world)
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = null
+                                )
+                            }
+                        }
+                        Spacer(
+                            modifier = Modifier.height(4.dp)
+                        )
+                        CellGridView(
+                            modifier = Modifier
+                                .height(240.dp)
+                                .fillMaxWidth(),
+                            world = world
                         )
                     }
                 }
-                Spacer(
-                    modifier = Modifier.height(4.dp)
-                )
-                CellGridView(
-                    modifier = Modifier
-                        .height(240.dp)
-                        .fillMaxWidth(),
-                    world = world
-                )
             }
         }
     }
