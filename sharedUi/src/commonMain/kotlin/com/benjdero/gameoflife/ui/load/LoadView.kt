@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,6 +22,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.load.Load
 import com.benjdero.gameoflife.load.Load.Model
+import com.benjdero.gameoflife.ui.common.CellGridView
 
 @Composable
 fun LoadView(
@@ -60,6 +62,9 @@ fun LoadView(
                     modifier = Modifier.height(4.dp)
                 )
                 CellGridView(
+                    modifier = Modifier
+                        .height(240.dp)
+                        .fillMaxWidth(),
                     world = world
                 )
             }

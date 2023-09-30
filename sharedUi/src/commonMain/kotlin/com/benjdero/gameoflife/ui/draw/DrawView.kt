@@ -1,5 +1,6 @@
 package com.benjdero.gameoflife.ui.draw
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -46,6 +48,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.benjdero.gameoflife.draw.Draw
+import com.benjdero.gameoflife.ui.common.CellGridView
 import com.benjdero.gameoflife.ui.common.ToggleGridButton
 import com.benjdero.gameoflife.ui.theme.MyTheme
 import kotlin.math.min
@@ -177,7 +180,17 @@ fun DrawView(
                             }
                         }
                 ) {
-                    CellGridView(model)
+                    CellGridView(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                if (model.showGrid)
+                                    Color.Black
+                                else
+                                    Color.White
+                            ),
+                        world = model.world
+                    )
                     Column(
                         modifier = Modifier
                             .align(Alignment.CenterStart)

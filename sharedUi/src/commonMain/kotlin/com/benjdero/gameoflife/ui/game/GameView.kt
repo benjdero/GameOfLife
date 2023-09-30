@@ -1,10 +1,12 @@
 package com.benjdero.gameoflife.ui.game
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -23,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerInputScope
 import androidx.compose.ui.input.pointer.pointerInput
@@ -32,6 +35,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.game.Game
 import com.benjdero.gameoflife.game.Game.Model
+import com.benjdero.gameoflife.ui.common.CellGridView
 import com.benjdero.gameoflife.ui.theme.MyTheme
 import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.max
@@ -132,7 +136,17 @@ fun GameView(
                             )
                         }
                 ) {
-                    CellGridView(model)
+                    CellGridView(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                if (model.showGrid)
+                                    Color.Black
+                                else
+                                    Color.White
+                            ),
+                        world = model.world
+                    )
                 }
             }
         }
