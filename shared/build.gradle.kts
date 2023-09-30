@@ -92,8 +92,10 @@ kotlin {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     namespace = "com.benjdero.gameoflife"
+
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
     }
@@ -101,6 +103,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_18
         targetCompatibility = JavaVersion.VERSION_18
+    }
+
+    kotlin {
+        jvmToolchain(18)
     }
 }
 
