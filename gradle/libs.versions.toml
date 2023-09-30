@@ -23,5 +23,5 @@ material = "1.9.0"
 
 # Android SDK
 compileSdk = "34"
-minSdk = "21"
+minSdk = "24"
 targetSdk = "34"

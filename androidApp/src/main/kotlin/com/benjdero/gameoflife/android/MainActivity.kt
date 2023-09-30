@@ -1,8 +1,8 @@
 package com.benjdero.gameoflife.android
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
 import com.arkivanov.decompose.defaultComponentContext
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
@@ -12,7 +12,7 @@ import com.benjdero.gameoflife.model.dao.DaoService
 import com.benjdero.gameoflife.model.dao.buildSqlDriver
 import com.benjdero.gameoflife.ui.RootView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
