@@ -26,6 +26,8 @@ import androidx.compose.material.icons.filled.Casino
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.outlined.ArrowCircleDown
+import androidx.compose.material.icons.outlined.ArrowCircleLeft
+import androidx.compose.material.icons.outlined.ArrowCircleRight
 import androidx.compose.material.icons.outlined.ArrowCircleUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,8 +36,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
@@ -67,7 +69,7 @@ fun DrawView(component: Draw) {
 
     MyTheme {
         Scaffold(
-            backgroundColor = androidx.compose.ui.graphics.Color.Black,
+            backgroundColor = Color.Black,
             bottomBar = {
                 BottomAppBar {
                     IconButton(
@@ -157,7 +159,7 @@ fun DrawView(component: Draw) {
                                     firstCellDragValue = model.world.isAlive(cellPosition.x, cellPosition.y)
                                     component.onDrawValue(cellPosition.x, cellPosition.y, !firstCellDragValue)
                                 },
-                                onDrag = { change: PointerInputChange, dragAmount: Offset ->
+                                onDrag = { change: PointerInputChange, _: Offset ->
                                     val previousCellPosition: IntOffset =
                                         getCellFromOffset(size, model.world.width, model.world.height, change.previousPosition)
                                     val currentCellPosition: IntOffset = getCellFromOffset(size, model.world.width, model.world.height, change.position)
@@ -180,16 +182,14 @@ fun DrawView(component: Draw) {
                             .padding(start = 16.dp)
                     ) {
                         WorldSizeButton(
-                            modifier = Modifier.rotate(-90f),
-                            imageVector = Icons.Outlined.ArrowCircleUp,
+                            imageVector = Icons.Outlined.ArrowCircleLeft,
                             onClick = component::increaseLeft
                         )
                         Spacer(
                             modifier = Modifier.height(8.dp)
                         )
                         WorldSizeButton(
-                            modifier = Modifier.rotate(90f),
-                            imageVector = Icons.Outlined.ArrowCircleUp,
+                            imageVector = Icons.Outlined.ArrowCircleRight,
                             onClick = component::decreaseLeft,
                             enabled = model.allowDecreaseWidth
                         )
@@ -218,16 +218,14 @@ fun DrawView(component: Draw) {
                             .padding(end = 16.dp)
                     ) {
                         WorldSizeButton(
-                            modifier = Modifier.rotate(90f),
-                            imageVector = Icons.Outlined.ArrowCircleUp,
+                            imageVector = Icons.Outlined.ArrowCircleRight,
                             onClick = component::increaseRight
                         )
                         Spacer(
                             modifier = Modifier.height(8.dp)
                         )
                         WorldSizeButton(
-                            modifier = Modifier.rotate(-90f),
-                            imageVector = Icons.Outlined.ArrowCircleUp,
+                            imageVector = Icons.Outlined.ArrowCircleLeft,
                             onClick = component::decreaseRight,
                             enabled = model.allowDecreaseWidth
                         )
