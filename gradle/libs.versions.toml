@@ -1,0 +1,27 @@
+[versions]
+# Global
+checker = "0.46.0"
+gradle = "8.0.0"
+kotlin = "1.8.20"
+
+# Shared
+coroutines = "1.6.4"
+mvikotlin = "3.2.0"
+decompose = "1.0.0"
+essenty = "1.1.0"
+sqldelight = "1.5.5"
+mokoResources = "0.22.0"
+
+# SharedUi
+composeCompiler = "1.4.6"
+compose = "1.4.0"
+
+# Android
+activityCompose = "1.7.1"
+appcompat = "1.6.1"
+material = "1.8.0"
+
+# Android SDK
+compileSdk = "33"
+minSdk = "21"
+targetSdk = "33"

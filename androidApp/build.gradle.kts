@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    compileSdk = Version.compileSdk
+    compileSdk = libs.versions.compileSdk.get().toInt()
     namespace = "com.benjdero.gameoflife.android"
 
     defaultConfig {
         applicationId = "com.benjdero.gameoflife.android"
-        minSdk = Version.minSdk
-        targetSdk = Version.targetSdk
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
     }
@@ -35,14 +35,14 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Version.composeCompiler
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 }
 
 dependencies {
     implementation(project(":shared"))
     implementation(project(":sharedUi"))
-    implementation("androidx.activity:activity-compose:${Version.activityCompose}")
-    implementation("androidx.appcompat:appcompat:${Version.appcompat}")
-    implementation("com.google.android.material:material:${Version.material}")
+    implementation("androidx.activity:activity-compose:${libs.versions.activityCompose.get()}")
+    implementation("androidx.appcompat:appcompat:${libs.versions.appcompat.get()}")
+    implementation("com.google.android.material:material:${libs.versions.material.get()}")
 }

@@ -1,7 +1,7 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
-    id("com.github.ben-manes.versions") version Version.checker
+    id("com.github.ben-manes.versions") version libs.versions.checker.get()
 }
 
 buildscript {
@@ -12,10 +12,10 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Version.kotlin}")
-        classpath("com.android.tools.build:gradle:${Version.gradle}")
-        classpath("com.squareup.sqldelight:gradle-plugin:${Version.sqldelight}")
-        classpath("dev.icerock.moko:resources-generator:${Version.mokoResources}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
+        classpath("com.android.tools.build:gradle:${libs.versions.gradle.get()}")
+        classpath("com.squareup.sqldelight:gradle-plugin:${libs.versions.sqldelight.get()}")
+        classpath("dev.icerock.moko:resources-generator:${libs.versions.mokoResources.get()}")
     }
 }
 

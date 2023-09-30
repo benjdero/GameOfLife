@@ -20,46 +20,46 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
-            export("com.arkivanov.mvikotlin:mvikotlin:${Version.mvikotlin}")
-            export("com.arkivanov.mvikotlin:mvikotlin-logging:${Version.mvikotlin}")
-            export("com.arkivanov.mvikotlin:mvikotlin-timetravel:${Version.mvikotlin}")
-            export("com.arkivanov.decompose:decompose:${Version.decompose}")
-            export("com.arkivanov.essenty:lifecycle:${Version.essenty}")
-            export("dev.icerock.moko:resources:${Version.mokoResources}")
+            export("com.arkivanov.mvikotlin:mvikotlin:${libs.versions.mvikotlin.get()}")
+            export("com.arkivanov.mvikotlin:mvikotlin-logging:${libs.versions.mvikotlin.get()}")
+            export("com.arkivanov.mvikotlin:mvikotlin-timetravel:${libs.versions.mvikotlin.get()}")
+            export("com.arkivanov.decompose:decompose:${libs.versions.decompose.get()}")
+            export("com.arkivanov.essenty:lifecycle:${libs.versions.essenty.get()}")
+            export("dev.icerock.moko:resources:${libs.versions.mokoResources.get()}")
         }
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutines}")
-                api("com.arkivanov.mvikotlin:mvikotlin:${Version.mvikotlin}")
-                api("com.arkivanov.mvikotlin:mvikotlin-logging:${Version.mvikotlin}")
-                api("com.arkivanov.mvikotlin:mvikotlin-timetravel:${Version.mvikotlin}")
-                implementation("com.arkivanov.mvikotlin:rx:${Version.mvikotlin}")
-                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:${Version.mvikotlin}")
-                api("com.arkivanov.decompose:decompose:${Version.decompose}")
-                api("com.arkivanov.essenty:lifecycle:${Version.essenty}")
-                implementation("com.squareup.sqldelight:runtime:${Version.sqldelight}")
-                api("dev.icerock.moko:resources:${Version.mokoResources}")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${libs.versions.coroutines.get()}")
+                api("com.arkivanov.mvikotlin:mvikotlin:${libs.versions.mvikotlin.get()}")
+                api("com.arkivanov.mvikotlin:mvikotlin-logging:${libs.versions.mvikotlin.get()}")
+                api("com.arkivanov.mvikotlin:mvikotlin-timetravel:${libs.versions.mvikotlin.get()}")
+                implementation("com.arkivanov.mvikotlin:rx:${libs.versions.mvikotlin.get()}")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:${libs.versions.mvikotlin.get()}")
+                api("com.arkivanov.decompose:decompose:${libs.versions.decompose.get()}")
+                api("com.arkivanov.essenty:lifecycle:${libs.versions.essenty.get()}")
+                implementation("com.squareup.sqldelight:runtime:${libs.versions.sqldelight.get()}")
+                api("dev.icerock.moko:resources:${libs.versions.mokoResources.get()}")
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation("dev.icerock.moko:resources-test:${Version.mokoResources}")
+                implementation("dev.icerock.moko:resources-test:${libs.versions.mokoResources.get()}")
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation("com.squareup.sqldelight:android-driver:${Version.sqldelight}")
+                implementation("com.squareup.sqldelight:android-driver:${libs.versions.sqldelight.get()}")
             }
         }
         val androidTest by getting
         val desktopMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:${Version.coroutines}")
-                implementation("com.squareup.sqldelight:sqlite-driver:${Version.sqldelight}")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:${libs.versions.coroutines.get()}")
+                implementation("com.squareup.sqldelight:sqlite-driver:${libs.versions.sqldelight.get()}")
             }
         }
         val desktopTest by getting
@@ -72,7 +72,7 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
-                implementation("com.squareup.sqldelight:native-driver:${Version.sqldelight}")
+                implementation("com.squareup.sqldelight:native-driver:${libs.versions.sqldelight.get()}")
             }
         }
         val iosX64Test by getting
@@ -88,12 +88,12 @@ kotlin {
 }
 
 android {
-    compileSdk = Version.compileSdk
+    compileSdk = libs.versions.compileSdk.get().toInt()
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     namespace = "com.benjdero.gameoflife"
     defaultConfig {
-        minSdk = Version.minSdk
-        targetSdk = Version.targetSdk
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
     }
 
     compileOptions {
