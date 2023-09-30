@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.benjdero.gameoflife.draw.Draw
+import com.benjdero.gameoflife.draw.Draw.Model
 import com.benjdero.gameoflife.ui.common.CellGridView
 import com.benjdero.gameoflife.ui.common.ToggleGridButton
 import com.benjdero.gameoflife.ui.theme.MyTheme
@@ -70,7 +71,7 @@ fun DrawView(
         return IntOffset(x, y)
     }
 
-    val model: Draw.Model by component.models.subscribeAsState()
+    val model: Model by component.models.subscribeAsState()
     var firstCellDragValue: Boolean by remember { mutableStateOf(false) }
 
     MyTheme {
@@ -271,11 +272,14 @@ fun DrawView(
 }
 
 @Composable
-private fun WorldSizeButton(modifier: Modifier = Modifier, imageVector: ImageVector, onClick: () -> Unit, enabled: Boolean = true) {
+private fun WorldSizeButton(
+    imageVector: ImageVector,
+    onClick: () -> Unit,
+    enabled: Boolean = true
+) {
     Button(
         modifier = Modifier
-            .size(36.dp)
-            .then(modifier),
+            .size(36.dp),
         shape = CircleShape,
         contentPadding = PaddingValues(all = 0.dp),
         enabled = enabled,
