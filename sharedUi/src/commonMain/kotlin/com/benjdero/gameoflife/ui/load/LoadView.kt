@@ -1,15 +1,21 @@
 package com.benjdero.gameoflife.ui.load
 
+import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -19,6 +25,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
@@ -36,51 +43,64 @@ fun LoadView(
 
     MyTheme {
         Scaffold { scaffoldPadding: PaddingValues ->
-            LazyColumn(
+            Box(
                 modifier = Modifier.padding(scaffoldPadding)
             ) {
-                items(model.worldList) { world: World ->
-                    Card(
-                        modifier = Modifier
-                            .padding(all = 8.dp)
-                            .clickable {
-                                component.onWorldSelected(world)
-                            }
-                    ) {
-                        Column(
+                val lazyListState: LazyListState = rememberLazyListState()
+                LazyColumn(
+                    state = lazyListState
+                ) {
+                    items(model.worldList) { world: World ->
+                        Card(
                             modifier = Modifier
-                                .padding(all = 16.dp)
-                        ) {
-                            Row {
-                                Text(
-                                    text = "World"
-                                )
-                                Spacer(
-                                    modifier = Modifier.weight(1f)
-                                )
-                                IconButton(
-                                    onClick = {
-                                        component.deleteWorld(world)
-                                    }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Delete,
-                                        contentDescription = null
-                                    )
+                                .padding(all = 8.dp)
+                                .clickable {
+                                    component.onWorldSelected(world)
                                 }
-                            }
-                            Spacer(
-                                modifier = Modifier.height(4.dp)
-                            )
-                            CellGridView(
+                        ) {
+                            Column(
                                 modifier = Modifier
-                                    .height(240.dp)
-                                    .fillMaxWidth(),
-                                world = world
-                            )
+                                    .padding(all = 16.dp)
+                            ) {
+                                Row {
+                                    Text(
+                                        text = "World"
+                                    )
+                                    Spacer(
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                    IconButton(
+                                        onClick = {
+                                            component.deleteWorld(world)
+                                        }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Delete,
+                                            contentDescription = null
+                                        )
+                                    }
+                                }
+                                Spacer(
+                                    modifier = Modifier.height(4.dp)
+                                )
+                                CellGridView(
+                                    modifier = Modifier
+                                        .height(240.dp)
+                                        .fillMaxWidth(),
+                                    world = world
+                                )
+                            }
                         }
                     }
                 }
+                VerticalScrollbar(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .fillMaxHeight(),
+                    adapter = rememberScrollbarAdapter(
+                        scrollState = lazyListState
+                    )
+                )
             }
         }
     }
