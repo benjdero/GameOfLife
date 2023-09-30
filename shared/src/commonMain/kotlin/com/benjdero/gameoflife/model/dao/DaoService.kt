@@ -1,7 +1,8 @@
 package com.benjdero.gameoflife.model.dao
 
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.logs.LogSqliteDriver
+import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.logs.LogSqliteDriver
 import com.benjdero.gameoflife.World as GolWorld
 
 class DaoService(
@@ -11,7 +12,13 @@ class DaoService(
         println(debugMessage)
     }
 
-    private val database: Database = Database(driver)
+    private val database: Database = Database(
+        driver = driver,
+        WorldAdapter = World.Adapter(
+            widthAdapter = IntColumnAdapter,
+            heightAdapter = IntColumnAdapter
+        )
+    )
 
     fun saveWorld(world: GolWorld) {
         val byteArray = booleanArrayToByteArray(world.cells, world.width * world.height)

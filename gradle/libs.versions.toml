@@ -9,7 +9,7 @@ coroutines = "1.7.3"
 mvikotlin = "3.2.1"
 decompose = "2.1.0"
 essenty = "1.2.0"
-sqldelight = "1.5.5"
+sqldelight = "2.0.0"
 mokoResources = "0.23.0"
 
 # SharedUi

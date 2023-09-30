@@ -2,8 +2,8 @@ package com.benjdero.gameoflife.model.dao
 
 import android.content.Context
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.squareup.sqldelight.android.AndroidSqliteDriver
-import com.squareup.sqldelight.db.SqlDriver
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 
 fun buildSqlDriver(context: Context): SqlDriver =
     AndroidSqliteDriver(

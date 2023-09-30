@@ -2,7 +2,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("kotlin-parcelize")
-    id("com.squareup.sqldelight")
+    id("app.cash.sqldelight")
     id("dev.icerock.mobile.multiplatform-resources")
 }
 
@@ -40,7 +40,8 @@ kotlin {
                 implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:${libs.versions.mvikotlin.get()}")
                 api("com.arkivanov.decompose:decompose:${libs.versions.decompose.get()}")
                 api("com.arkivanov.essenty:lifecycle:${libs.versions.essenty.get()}")
-                implementation("com.squareup.sqldelight:runtime:${libs.versions.sqldelight.get()}")
+                implementation("app.cash.sqldelight:runtime:${libs.versions.sqldelight.get()}")
+                implementation("app.cash.sqldelight:primitive-adapters:${libs.versions.sqldelight.get()}")
                 api("dev.icerock.moko:resources:${libs.versions.mokoResources.get()}")
             }
         }
@@ -53,7 +54,7 @@ kotlin {
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
-                implementation("com.squareup.sqldelight:android-driver:${libs.versions.sqldelight.get()}")
+                implementation("app.cash.sqldelight:android-driver:${libs.versions.sqldelight.get()}")
             }
         }
         val androidUnitTest by getting
@@ -61,7 +62,7 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:${libs.versions.coroutines.get()}")
-                implementation("com.squareup.sqldelight:sqlite-driver:${libs.versions.sqldelight.get()}")
+                implementation("app.cash.sqldelight:sqlite-driver:${libs.versions.sqldelight.get()}")
             }
         }
         val desktopTest by getting
@@ -74,7 +75,7 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
-                implementation("com.squareup.sqldelight:native-driver:${libs.versions.sqldelight.get()}")
+                implementation("app.cash.sqldelight:native-driver:${libs.versions.sqldelight.get()}")
             }
         }
         val iosX64Test by getting
@@ -105,9 +106,11 @@ android {
 }
 
 sqldelight {
-    database("Database") {
-        packageName = "com.benjdero.gameoflife.model.dao"
-        sourceFolders = listOf("sql")
+    databases {
+        create("Database") {
+            packageName.set("com.benjdero.gameoflife.model.dao")
+            srcDirs("src/commonMain/sql")
+        }
     }
 }
 
