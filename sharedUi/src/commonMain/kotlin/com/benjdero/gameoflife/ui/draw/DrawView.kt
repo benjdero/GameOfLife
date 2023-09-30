@@ -51,7 +51,9 @@ import com.benjdero.gameoflife.ui.theme.MyTheme
 import kotlin.math.min
 
 @Composable
-fun DrawView(component: Draw) {
+fun DrawView(
+    component: Draw
+) {
 
     fun getCellFromOffset(canvasSize: IntSize, worldWidth: Int, worldHeight: Int, offset: Offset): IntOffset {
         val cellWidth: Float = canvasSize.width.toFloat() / worldWidth

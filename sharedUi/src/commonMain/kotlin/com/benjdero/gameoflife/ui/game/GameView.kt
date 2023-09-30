@@ -38,7 +38,9 @@ import kotlin.math.max
 import kotlin.math.sqrt
 
 @Composable
-fun GameView(component: Game) {
+fun GameView(
+    component: Game
+) {
     val model: Model by component.models.subscribeAsState()
     var scale: Float by remember { mutableStateOf(1f) }
     var offset: Offset by remember { mutableStateOf(Offset.Zero) }

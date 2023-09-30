@@ -17,7 +17,9 @@ private const val PADDING_HORIZONTAL = 1f
 private const val PADDING_VERTICAL = 1f
 
 @Composable
-internal fun CellGridView(world: World) {
+internal fun CellGridView(
+    world: World
+) {
     val cellColor: Color = MaterialTheme.colors.secondary
 
     Canvas(

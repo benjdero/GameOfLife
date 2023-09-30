@@ -15,7 +15,9 @@ import com.benjdero.gameoflife.ui.theme.MyTheme
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
-fun MenuView(component: Menu) {
+fun MenuView(
+    component: Menu
+) {
     MyTheme {
         Scaffold {
             Column(

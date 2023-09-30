@@ -23,7 +23,9 @@ import com.benjdero.gameoflife.load.Load
 import com.benjdero.gameoflife.load.Load.Model
 
 @Composable
-fun LoadView(component: Load) {
+fun LoadView(
+    component: Load
+) {
     val model: Model by component.models.subscribeAsState()
 
     LazyColumn {
