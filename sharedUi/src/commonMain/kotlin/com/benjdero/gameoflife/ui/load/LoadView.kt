@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -39,41 +40,45 @@ fun LoadView(
                 modifier = Modifier.padding(scaffoldPadding)
             ) {
                 items(model.worldList) { world: World ->
-                    Column(
-                        modifier =
-                        Modifier
-                            .padding(all = 16.dp)
+                    Card(
+                        modifier = Modifier
+                            .padding(all = 8.dp)
                             .clickable {
                                 component.onWorldSelected(world)
                             }
                     ) {
-                        Row {
-                            Text(
-                                text = "World"
-                            )
-                            Spacer(
-                                modifier = Modifier.weight(1f)
-                            )
-                            IconButton(
-                                onClick = {
-                                    component.deleteWorld(world)
-                                }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Delete,
-                                    contentDescription = null
-                                )
-                            }
-                        }
-                        Spacer(
-                            modifier = Modifier.height(4.dp)
-                        )
-                        CellGridView(
+                        Column(
                             modifier = Modifier
-                                .height(240.dp)
-                                .fillMaxWidth(),
-                            world = world
-                        )
+                                .padding(all = 16.dp)
+                        ) {
+                            Row {
+                                Text(
+                                    text = "World"
+                                )
+                                Spacer(
+                                    modifier = Modifier.weight(1f)
+                                )
+                                IconButton(
+                                    onClick = {
+                                        component.deleteWorld(world)
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Delete,
+                                        contentDescription = null
+                                    )
+                                }
+                            }
+                            Spacer(
+                                modifier = Modifier.height(4.dp)
+                            )
+                            CellGridView(
+                                modifier = Modifier
+                                    .height(240.dp)
+                                    .fillMaxWidth(),
+                                world = world
+                            )
+                        }
                     }
                 }
             }
