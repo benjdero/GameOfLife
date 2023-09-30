@@ -29,7 +29,7 @@ internal class DrawStoreProvider(
         data class WorldUpdate(val cells: BooleanArray) : Msg()
         data class WidthChanged(val width: Int, val cells: BooleanArray) : Msg()
         data class HeightChanged(val height: Int, val cells: BooleanArray) : Msg()
-        object ToggleShowGrid : Msg()
+        data object ToggleShowGrid : Msg()
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {

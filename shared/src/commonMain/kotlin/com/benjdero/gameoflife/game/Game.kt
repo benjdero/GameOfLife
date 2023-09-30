@@ -37,6 +37,6 @@ interface Game {
     )
 
     sealed class Output {
-        object GoBack : Output()
+        data object GoBack : Output()
     }
 }

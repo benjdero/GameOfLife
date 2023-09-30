@@ -7,10 +7,10 @@ import com.benjdero.gameoflife.game.GameStore.State
 
 internal interface GameStore : Store<Intent, State, Nothing> {
     sealed class Intent {
-        object RunGame : Intent()
-        object PrevStep : Intent()
-        object NextStep : Intent()
-        object ShowGrid : Intent()
+        data object RunGame : Intent()
+        data object PrevStep : Intent()
+        data object NextStep : Intent()
+        data object ShowGrid : Intent()
     }
 
     data class State(

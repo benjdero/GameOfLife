@@ -29,8 +29,8 @@ internal class GameStoreProvider(
     private sealed class Msg {
         data class RunGame(val running: Boolean) : Msg()
         data class WorldUpdate(val cells: BooleanArray) : Msg()
-        object WorldRollback : Msg()
-        object ToggleShowGrid : Msg()
+        data object WorldRollback : Msg()
+        data object ToggleShowGrid : Msg()
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {

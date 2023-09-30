@@ -14,7 +14,7 @@ interface Menu {
     )
 
     sealed class Output {
-        object StartDraw : Output()
-        object StartGame : Output()
+        data object StartDraw : Output()
+        data object StartGame : Output()
     }
 }
