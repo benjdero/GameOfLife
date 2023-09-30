@@ -32,7 +32,7 @@ kotlin {
             }
         }
         val androidMain by getting
-        val androidTest by getting
+        val androidUnitTest by getting
         val desktopMain by getting
         val desktopTest by getting
     }

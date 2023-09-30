@@ -43,7 +43,8 @@ data class World(
         }
     }
 
-    sealed class Saved {
+    @Parcelize
+    sealed class Saved : Parcelable {
         object Not : Saved()
         data class AsWorld(val id: Long) : Saved()
     }

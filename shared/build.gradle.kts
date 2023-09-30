@@ -51,12 +51,14 @@ kotlin {
             }
         }
         val androidMain by getting {
+            dependsOn(commonMain)
             dependencies {
                 implementation("com.squareup.sqldelight:android-driver:${libs.versions.sqldelight.get()}")
             }
         }
-        val androidTest by getting
+        val androidUnitTest by getting
         val desktopMain by getting {
+            dependsOn(commonMain)
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:${libs.versions.coroutines.get()}")
                 implementation("com.squareup.sqldelight:sqlite-driver:${libs.versions.sqldelight.get()}")
