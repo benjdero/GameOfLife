@@ -20,8 +20,11 @@ data class World(
                 saved = Saved.Not,
                 width = width,
                 height = height,
-                cells = BooleanArray(width * height) {
-                    Random.nextBoolean()
+                cells = BooleanArray(width * height) { index: Int ->
+                    if (index / width == 0 || index / width == height - 1 || index % width == 0 || index % width == width - 1)
+                        false
+                    else
+                        Random.nextBoolean()
                 }
             )
     }
