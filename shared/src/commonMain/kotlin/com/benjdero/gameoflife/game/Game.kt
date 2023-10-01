@@ -30,18 +30,6 @@ interface Game {
         val world: World,
         val showGrid: Boolean,
         val history: List<World>
-    ) {
-        val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, cell: Boolean ->
-            FlatWorldElement(
-                id = index,
-                cell = cell
-            )
-        }
-    }
-
-    data class FlatWorldElement(
-        val id: Int,
-        val cell: Boolean
     )
 
     sealed class Output {
