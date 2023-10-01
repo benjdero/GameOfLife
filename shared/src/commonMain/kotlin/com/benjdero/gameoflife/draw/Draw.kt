@@ -45,18 +45,6 @@ interface Draw {
         val showGrid: Boolean,
         val allowDecreaseWidth: Boolean,
         val allowDecreaseHeight: Boolean,
-    ) {
-        val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, cell: Boolean ->
-            FlatWorldElement(
-                id = index,
-                cell = cell
-            )
-        }
-    }
-
-    data class FlatWorldElement(
-        val id: Int,
-        val cell: Boolean
     )
 
     sealed class Output {

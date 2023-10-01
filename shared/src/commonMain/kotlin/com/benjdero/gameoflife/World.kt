@@ -46,6 +46,17 @@ data class World(
         }
     }
 
+    /**
+     * Allow to draw world on iOS < 15.0
+     */
+    fun toFlatWorld(): List<FlatWorldElement> =
+        cells.mapIndexed { index: Int, cell: Boolean ->
+            FlatWorldElement(
+                id = index,
+                cell = cell
+            )
+        }
+
     @Parcelize
     sealed class Saved : Parcelable {
         data object Not : Saved()
