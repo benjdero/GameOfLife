@@ -1,5 +1,5 @@
-import SwiftUI
 import shared
+import SwiftUI
 
 struct MenuView: View {
     private let component: shared.Menu
@@ -16,6 +16,9 @@ struct MenuView: View {
 
     var body: some View {
         VStack {
+            Button(action: component.onStartDraw) {
+                Text(Res.strings().menu_start_draw.localized())
+            }
             Button(action: component.onStartGame) {
                 Text(Res.strings().menu_start_game.localized())
             }

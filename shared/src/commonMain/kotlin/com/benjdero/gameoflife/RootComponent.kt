@@ -20,6 +20,8 @@ import com.benjdero.gameoflife.load.LoadComponent
 import com.benjdero.gameoflife.menu.Menu
 import com.benjdero.gameoflife.menu.MenuComponent
 import com.benjdero.gameoflife.model.dao.DaoService
+import com.benjdero.gameoflife.save.Save
+import com.benjdero.gameoflife.save.SaveComponent
 
 class RootComponent(
     componentContext: ComponentContext,
@@ -45,7 +47,6 @@ class RootComponent(
                     component = DrawComponent(
                         componentContext = componentContext,
                         storeFactory = storeFactory,
-                        daoService = daoService,
                         world = configuration.world,
                         output = ::onDrawOutput
                     )
@@ -56,6 +57,15 @@ class RootComponent(
                         storeFactory = storeFactory,
                         daoService = daoService,
                         output = ::onLoadOutput
+                    )
+                )
+                is Configuration.Save -> Root.Child.ChildSave(
+                    component = SaveComponent(
+                        componentContext = componentContext,
+                        storeFactory = storeFactory,
+                        daoService = daoService,
+                        world = configuration.world,
+                        output = ::onSaveOutput
                     )
                 )
                 is Configuration.Game -> Root.Child.ChildGame(
@@ -73,19 +83,29 @@ class RootComponent(
     private fun onMenuOutput(output: Menu.Output): Unit =
         when (output) {
             Menu.Output.StartDraw -> navigation.push(Configuration.Draw(null))
-            Menu.Output.StartGame -> navigation.push(Configuration.Game(World.random(15, 10)))
+            Menu.Output.StartGame -> navigation.push(Configuration.Game(null))
         }
 
     private fun onDrawOutput(output: Draw.Output): Unit =
         when (output) {
             is Draw.Output.Finish -> navigation.push(Configuration.Game(output.world))
             Draw.Output.GoBack -> navigation.pop()
-            Draw.Output.Load -> navigation.replaceCurrent(Configuration.Load)
+            Draw.Output.Load -> navigation.push(Configuration.Load)
+            is Draw.Output.Save -> navigation.push(Configuration.Save(output.world))
         }
 
     private fun onLoadOutput(output: Load.Output): Unit =
         when (output) {
-            is Load.Output.WorldSelected -> navigation.replaceCurrent(Configuration.Draw(output.world))
+            Load.Output.GoBack -> navigation.pop()
+            is Load.Output.WorldSelected -> {
+                navigation.pop()
+                navigation.replaceCurrent(Configuration.Draw(output.world))
+            }
+        }
+
+    private fun onSaveOutput(output: Save.Output): Unit =
+        when (output) {
+            Save.Output.GoBack -> navigation.pop()
         }
 
     private fun onGameOutput(output: Game.Output): Unit =
@@ -106,6 +126,9 @@ class RootComponent(
         data object Load : Configuration()
 
         @Parcelize
-        data class Game(val world: World) : Configuration()
+        data class Save(val world: World) : Configuration()
+
+        @Parcelize
+        data class Game(val world: World?) : Configuration()
     }
 }

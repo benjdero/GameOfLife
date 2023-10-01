@@ -9,7 +9,7 @@ import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
 import com.benjdero.gameoflife.Root
 import com.benjdero.gameoflife.RootComponent
 import com.benjdero.gameoflife.model.dao.DaoService
-import com.benjdero.gameoflife.model.dao.buildSqlDriver
+import com.benjdero.gameoflife.model.dao.SqlDriverFactory
 import com.benjdero.gameoflife.ui.RootView
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +19,11 @@ class MainActivity : ComponentActivity() {
         val component: Root = RootComponent(
             componentContext = defaultComponentContext(),
             storeFactory = LoggingStoreFactory(TimeTravelStoreFactory()),
-            daoService = DaoService(buildSqlDriver(this))
+            daoService = DaoService(
+                sqlDriverFactory = SqlDriverFactory(
+                    context = this
+                )
+            )
         )
 
         setContent {

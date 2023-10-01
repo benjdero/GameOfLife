@@ -10,11 +10,14 @@ interface Load {
 
     fun deleteWorld(world: World)
 
+    fun goBack()
+
     data class Model(
         val worldList: List<World>
     )
 
     sealed class Output {
+        data object GoBack : Output()
         data class WorldSelected(val world: World) : Output()
     }
 }

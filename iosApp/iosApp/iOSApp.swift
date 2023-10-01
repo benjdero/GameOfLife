@@ -1,5 +1,5 @@
-import SwiftUI
 import shared
+import SwiftUI
 
 @main
 struct iOSApp: App {
@@ -25,7 +25,7 @@ private class RootHolder: ObservableObject {
         component = RootComponent(
             componentContext: DefaultComponentContext(lifecycle: lifecycle),
             storeFactory: LoggingStoreFactory(delegate: TimeTravelStoreFactory()),
-            daoService: DaoService(sqlDriver: BuildSqlDriverKt.buildSqlDriver())
+            daoService: DaoService(sqlDriverFactory: SqlDriverFactory())
         )
 
         lifecycle.onCreate()

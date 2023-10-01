@@ -13,13 +13,13 @@ import kotlinx.coroutines.launch
 
 internal class GameStoreProvider(
     private val storeFactory: StoreFactory,
-    val world: World
+    private val world: World?
 ) {
     fun provide(): GameStore =
         object : GameStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "WorldStore",
             initialState = State(
-                world = world
+                world = world ?: World.random()
             ),
             bootstrapper = SimpleBootstrapper(),
             executorFactory = ::ExecutorImpl,
@@ -28,7 +28,7 @@ internal class GameStoreProvider(
 
     private sealed class Msg {
         data class RunGame(val running: Boolean) : Msg()
-        data class WorldUpdate(val cells: BooleanArray) : Msg()
+        data class WorldUpdate(val cells: BooleanArray, val width: Int, val height: Int) : Msg()
         data object WorldRollback : Msg()
         data object ToggleShowGrid : Msg()
     }
@@ -53,7 +53,7 @@ internal class GameStoreProvider(
                         if (!state.running)
                             return@launch
                         nextStep(state)
-                        delay(500)
+                        delay(100)
                     }
                 }
             }
@@ -64,18 +64,125 @@ internal class GameStoreProvider(
         }
 
         private fun nextStep(state: State) {
-            val nextWorld: BooleanArray = calcNextWorld(state)
-            dispatch(Msg.WorldUpdate(nextWorld))
+            var nextWorld: BooleanArray =
+                state.world.mapIndexed { x: Int, y: Int, cell: Boolean ->
+                    val neighborsCount: Int = countNeighbors(x, y, state.world)
+                    if (cell)
+                        neighborsCount in 2..3
+                    else
+                        neighborsCount == 3
+                }
+
+            var width: Int = state.world.width
+            var height: Int = state.world.height
+            if (needIncreaseLeft(nextWorld, width)) {
+                nextWorld = increaseLeft(nextWorld, width, height)
+                width += 1
+            }
+            if (needIncreaseTop(nextWorld, width)) {
+                nextWorld = increaseTop(nextWorld, width, height)
+                height += 1
+            }
+            if (needIncreaseRight(nextWorld, width)) {
+                nextWorld = increaseRight(nextWorld, width, height)
+                width += 1
+            }
+            if (needIncreaseBottom(nextWorld, width, height)) {
+                nextWorld = increaseBottom(nextWorld, width, height)
+                height += 1
+            }
+            dispatch(Msg.WorldUpdate(nextWorld, width, height))
         }
 
-        private fun calcNextWorld(state: State): BooleanArray =
-            state.world.mapIndexed { x: Int, y: Int, cell: Boolean ->
-                val neighborsCount: Int = countNeighbors(x, y, state.world)
-                if (cell)
-                    neighborsCount in 2..3
-                else
-                    neighborsCount == 3
+        private fun needIncreaseLeft(world: BooleanArray, width: Int): Boolean {
+            world.forEachIndexed { index: Int, cell: Boolean ->
+                if (index % width == 0 && cell)
+                    return true
             }
+
+            return false
+        }
+
+        private fun needIncreaseTop(world: BooleanArray, width: Int): Boolean {
+            world.forEachIndexed { index: Int, cell: Boolean ->
+                if (index / width == 0 && cell)
+                    return true
+            }
+
+            return false
+        }
+
+        private fun needIncreaseRight(world: BooleanArray, width: Int): Boolean {
+            world.forEachIndexed { index: Int, cell: Boolean ->
+                if (index % width == width - 1 && cell)
+                    return true
+            }
+
+            return false
+        }
+
+        private fun needIncreaseBottom(world: BooleanArray, width: Int, height: Int): Boolean {
+            world.forEachIndexed { index: Int, cell: Boolean ->
+                if (index / width == height - 1 && cell)
+                    return true
+            }
+
+            return false
+        }
+
+        private fun increaseLeft(world: BooleanArray, width: Int, height: Int): BooleanArray {
+            val newWidth: Int = width + 1
+            val newWorld =
+                BooleanArray(newWidth * height) { index: Int ->
+                    val i: Int = index
+                    if (i % newWidth == 0)
+                        false
+                    else
+                        world[i - 1 - i / newWidth]
+                }
+
+            return newWorld
+        }
+
+        private fun increaseTop(world: BooleanArray, width: Int, height: Int): BooleanArray {
+            val newHeight: Int = height + 1
+            val newWorld =
+                BooleanArray(width * newHeight) { index: Int ->
+                    if (index / width == 0)
+                        false
+                    else
+                        world[index - width]
+                }
+
+            return newWorld
+        }
+
+        private fun increaseRight(world: BooleanArray, width: Int, height: Int): BooleanArray {
+            val newWidth: Int = width + 1
+            val newWorld =
+                BooleanArray(newWidth * height) { index: Int ->
+                    val i: Int = index
+                    if (i % newWidth == width)
+                        false
+                    else
+                        world[i - i / newWidth]
+                }
+
+            return newWorld
+        }
+
+        private fun increaseBottom(world: BooleanArray, width: Int, height: Int): BooleanArray {
+            val newHeight: Int = height + 1
+            val newWorld =
+                BooleanArray(width * newHeight) { index: Int ->
+                    if (index / width == height)
+                        false
+                    else
+                        world[index]
+                }
+
+            return newWorld
+        }
 
         private fun countNeighbors(x: Int, y: Int, world: World): Int {
             var count = 0
@@ -102,18 +209,20 @@ internal class GameStoreProvider(
         override fun State.reduce(msg: Msg): State =
             when (msg) {
                 is Msg.RunGame -> copy(running = msg.running)
-                is Msg.WorldUpdate -> worldUpdate(cells = msg.cells)
+                is Msg.WorldUpdate -> worldUpdate(cells = msg.cells, width = msg.width, height = msg.height)
                 is Msg.WorldRollback -> worldRollback()
                 Msg.ToggleShowGrid -> copy(showGrid = !showGrid)
             }
 
-        private fun State.worldUpdate(cells: BooleanArray) =
+        private fun State.worldUpdate(cells: BooleanArray, width: Int, height: Int) =
             copy(
                 generation = generation + 1,
                 world = world.copy(
-                    cells = cells
+                    cells = cells,
+                    width = width,
+                    height = height
                 ),
-                history = history.plus(world.cells).let {
+                history = history.plus(world).let {
                     if (it.size > 10)
                         it.drop(1)
                     else
@@ -124,9 +233,7 @@ internal class GameStoreProvider(
         private fun State.worldRollback(): State =
             copy(
                 generation = generation - 1,
-                world = world.copy(
-                    cells = history.last()
-                ),
+                world = history.last(),
                 history = history.dropLast(1)
             )
     }

@@ -131,7 +131,9 @@ fun DrawView(
                         modifier = Modifier.width(8.dp)
                     )
                     IconButton(
-                        onClick = component::save
+                        onClick = {
+                            component.save(model.world)
+                        }
                     ) {
                         Icon(
                             imageVector = Icons.Default.Save,
@@ -163,6 +165,10 @@ fun DrawView(
                             detectDragGestures(
                                 onDragStart = { offset: Offset ->
                                     val cellPosition: IntOffset = getCellFromOffset(size, model.world.width, model.world.height, offset)
+                                    if (!model.world.isWithinBounds(cellPosition.x, cellPosition.y)) {
+                                        println("Out of bounds coordinates [${cellPosition.x}:${cellPosition.y}]")
+                                        return@detectDragGestures
+                                    }
                                     firstCellDragValue = model.world.isAlive(cellPosition.x, cellPosition.y)
                                     component.onDrawValue(cellPosition.x, cellPosition.y, !firstCellDragValue)
                                 },

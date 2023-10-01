@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,11 @@
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7C2C2A6128690AF000B2F0BC /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C2A6028690AF000B2F0BC /* ObservableValue.swift */; };
+		7CC46AC82AC9AF9E003C2B77 /* LoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC46AC72AC9AF9E003C2B77 /* LoadView.swift */; };
+		7CC46ACA2AC9B060003C2B77 /* GameGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC46AC92AC9B060003C2B77 /* GameGridView.swift */; };
+		7CC46ACC2AC9B23D003C2B77 /* SaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC46ACB2AC9B23D003C2B77 /* SaveView.swift */; };
+		7CC46ACE2AC9B251003C2B77 /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC46ACD2AC9B251003C2B77 /* DrawView.swift */; };
+		7CC46AD82AC9D03F003C2B77 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 7CC46AD72AC9D03F003C2B77 /* SwiftFormat */; };
 		7CEA551C2888B032008A402C /* StringResourceExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEA551B2888B032008A402C /* StringResourceExt.swift */; };
 		7CFC99FA2888740600E9AD3D /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFC99F92888740600E9AD3D /* GameView.swift */; };
 		7CFC99FC2888760600E9AD3D /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFC99FB2888760600E9AD3D /* MenuView.swift */; };
@@ -38,6 +43,10 @@
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C2C2A6028690AF000B2F0BC /* ObservableValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
+		7CC46AC72AC9AF9E003C2B77 /* LoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadView.swift; sourceTree = "<group>"; };
+		7CC46AC92AC9B060003C2B77 /* GameGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGridView.swift; sourceTree = "<group>"; };
+		7CC46ACB2AC9B23D003C2B77 /* SaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveView.swift; sourceTree = "<group>"; };
+		7CC46ACD2AC9B251003C2B77 /* DrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 		7CEA551B2888B032008A402C /* StringResourceExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringResourceExt.swift; sourceTree = "<group>"; };
 		7CFC99F92888740600E9AD3D /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		7CFC99FB2888760600E9AD3D /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
@@ -50,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CC46AD82AC9D03F003C2B77 /* SwiftFormat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +104,10 @@
 				7CFC99FD2888767C00E9AD3D /* RootView.swift */,
 				7CFC99FF2888866700E9AD3D /* MutableStateBuilder.swift */,
 				7CEA551B2888B032008A402C /* StringResourceExt.swift */,
+				7CC46AC72AC9AF9E003C2B77 /* LoadView.swift */,
+				7CC46AC92AC9B060003C2B77 /* GameGridView.swift */,
+				7CC46ACB2AC9B23D003C2B77 /* SaveView.swift */,
+				7CC46ACD2AC9B251003C2B77 /* DrawView.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -123,6 +137,9 @@
 			dependencies = (
 			);
 			name = iosApp;
+			packageProductDependencies = (
+				7CC46AD72AC9D03F003C2B77 /* SwiftFormat */,
+			);
 			productName = iosApp;
 			productReference = 7555FF7B242A565900829871 /* iosApp.app */;
 			productType = "com.apple.product-type.application";
@@ -151,6 +168,9 @@
 				Base,
 			);
 			mainGroup = 7555FF72242A565900829871;
+			packageReferences = (
+				7CC46AD62AC9D03F003C2B77 /* XCRemoteSwiftPackageReference "SwiftFormat" */,
+			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -199,9 +219,13 @@
 			files = (
 				7CFC99FC2888760600E9AD3D /* MenuView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				7CC46ACE2AC9B251003C2B77 /* DrawView.swift in Sources */,
+				7CC46ACA2AC9B060003C2B77 /* GameGridView.swift in Sources */,
 				7CFC99FE2888767C00E9AD3D /* RootView.swift in Sources */,
 				7CFC99FA2888740600E9AD3D /* GameView.swift in Sources */,
+				7CC46AC82AC9AF9E003C2B77 /* LoadView.swift in Sources */,
 				7CFC9A002888866700E9AD3D /* MutableStateBuilder.swift in Sources */,
+				7CC46ACC2AC9B23D003C2B77 /* SaveView.swift in Sources */,
 				7CEA551C2888B032008A402C /* StringResourceExt.swift in Sources */,
 				7C2C2A6128690AF000B2F0BC /* ObservableValue.swift in Sources */,
 			);
@@ -398,6 +422,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7CC46AD62AC9D03F003C2B77 /* XCRemoteSwiftPackageReference "SwiftFormat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nicklockwood/SwiftFormat";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7CC46AD72AC9D03F003C2B77 /* SwiftFormat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7CC46AD62AC9D03F003C2B77 /* XCRemoteSwiftPackageReference "SwiftFormat" */;
+			productName = SwiftFormat;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7555FF73242A565900829871 /* Project object */;
 }

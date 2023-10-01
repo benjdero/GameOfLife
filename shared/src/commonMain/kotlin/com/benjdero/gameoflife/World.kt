@@ -20,8 +20,11 @@ data class World(
                 saved = Saved.Not,
                 width = width,
                 height = height,
-                cells = BooleanArray(width * height) {
-                    Random.nextBoolean()
+                cells = BooleanArray(width * height) { index: Int ->
+                    if (index / width == 0 || index / width == height - 1 || index % width == 0 || index % width == width - 1)
+                        false
+                    else
+                        Random.nextBoolean()
                 }
             )
     }
@@ -43,9 +46,20 @@ data class World(
         }
     }
 
+    /**
+     * Allow to draw world on iOS < 15.0
+     */
+    fun toFlatWorld(): List<FlatWorldElement> =
+        cells.mapIndexed { index: Int, cell: Boolean ->
+            FlatWorldElement(
+                id = index,
+                cell = cell
+            )
+        }
+
     @Parcelize
     sealed class Saved : Parcelable {
         data object Not : Saved()
-        data class AsWorld(val id: Long) : Saved()
+        data class AsWorld(val id: Long, val name: String) : Saved()
     }
 }

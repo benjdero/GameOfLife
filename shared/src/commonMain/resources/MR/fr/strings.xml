@@ -2,6 +2,7 @@
 <resources>
     <string name="menu_start_draw">Dessiner</string>
     <string name="menu_start_game">Jouer</string>
+    <string name="load_list_empty">Aucun monde sauvegardé</string>
     <string name="game_run">Démarrer</string>
     <string name="game_pause">Pause</string>
     <string name="game_prev_step">Précédent</string>

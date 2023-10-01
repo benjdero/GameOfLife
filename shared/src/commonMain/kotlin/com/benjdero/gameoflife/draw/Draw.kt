@@ -34,7 +34,7 @@ interface Draw {
 
     fun load()
 
-    fun save()
+    fun save(world: World)
 
     fun finish()
 
@@ -45,23 +45,12 @@ interface Draw {
         val showGrid: Boolean,
         val allowDecreaseWidth: Boolean,
         val allowDecreaseHeight: Boolean,
-    ) {
-        val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, cell: Boolean ->
-            FlatWorldElement(
-                id = index,
-                cell = cell
-            )
-        }
-    }
-
-    data class FlatWorldElement(
-        val id: Int,
-        val cell: Boolean
     )
 
     sealed class Output {
         data class Finish(val world: World) : Output()
         data object GoBack : Output()
         data object Load : Output()
+        data class Save(val world: World) : Output()
     }
 }

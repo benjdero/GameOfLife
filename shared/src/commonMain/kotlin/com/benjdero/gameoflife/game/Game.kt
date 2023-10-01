@@ -21,7 +21,7 @@ interface Game {
         val generation: Int,
         val world: World,
         val showGrid: Boolean,
-        val history: List<BooleanArray>
+        val history: List<World>
     ) {
         val flatWorld: List<FlatWorldElement> = world.cells.mapIndexed { index: Int, cell: Boolean ->
             FlatWorldElement(

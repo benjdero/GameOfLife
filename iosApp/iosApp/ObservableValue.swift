@@ -1,5 +1,5 @@
-import SwiftUI
 import shared
+import SwiftUI
 
 public class ObservableValue<T: AnyObject>: ObservableObject {
     private let observableValue: Value<T>
