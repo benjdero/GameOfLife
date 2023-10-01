@@ -18,6 +18,6 @@ internal interface GameStore : Store<Intent, State, Nothing> {
         val generation: Int = 1,
         val world: World,
         val showGrid: Boolean = false,
-        val history: List<BooleanArray> = emptyList()
+        val history: List<World> = emptyList()
     )
 }
