@@ -12,7 +12,7 @@ import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
 import com.benjdero.gameoflife.Root
 import com.benjdero.gameoflife.RootComponent
 import com.benjdero.gameoflife.model.dao.DaoService
-import com.benjdero.gameoflife.model.dao.buildSqlDriver
+import com.benjdero.gameoflife.model.dao.SqlDriverFactory
 import com.benjdero.gameoflife.ui.RootView
 
 @OptIn(ExperimentalDecomposeApi::class)
@@ -23,7 +23,9 @@ fun main() {
             lifecycle = lifecycle
         ),
         storeFactory = LoggingStoreFactory(TimeTravelStoreFactory()),
-        daoService = DaoService(buildSqlDriver())
+        daoService = DaoService(
+            sqlDriverFactory = SqlDriverFactory()
+        )
     )
 
     application {

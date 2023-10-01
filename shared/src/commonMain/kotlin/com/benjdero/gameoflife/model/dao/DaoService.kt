@@ -6,9 +6,11 @@ import app.cash.sqldelight.logs.LogSqliteDriver
 import com.benjdero.gameoflife.World as GolWorld
 
 class DaoService(
-    sqlDriver: SqlDriver
+    sqlDriverFactory: SqlDriverFactory
 ) {
-    private val driver: SqlDriver = LogSqliteDriver(sqlDriver) { debugMessage: String ->
+    private val driver: SqlDriver = LogSqliteDriver(
+        sqlDriver = sqlDriverFactory.create()
+    ) { debugMessage: String ->
         println(debugMessage)
     }
 
