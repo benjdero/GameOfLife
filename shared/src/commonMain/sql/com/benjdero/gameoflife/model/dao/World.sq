@@ -23,7 +23,8 @@ WHERE id = ?;
 
 findAll:
 SELECT *
-FROM World;
+FROM World
+ORDER BY id DESC;
 
 maxId:
 SELECT MAX(id)
