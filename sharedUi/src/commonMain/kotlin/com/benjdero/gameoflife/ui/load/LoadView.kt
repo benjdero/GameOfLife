@@ -87,8 +87,13 @@ fun LoadView(
                                 .padding(all = 16.dp)
                         ) {
                             Row {
+                                val saved: World.Saved = world.saved
                                 Text(
-                                    text = "World"
+                                    text = if (saved is World.Saved.AsWorld) {
+                                        saved.name
+                                    } else {
+                                        "" // Should never happen here
+                                    }
                                 )
                                 Spacer(
                                     modifier = Modifier.weight(1f)
