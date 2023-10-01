@@ -80,12 +80,16 @@ class RootComponent(
         when (output) {
             is Draw.Output.Finish -> navigation.push(Configuration.Game(output.world))
             Draw.Output.GoBack -> navigation.pop()
-            Draw.Output.Load -> navigation.replaceCurrent(Configuration.Load)
+            Draw.Output.Load -> navigation.push(Configuration.Load)
         }
 
     private fun onLoadOutput(output: Load.Output): Unit =
         when (output) {
-            is Load.Output.WorldSelected -> navigation.replaceCurrent(Configuration.Draw(output.world))
+            Load.Output.GoBack -> navigation.pop()
+            is Load.Output.WorldSelected -> {
+                navigation.pop()
+                navigation.replaceCurrent(Configuration.Draw(output.world))
+            }
         }
 
     private fun onGameOutput(output: Game.Output): Unit =

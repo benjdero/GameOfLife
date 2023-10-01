@@ -43,4 +43,8 @@ class LoadComponent(
                 store.accept(Intent.DeleteWorld(it.id))
         }
     }
+
+    override fun goBack() {
+        output(Output.GoBack)
+    }
 }
