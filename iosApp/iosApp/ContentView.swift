@@ -1,5 +1,5 @@
-import SwiftUI
 import shared
+import SwiftUI
 
 struct ContentView: View {
     private let world: World
@@ -17,7 +17,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             LazyVGrid(
-                columns: (1...model.width).map { _ in
+                columns: (1 ... model.width).map { _ in
                     GridItem(.flexible(), spacing: 1)
                 },
                 spacing: 1
