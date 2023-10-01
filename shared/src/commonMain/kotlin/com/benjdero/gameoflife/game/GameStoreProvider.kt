@@ -5,6 +5,7 @@ import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import com.benjdero.gameoflife.Speed
 import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.game.GameStore.Intent
 import com.benjdero.gameoflife.game.GameStore.State
@@ -31,6 +32,7 @@ internal class GameStoreProvider(
         data class WorldUpdate(val cells: BooleanArray, val width: Int, val height: Int) : Msg()
         data object WorldRollback : Msg()
         data object ToggleShowGrid : Msg()
+        data class SetSpeed(val speed: Speed, val canSpeedUp: Boolean, val canSpeedDown: Boolean) : Msg()
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {
@@ -40,6 +42,8 @@ internal class GameStoreProvider(
                 Intent.PrevStep -> prevStep()
                 Intent.NextStep -> nextStep(getState())
                 Intent.ShowGrid -> showGrid()
+                Intent.SpeedUp -> speedUp(getState())
+                Intent.SpeedDown -> speedDown(getState())
             }
         }
 
@@ -53,7 +57,14 @@ internal class GameStoreProvider(
                         if (!state.running)
                             return@launch
                         nextStep(state)
-                        delay(100)
+                        val delay: Long =
+                            when (state.speed) {
+                                Speed.NORMAL -> 1000
+                                Speed.FAST_2X -> 500
+                                Speed.FAST_4X -> 250
+                                Speed.FAST_10X -> 100
+                            }
+                        delay(delay)
                     }
                 }
             }
@@ -203,6 +214,40 @@ internal class GameStoreProvider(
         private fun showGrid() {
             dispatch(Msg.ToggleShowGrid)
         }
+
+        private fun speedUp(state: State) {
+            val newSpeed: Speed =
+                when (state.speed) {
+                    Speed.NORMAL -> Speed.FAST_2X
+                    Speed.FAST_2X -> Speed.FAST_4X
+                    Speed.FAST_4X -> Speed.FAST_10X
+                    Speed.FAST_10X -> Speed.FAST_10X
+                }
+            dispatch(
+                Msg.SetSpeed(
+                    speed = newSpeed,
+                    canSpeedUp = newSpeed != Speed.FAST_10X,
+                    canSpeedDown = true
+                )
+            )
+        }
+
+        private fun speedDown(state: State) {
+            val newSpeed: Speed =
+                when (state.speed) {
+                    Speed.NORMAL -> Speed.NORMAL
+                    Speed.FAST_2X -> Speed.NORMAL
+                    Speed.FAST_4X -> Speed.FAST_2X
+                    Speed.FAST_10X -> Speed.FAST_4X
+                }
+            dispatch(
+                Msg.SetSpeed(
+                    speed = newSpeed,
+                    canSpeedUp = true,
+                    canSpeedDown = newSpeed != Speed.NORMAL
+                )
+            )
+        }
     }
 
     private object ReducerImpl : Reducer<State, Msg> {
@@ -212,6 +257,7 @@ internal class GameStoreProvider(
                 is Msg.WorldUpdate -> worldUpdate(cells = msg.cells, width = msg.width, height = msg.height)
                 is Msg.WorldRollback -> worldRollback()
                 Msg.ToggleShowGrid -> copy(showGrid = !showGrid)
+                is Msg.SetSpeed -> copy(speed = msg.speed, canSpeedUp = msg.canSpeedUp, canSpeedDown = msg.canSpeedDown)
             }
 
         private fun State.worldUpdate(cells: BooleanArray, width: Int, height: Int) =
