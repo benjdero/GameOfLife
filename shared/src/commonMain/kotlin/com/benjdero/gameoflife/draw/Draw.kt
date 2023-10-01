@@ -34,7 +34,7 @@ interface Draw {
 
     fun load()
 
-    fun save()
+    fun save(world: World)
 
     fun finish()
 
@@ -63,5 +63,6 @@ interface Draw {
         data class Finish(val world: World) : Output()
         data object GoBack : Output()
         data object Load : Output()
+        data class Save(val world: World) : Output()
     }
 }

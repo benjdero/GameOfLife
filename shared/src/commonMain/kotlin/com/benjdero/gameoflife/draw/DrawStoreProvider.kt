@@ -8,12 +8,9 @@ import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.draw.DrawStore.Intent
 import com.benjdero.gameoflife.draw.DrawStore.State
-import com.benjdero.gameoflife.model.dao.DaoService
-import kotlinx.coroutines.launch
 
 internal class DrawStoreProvider(
     private val storeFactory: StoreFactory,
-    private val daoService: DaoService,
     private val world: World?
 ) {
     fun provide(): DrawStore =
@@ -50,7 +47,6 @@ internal class DrawStoreProvider(
                 Intent.DecreaseRight -> decreaseRight(getState())
                 Intent.IncreaseBottom -> increaseBottom(getState())
                 Intent.DecreaseBottom -> decreaseBottom(getState())
-                Intent.Save -> save(getState())
             }
         }
 
@@ -201,12 +197,6 @@ internal class DrawStoreProvider(
                         cells[index]
                     }
                 dispatch(Msg.HeightChanged(newHeight, newWorld))
-            }
-        }
-
-        private fun save(state: State) {
-            scope.launch {
-                daoService.saveWorld(state.world)
             }
         }
     }

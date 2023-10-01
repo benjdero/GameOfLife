@@ -22,11 +22,11 @@ class DaoService(
         )
     )
 
-    fun saveWorld(world: GolWorld) {
+    fun saveWorld(world: GolWorld, name: String) {
         val byteArray = booleanArrayToByteArray(world.cells, world.width * world.height)
         when (world.saved) {
             GolWorld.Saved.Not ->
-                database.worldQueries.insert(world.width, world.height, byteArray)
+                database.worldQueries.insert(world.width, world.height, byteArray, name)
             is GolWorld.Saved.AsWorld ->
                 database.worldQueries.update(world.width, world.height, byteArray, world.saved.id)
         }
@@ -37,15 +37,21 @@ class DaoService(
     }
 
     fun findAllWorld(): List<GolWorld> =
-        database.worldQueries.findAll { id: Long, width: Int, height: Int, cells: ByteArray ->
+        database.worldQueries.findAll { id: Long, name: String, width: Int, height: Int, cells: ByteArray ->
             val booleanArray = byteArrayToBooleanArray(cells, width * height)
             GolWorld(
-                saved = GolWorld.Saved.AsWorld(id),
+                saved = GolWorld.Saved.AsWorld(
+                    id = id,
+                    name = name
+                ),
                 width = width,
                 height = height,
                 cells = booleanArray
             )
         }.executeAsList()
+
+    fun maxWorldId(): Long? =
+        database.worldQueries.maxId().executeAsOne().MAX
 
     /**
      * World cells are converted to ByteArray to be saved in the database

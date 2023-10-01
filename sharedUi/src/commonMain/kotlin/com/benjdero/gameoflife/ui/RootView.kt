@@ -8,6 +8,7 @@ import com.benjdero.gameoflife.ui.draw.DrawView
 import com.benjdero.gameoflife.ui.game.GameView
 import com.benjdero.gameoflife.ui.load.LoadView
 import com.benjdero.gameoflife.ui.menu.MenuView
+import com.benjdero.gameoflife.ui.save.SaveView
 
 @Composable
 fun RootView(
@@ -21,6 +22,7 @@ fun RootView(
                 is Root.Child.ChildMenu -> MenuView(child.component)
                 is Root.Child.ChildDraw -> DrawView(child.component)
                 is Root.Child.ChildLoad -> LoadView(child.component)
+                is Root.Child.ChildSave -> SaveView(child.component)
                 is Root.Child.ChildGame -> GameView(child.component)
             }
         }

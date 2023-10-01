@@ -2,14 +2,15 @@ import kotlin.Int;
 
 CREATE TABLE World (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
     width INTEGER AS Int NOT NULL,
     height INTEGER AS Int NOT NULL,
     cells BLOB NOT NULL
 );
 
 insert:
-INSERT INTO World(width, height, cells)
-VALUES (?, ?, ?);
+INSERT INTO World(width, height, cells, name)
+VALUES (?, ?, ?, ?);
 
 update:
 UPDATE World
@@ -22,4 +23,8 @@ WHERE id = ?;
 
 findAll:
 SELECT *
+FROM World;
+
+maxId:
+SELECT MAX(id)
 FROM World;

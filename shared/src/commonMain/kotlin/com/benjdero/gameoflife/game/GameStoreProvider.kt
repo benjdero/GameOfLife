@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 internal class GameStoreProvider(
     private val storeFactory: StoreFactory,
-    val world: World?
+    private val world: World?
 ) {
     fun provide(): GameStore =
         object : GameStore, Store<Intent, State, Nothing> by storeFactory.create(

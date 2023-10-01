@@ -47,7 +47,7 @@ fun DrawPreview() {
                 override fun increaseBottom() {}
                 override fun decreaseBottom() {}
                 override fun load() {}
-                override fun save() {}
+                override fun save(world: World) {}
                 override fun finish() {}
                 override fun goBack() {}
             }

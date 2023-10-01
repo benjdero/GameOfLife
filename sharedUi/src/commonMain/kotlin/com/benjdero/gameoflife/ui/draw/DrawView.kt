@@ -131,7 +131,9 @@ fun DrawView(
                         modifier = Modifier.width(8.dp)
                     )
                     IconButton(
-                        onClick = component::save
+                        onClick = {
+                            component.save(model.world)
+                        }
                     ) {
                         Icon(
                             imageVector = Icons.Default.Save,
