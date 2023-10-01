@@ -19,7 +19,9 @@ internal class DrawStoreProvider(
     fun provide(): DrawStore =
         object : DrawStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "DrawStore",
-            initialState = State(world ?: World.random()),
+            initialState = State(
+                world = world ?: World.random()
+            ),
             bootstrapper = SimpleBootstrapper(),
             executorFactory = ::ExecutorImpl,
             reducer = ReducerImpl

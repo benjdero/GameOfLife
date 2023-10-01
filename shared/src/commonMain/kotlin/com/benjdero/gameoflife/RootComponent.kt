@@ -73,7 +73,7 @@ class RootComponent(
     private fun onMenuOutput(output: Menu.Output): Unit =
         when (output) {
             Menu.Output.StartDraw -> navigation.push(Configuration.Draw(null))
-            Menu.Output.StartGame -> navigation.push(Configuration.Game(World.random(15, 10)))
+            Menu.Output.StartGame -> navigation.push(Configuration.Game(null))
         }
 
     private fun onDrawOutput(output: Draw.Output): Unit =
@@ -106,6 +106,6 @@ class RootComponent(
         data object Load : Configuration()
 
         @Parcelize
-        data class Game(val world: World) : Configuration()
+        data class Game(val world: World?) : Configuration()
     }
 }

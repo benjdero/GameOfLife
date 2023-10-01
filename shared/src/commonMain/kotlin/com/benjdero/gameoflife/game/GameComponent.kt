@@ -14,7 +14,7 @@ import com.benjdero.gameoflife.game.GameStore.Intent
 class GameComponent(
     componentContext: ComponentContext,
     storeFactory: StoreFactory,
-    world: World,
+    world: World?,
     private val output: (Output) -> Unit
 ) : Game, ComponentContext by componentContext {
 

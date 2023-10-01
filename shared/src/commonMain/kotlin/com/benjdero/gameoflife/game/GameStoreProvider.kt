@@ -13,13 +13,13 @@ import kotlinx.coroutines.launch
 
 internal class GameStoreProvider(
     private val storeFactory: StoreFactory,
-    val world: World
+    val world: World?
 ) {
     fun provide(): GameStore =
         object : GameStore, Store<Intent, State, Nothing> by storeFactory.create(
             name = "WorldStore",
             initialState = State(
-                world = world
+                world = world ?: World.random()
             ),
             bootstrapper = SimpleBootstrapper(),
             executorFactory = ::ExecutorImpl,
