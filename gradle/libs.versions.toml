@@ -7,14 +7,14 @@ kotlin = "1.9.10"
 # Shared
 coroutines = "1.7.3"
 mvikotlin = "3.2.1"
-decompose = "2.1.0"
+decompose = "2.1.2"
 essenty = "1.2.0"
 sqldelight = "2.0.0"
 mokoResources = "0.23.0"
 
 # SharedUi
 composeCompiler = "1.5.3"
-compose = "1.5.2"
+compose = "1.5.3"
 
 # Android
 activityCompose = "1.7.2"
