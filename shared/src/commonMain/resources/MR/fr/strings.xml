@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+    <string name="app_name">Game Of Life</string>
     <string name="menu_start_draw">Dessiner</string>
     <string name="menu_start_game">Jouer</string>
     <string name="load_list_empty">Aucun monde sauvegardé</string>
