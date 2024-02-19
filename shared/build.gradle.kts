@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -17,8 +19,8 @@ kotlin {
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
+    ).forEach { iosTarget: KotlinNativeTarget ->
+        iosTarget.binaries.framework {
             baseName = "shared"
             export(libs.mvikotlin)
             export(libs.mvikotlinLogging)

@@ -1,3 +1,5 @@
+rootProject.name = "GameOfLife"
+
 pluginManagement {
     repositories {
         google()
@@ -6,7 +8,13 @@ pluginManagement {
     }
 }
 
-rootProject.name = "GameOfLife"
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
 include(":androidApp")
 include(":desktopApp")
 include(":shared")

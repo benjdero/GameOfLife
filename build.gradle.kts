@@ -5,24 +5,11 @@ plugins {
 }
 
 buildscript {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
         classpath("com.android.tools.build:gradle:${libs.versions.agp.get()}")
         classpath("app.cash.sqldelight:gradle-plugin:${libs.versions.sqldelight.get()}")
         classpath("dev.icerock.moko:resources-generator:${libs.versions.mokoResources.get()}")
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
     }
 }
 
