@@ -1,16 +1,14 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
-    id("com.github.ben-manes.versions") version libs.versions.checker.get()
-}
-
-buildscript {
-    dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${libs.versions.kotlin.get()}")
-        classpath("com.android.tools.build:gradle:${libs.versions.agp.get()}")
-        classpath("app.cash.sqldelight:gradle-plugin:${libs.versions.sqldelight.get()}")
-        classpath("dev.icerock.moko:resources-generator:${libs.versions.mokoResources.get()}")
-    }
+    alias(libs.plugins.checker)
+    alias(libs.plugins.androidApplication) apply false
+    alias(libs.plugins.androidLibrary) apply false
+    alias(libs.plugins.jetbrainsCompose) apply false
+    alias(libs.plugins.kotlinMultiplatform) apply false
+    alias(libs.plugins.sqldelight) apply false
+    alias(libs.plugins.mokoResources) apply false
+    alias(libs.plugins.kotlinParcelize) apply false
 }
 
 fun isNonStable(version: String): Boolean {

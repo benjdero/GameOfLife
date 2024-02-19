@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("kotlin-parcelize")
-    id("app.cash.sqldelight")
-    id("dev.icerock.mobile.multiplatform-resources")
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.sqldelight)
+    alias(libs.plugins.mokoResources)
+    alias(libs.plugins.kotlinParcelize)
 }
 
 kotlin {

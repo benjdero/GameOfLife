@@ -31,12 +31,22 @@ decomposeCompose = { group = "com.arkivanov.decompose", name = "extensions-compo
 essenty = { group = "com.arkivanov.essenty", name = "lifecycle", version.ref = "essenty" }
 sqldelightRuntime = { group = "app.cash.sqldelight", name = "runtime", version.ref = "sqldelight" }
 sqldelightPrimitive = { group = "app.cash.sqldelight", name = "primitive-adapters", version.ref = "sqldelight" }
-sqldelightAndroidDriver = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight"}
-sqldelightDesktopDriver = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight"}
-sqldelightNativeDriver = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sqldelight"}
+sqldelightAndroidDriver = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
+sqldelightDesktopDriver = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
+sqldelightNativeDriver = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sqldelight" }
 mokoResources = { group = "dev.icerock.moko", name = "resources", version.ref = "mokoResources" }
 mokoResourcesCompose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "mokoResources" }
-mokoResourcesTest = { group = "dev.icerock.moko", name = "resources-test", version.ref = "mokoResources"}
-activityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose"}
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat"}
-material = { group = "com.google.android.material", name = "material", version.ref = "material"}
+mokoResourcesTest = { group = "dev.icerock.moko", name = "resources-test", version.ref = "mokoResources" }
+activityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+mokoResources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "mokoResources" }
+checker = { id = "com.github.ben-manes.versions", version.ref = "checker" }
+kotlinParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
