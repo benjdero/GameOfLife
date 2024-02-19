@@ -21,7 +21,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget: KotlinNativeTarget ->
         iosTarget.binaries.framework {
-            baseName = "shared"
+            baseName = "Shared"
             export(libs.mvikotlin)
             export(libs.mvikotlinLogging)
             export(libs.mvikotlinTimetravel)

@@ -1,4 +1,4 @@
-import shared
+import Shared
 import SwiftUI
 
 struct DrawView: View {

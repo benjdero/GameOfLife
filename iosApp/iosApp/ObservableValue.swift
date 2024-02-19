@@ -1,22 +1,18 @@
-import shared
+import Shared
 import SwiftUI
 
 public class ObservableValue<T: AnyObject>: ObservableObject {
-    private let observableValue: Value<T>
-
     @Published
     var value: T
 
-    private var observer: ((T) -> Void)?
+    private var cancellation: Cancellation?
 
     init(_ value: Value<T>) {
-        observableValue = value
-        self.value = observableValue.value
-        observer = { [weak self] value in self?.value = value }
-        observableValue.subscribe(observer: observer!)
+        self.value = value.value
+        cancellation = value.observe { [weak self] value in self?.value = value }
     }
 
     deinit {
-        observableValue.unsubscribe(observer: self.observer!)
+        cancellation?.cancel()
     }
 }
