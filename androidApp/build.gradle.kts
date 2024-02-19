@@ -42,7 +42,7 @@ android {
 dependencies {
     implementation(project(":shared"))
     implementation(project(":sharedUi"))
-    implementation("androidx.activity:activity-compose:${libs.versions.activityCompose.get()}")
-    implementation("androidx.appcompat:appcompat:${libs.versions.appcompat.get()}")
-    implementation("com.google.android.material:material:${libs.versions.material.get()}")
+    implementation(libs.activityCompose)
+    implementation(libs.appcompat)
+    implementation(libs.material)
 }

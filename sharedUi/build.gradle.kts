@@ -22,8 +22,8 @@ kotlin {
                 implementation(compose.animation)
                 implementation(compose.uiTooling)
                 implementation(compose.materialIconsExtended)
-                api("com.arkivanov.decompose:extensions-compose-jetbrains:${libs.versions.decompose.get()}")
-                implementation("dev.icerock.moko:resources-compose:${libs.versions.mokoResources.get()}")
+                api(libs.decomposeCompose)
+                implementation(libs.mokoResourcesCompose)
             }
         }
         val commonTest by getting {
