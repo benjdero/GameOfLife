@@ -40,8 +40,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":shared"))
-    implementation(project(":sharedUi"))
+    implementation(projects.shared)
+    implementation(projects.sharedUi)
     implementation(libs.activityCompose)
     implementation(libs.appcompat)
     implementation(libs.material)
