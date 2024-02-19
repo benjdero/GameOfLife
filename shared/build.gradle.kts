@@ -10,7 +10,7 @@ plugins {
 
 kotlin {
     androidTarget()
-    jvm("desktop") {
+    jvm {
         compilations.all {
             kotlinOptions.jvmTarget = "18"
         }
@@ -32,62 +32,32 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.coroutines)
-                api(libs.mvikotlin)
-                api(libs.mvikotlinLogging)
-                api(libs.mvikotlinTimetravel)
-                implementation(libs.mvikotlinRx)
-                implementation(libs.mvikotlinCoroutines)
-                api(libs.decompose)
-                api(libs.essenty)
-                implementation(libs.sqldelightRuntime)
-                implementation(libs.sqldelightPrimitive)
-                api(libs.mokoResources)
-            }
+        commonMain.dependencies {
+            implementation(libs.coroutines)
+            api(libs.mvikotlin)
+            api(libs.mvikotlinLogging)
+            api(libs.mvikotlinTimetravel)
+            implementation(libs.mvikotlinRx)
+            implementation(libs.mvikotlinCoroutines)
+            api(libs.decompose)
+            api(libs.essenty)
+            implementation(libs.sqldelightRuntime)
+            implementation(libs.sqldelightPrimitive)
+            api(libs.mokoResources)
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(libs.mokoResourcesTest)
-            }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.mokoResourcesTest)
         }
-        val androidMain by getting {
-            dependsOn(commonMain)
-            dependencies {
-                implementation(libs.sqldelightAndroidDriver)
-            }
+        androidMain.dependencies {
+            implementation(libs.sqldelightAndroidDriver)
         }
-        val androidUnitTest by getting
-        val desktopMain by getting {
-            dependsOn(commonMain)
-            dependencies {
-                implementation(libs.coroutinesDesktop)
-                implementation(libs.sqldelightDesktopDriver)
-            }
+        jvmMain.dependencies {
+            implementation(libs.coroutinesDesktop)
+            implementation(libs.sqldelightDesktopDriver)
         }
-        val desktopTest by getting
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation(libs.sqldelightNativeDriver)
-            }
-        }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
-            dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
+        iosMain.dependencies {
+            implementation(libs.sqldelightNativeDriver)
         }
     }
 }
@@ -97,6 +67,7 @@ android {
     namespace = "com.benjdero.gameoflife"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].java.srcDirs("build/generated/moko/androidMain/src")
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()

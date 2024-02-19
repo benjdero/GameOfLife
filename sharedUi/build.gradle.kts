@@ -6,15 +6,14 @@ plugins {
 
 kotlin {
     androidTarget()
-    jvm("desktop") {
+    jvm {
         compilations.all {
             kotlinOptions.jvmTarget = "18"
         }
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
+        commonMain.dependencies {
                 implementation(project(":shared"))
                 implementation(compose.runtime)
                 implementation(compose.foundation)
@@ -24,21 +23,13 @@ kotlin {
                 implementation(compose.materialIconsExtended)
                 api(libs.decomposeCompose)
                 implementation(libs.mokoResourcesCompose)
-            }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
         }
-        val androidMain by getting
-        val androidUnitTest by getting
-        val desktopMain by getting {
-            dependencies {
-                implementation(compose.desktop.currentOs)
-            }
+        jvmMain.dependencies {
+            implementation(compose.desktop.currentOs)
         }
-        val desktopTest by getting
     }
 }
 
