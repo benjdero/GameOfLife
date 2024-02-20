@@ -1,7 +1,7 @@
 package com.benjdero.gameoflife.ui.common
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,9 +23,9 @@ internal fun CellGridView(
     showCursor: Boolean,
     world: World
 ) {
-    val aliveCellColor: Color = MaterialTheme.colors.secondary
-    val deadCellColor: Color = MaterialTheme.colors.background
-    val cursorColor: Color = MaterialTheme.colors.error
+    val aliveCellColor: Color = MaterialTheme.colorScheme.secondary
+    val deadCellColor: Color = MaterialTheme.colorScheme.background
+    val cursorColor: Color = MaterialTheme.colorScheme.error
     val (cursorPosition, setCursorPosition) = remember { mutableStateOf<Offset?>(null) }
 
     Canvas(

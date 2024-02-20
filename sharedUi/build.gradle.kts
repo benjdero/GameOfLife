@@ -8,7 +8,7 @@ kotlin {
     androidTarget()
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "18"
+            kotlinOptions.jvmTarget = "17"
         }
     }
 
@@ -17,7 +17,7 @@ kotlin {
                 implementation(projects.shared)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-                implementation(compose.material)
+                implementation(compose.material3)
                 implementation(compose.animation)
                 implementation(compose.uiTooling)
                 implementation(compose.materialIconsExtended)
@@ -44,11 +44,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlin {
-        jvmToolchain(18)
+        jvmToolchain(17)
     }
 }

@@ -10,15 +10,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.BottomAppBar
-import androidx.compose.material.FabPosition
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -66,9 +66,30 @@ fun GameView(
         Scaffold(
             bottomBar = {
                 BottomAppBar(
+                    actions = {
+
+                    },
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            onClick = component::runGame
+                        ) {
+                            Icon(
+                                imageVector = if (model.running)
+                                    Icons.Default.Pause
+                                else
+                                    Icons.Default.PlayArrow,
+                                contentDescription = if (model.running)
+                                    stringResource(Res.strings.game_pause)
+                                else
+                                    stringResource(Res.strings.game_run),
+                            )
+                        }
+                    }
+                )
+                BottomAppBar(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    cutoutShape = CircleShape
+//                    cutoutShape = CircleShape // TODO
                 ) {
                     ControlView(
                         model = model,
@@ -92,7 +113,7 @@ fun GameView(
                     )
                 }
             },
-            isFloatingActionButtonDocked = true,
+//            isFloatingActionButtonDocked = true,
             floatingActionButtonPosition = FabPosition.Center,
             floatingActionButton = {
                 FloatingActionButton(
@@ -145,9 +166,9 @@ fun GameView(
                             .fillMaxSize()
                             .background(
                                 if (model.showGrid)
-                                    MaterialTheme.colors.onBackground
+                                    MaterialTheme.colorScheme.onBackground
                                 else
-                                    MaterialTheme.colors.background
+                                    MaterialTheme.colorScheme.background
                             ),
                         showCursor = false,
                         world = model.world

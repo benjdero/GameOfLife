@@ -1,6 +1,5 @@
 package com.benjdero.gameoflife.ui
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.benjdero.gameoflife.Root
@@ -9,12 +8,13 @@ import com.benjdero.gameoflife.ui.game.GameView
 import com.benjdero.gameoflife.ui.load.LoadView
 import com.benjdero.gameoflife.ui.menu.MenuView
 import com.benjdero.gameoflife.ui.save.SaveView
+import com.benjdero.gameoflife.ui.theme.MyTheme
 
 @Composable
 fun RootView(
     component: Root
 ) {
-    MaterialTheme {
+    MyTheme {
         Children(
             stack = component.childStack
         ) {
