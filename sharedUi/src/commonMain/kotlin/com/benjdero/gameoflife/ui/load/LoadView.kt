@@ -116,6 +116,7 @@ fun LoadView(
                                 modifier = Modifier
                                     .height(240.dp)
                                     .fillMaxWidth(),
+                                showCursor = false,
                                 world = world
                             )
                         }

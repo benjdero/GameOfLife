@@ -197,6 +197,7 @@ fun DrawView(
                                 else
                                     MaterialTheme.colors.background
                             ),
+                        showCursor = true,
                         world = model.world
                     )
                     Column(

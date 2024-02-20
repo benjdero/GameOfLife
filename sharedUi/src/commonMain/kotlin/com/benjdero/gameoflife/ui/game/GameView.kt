@@ -149,6 +149,7 @@ fun GameView(
                                 else
                                     MaterialTheme.colors.background
                             ),
+                        showCursor = false,
                         world = model.world
                     )
                 }

@@ -58,6 +58,7 @@ fun SaveView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
+                    showCursor = false,
                     world = model.world
                 )
                 TextField(
