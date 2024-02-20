@@ -7,7 +7,7 @@ import com.benjdero.gameoflife.ui.theme.MyTheme
 
 @Preview
 @Composable
-fun DrawPreview() {
+private fun DrawPreview() {
     MyTheme {
         DrawView(
             component = DrawMock()
