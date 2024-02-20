@@ -5,15 +5,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.input.pointer.PointerEvent
-import androidx.compose.ui.input.pointer.PointerEventType
-import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.unit.IntOffset
 import com.benjdero.gameoflife.World
 import kotlin.math.min
@@ -21,7 +17,6 @@ import kotlin.math.min
 private const val PADDING_HORIZONTAL = 1f
 private const val PADDING_VERTICAL = 1f
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun CellGridView(
     modifier: Modifier = Modifier,
@@ -35,14 +30,10 @@ internal fun CellGridView(
 
     Canvas(
         modifier = modifier
-            .onPointerEvent(PointerEventType.Move) { event: PointerEvent ->
-                if (showCursor) {
-                    setCursorPosition(event.changes.last().position)
-                }
-            }
-            .onPointerEvent(PointerEventType.Exit) {
-                setCursorPosition(null)
-            }
+            .onPointerMoveEvent(
+                showCursor = showCursor,
+                setCursorPosition = setCursorPosition
+            )
     ) {
         val cellWidth: Float = size.width / world.width
         val cellHeight: Float = size.height / world.height
