@@ -32,6 +32,14 @@ kotlin {
     }
 
     sourceSets {
+        // Fix temporaire pour MokoResources
+        // Voir https://github.com/icerockdev/moko-resources/issues/531
+        jvmMain {
+            dependsOn(commonMain.get())
+        }
+    }
+
+    sourceSets {
         commonMain.dependencies {
             implementation(libs.coroutines)
             api(libs.mvikotlin)
