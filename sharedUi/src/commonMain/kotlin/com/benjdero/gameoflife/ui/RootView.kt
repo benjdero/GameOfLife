@@ -9,12 +9,13 @@ import com.benjdero.gameoflife.ui.game.GameView
 import com.benjdero.gameoflife.ui.load.LoadView
 import com.benjdero.gameoflife.ui.menu.MenuView
 import com.benjdero.gameoflife.ui.save.SaveView
+import com.benjdero.gameoflife.ui.theme.MyTheme
 
 @Composable
 fun RootView(
     component: Root
 ) {
-    MaterialTheme {
+    MyTheme {
         Children(
             stack = component.childStack
         ) {

@@ -23,7 +23,6 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.benjdero.gameoflife.save.Save
 import com.benjdero.gameoflife.save.Save.Model
 import com.benjdero.gameoflife.ui.common.CellGridView
-import com.benjdero.gameoflife.ui.theme.MyTheme
 
 @Composable
 fun SaveView(
@@ -31,61 +30,59 @@ fun SaveView(
 ) {
     val model: Model by component.models.subscribeAsState()
 
-    MyTheme {
-        Scaffold(
-            bottomBar = {
-                BottomAppBar(
-                    modifier = Modifier
-                        .fillMaxWidth()
+    Scaffold(
+        bottomBar = {
+            BottomAppBar(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                IconButton(
+                    onClick = component::exit
                 ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = null
+                    )
+                }
+            }
+        }
+    ) { scaffoldPadding: PaddingValues ->
+        Column(
+            modifier = Modifier
+                .padding(scaffoldPadding),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CellGridView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                showCursor = false,
+                world = model.world
+            )
+            TextField(
+                value = model.name,
+                onValueChange = component::setName,
+                singleLine = true,
+                trailingIcon = {
                     IconButton(
-                        onClick = component::exit
+                        onClick = component::clearName,
+                        enabled = model.canSave
                     ) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.Default.Clear,
                             contentDescription = null
                         )
                     }
                 }
-            }
-        ) { scaffoldPadding: PaddingValues ->
-            Column(
-                modifier = Modifier
-                    .padding(scaffoldPadding),
-                horizontalAlignment = Alignment.CenterHorizontally
+            )
+            Button(
+                onClick = component::save,
+                enabled = model.canSave
             ) {
-                CellGridView(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    showCursor = false,
-                    world = model.world
+                Icon(
+                    imageVector = Icons.Default.Save,
+                    contentDescription = null
                 )
-                TextField(
-                    value = model.name,
-                    onValueChange = component::setName,
-                    singleLine = true,
-                    trailingIcon = {
-                        IconButton(
-                            onClick = component::clearName,
-                            enabled = model.canSave
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Clear,
-                                contentDescription = null
-                            )
-                        }
-                    }
-                )
-                Button(
-                    onClick = component::save,
-                    enabled = model.canSave
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Save,
-                        contentDescription = null
-                    )
-                }
             }
         }
     }

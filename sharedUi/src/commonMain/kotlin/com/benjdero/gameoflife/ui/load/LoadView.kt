@@ -32,7 +32,6 @@ import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.load.Load
 import com.benjdero.gameoflife.load.Load.Model
 import com.benjdero.gameoflife.ui.common.CellGridView
-import com.benjdero.gameoflife.ui.theme.MyTheme
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
@@ -41,85 +40,83 @@ fun LoadView(
 ) {
     val model: Model by component.models.subscribeAsState()
 
-    MyTheme {
-        Scaffold(
-            bottomBar = {
-                BottomAppBar(
-                    modifier = Modifier
-                        .fillMaxWidth()
+    Scaffold(
+        bottomBar = {
+            BottomAppBar(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                IconButton(
+                    onClick = component::goBack
                 ) {
-                    IconButton(
-                        onClick = component::goBack
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = null
-                        )
-                    }
-                }
-            }
-        ) { scaffoldPadding: PaddingValues ->
-            if (model.worldList.isEmpty()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .align(Alignment.Center),
-                        text = stringResource(Res.strings.load_list_empty)
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = null
                     )
                 }
             }
-            LazyColumn(
-                modifier = Modifier.padding(scaffoldPadding)
+        }
+    ) { scaffoldPadding: PaddingValues ->
+        if (model.worldList.isEmpty()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
             ) {
-                items(model.worldList) { world: World ->
-                    Card(
-                        modifier = Modifier
-                            .padding(all = 8.dp)
-                            .clickable {
-                                component.onWorldSelected(world)
-                            }
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .padding(all = 16.dp)
-                        ) {
-                            Row {
-                                val saved: World.Saved = world.saved
-                                Text(
-                                    text = if (saved is World.Saved.AsWorld) {
-                                        saved.name
-                                    } else {
-                                        "" // Should never happen here
-                                    }
-                                )
-                                Spacer(
-                                    modifier = Modifier.weight(1f)
-                                )
-                                IconButton(
-                                    onClick = {
-                                        component.deleteWorld(world)
-                                    }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Delete,
-                                        contentDescription = null
-                                    )
-                                }
-                            }
-                            Spacer(
-                                modifier = Modifier.height(4.dp)
-                            )
-                            CellGridView(
-                                modifier = Modifier
-                                    .height(240.dp)
-                                    .fillMaxWidth(),
-                                showCursor = false,
-                                world = world
-                            )
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.Center),
+                    text = stringResource(Res.strings.load_list_empty)
+                )
+            }
+        }
+        LazyColumn(
+            modifier = Modifier.padding(scaffoldPadding)
+        ) {
+            items(model.worldList) { world: World ->
+                Card(
+                    modifier = Modifier
+                        .padding(all = 8.dp)
+                        .clickable {
+                            component.onWorldSelected(world)
                         }
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(all = 16.dp)
+                    ) {
+                        Row {
+                            val saved: World.Saved = world.saved
+                            Text(
+                                text = if (saved is World.Saved.AsWorld) {
+                                    saved.name
+                                } else {
+                                    "" // Should never happen here
+                                }
+                            )
+                            Spacer(
+                                modifier = Modifier.weight(1f)
+                            )
+                            IconButton(
+                                onClick = {
+                                    component.deleteWorld(world)
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = null
+                                )
+                            }
+                        }
+                        Spacer(
+                            modifier = Modifier.height(4.dp)
+                        )
+                        CellGridView(
+                            modifier = Modifier
+                                .height(240.dp)
+                                .fillMaxWidth(),
+                            showCursor = false,
+                            world = world
+                        )
                     }
                 }
             }
