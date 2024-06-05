@@ -30,6 +30,9 @@ class GameComponent(
         Model(
             running = it.running,
             generation = it.generation,
+            speed = it.speed,
+            canSpeedUp = it.canSpeedUp,
+            canSpeedDown = it.canSpeedDown,
             world = it.world,
             showGrid = it.showGrid,
             history = it.history
@@ -54,5 +57,13 @@ class GameComponent(
 
     override fun goBack() {
         output(Output.GoBack)
+    }
+
+    override fun speedUp() {
+        store.accept(Intent.SpeedUp)
+    }
+
+    override fun speedDown() {
+        store.accept(Intent.SpeedDown)
     }
 }

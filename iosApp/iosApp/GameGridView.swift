@@ -1,4 +1,4 @@
-import shared
+import Shared
 import SwiftUI
 
 struct GameGridView: View {
@@ -20,13 +20,13 @@ struct GameGridView: View {
                     c.fill(
                         Path(
                             CGRect(
-                                x: Int(x) * cellSize,
-                                y: Int(y) * cellSize,
+                                x: Int(truncating: x) * cellSize,
+                                y: Int(truncating: y) * cellSize,
                                 width: cellSize,
                                 height: cellSize
                             )
                         ),
-                        with: .color(Bool(cell) ? .green : .white)
+                        with: .color(Bool(truncating: cell) ? .green : .white)
                     )
                 }
             }

@@ -10,11 +10,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
@@ -41,13 +40,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.benjdero.gameoflife.draw.Draw
 import com.benjdero.gameoflife.draw.Draw.Model
 import com.benjdero.gameoflife.ui.common.CellGridView
@@ -197,103 +195,151 @@ fun DrawView(
                                 else
                                     MaterialTheme.colors.background
                             ),
+                        showCursor = true,
                         world = model.world
                     )
-                    Column(
+                    Row(
                         modifier = Modifier
                             .align(Alignment.CenterStart)
                             .padding(start = 16.dp)
                     ) {
-                        WorldSizeButton(
-                            imageVector = Icons.Outlined.ArrowCircleLeft,
+                        Button(
+                            modifier = Modifier.size(36.dp),
+                            shape = RoundedCornerShape(
+                                topStart = 50f,
+                                bottomStart = 50f
+                            ),
+                            contentPadding = PaddingValues(all = 0.dp),
                             onClick = component::increaseLeft
-                        )
-                        Spacer(
-                            modifier = Modifier.height(8.dp)
-                        )
-                        WorldSizeButton(
-                            imageVector = Icons.Outlined.ArrowCircleRight,
-                            onClick = component::decreaseLeft,
-                            enabled = model.allowDecreaseWidth
-                        )
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.ArrowCircleLeft,
+                                contentDescription = null
+                            )
+                        }
+                        Button(
+                            modifier = Modifier.size(36.dp),
+                            shape = RoundedCornerShape(
+                                topEnd = 50f,
+                                bottomEnd = 50f
+                            ),
+                            contentPadding = PaddingValues(all = 0.dp),
+                            enabled = model.allowDecreaseWidth,
+                            onClick = component::decreaseLeft
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.ArrowCircleRight,
+                                contentDescription = null
+                            )
+                        }
                     }
-                    Row(
+                    Column(
                         modifier = Modifier
                             .align(Alignment.TopCenter)
                             .padding(top = 16.dp)
                     ) {
-                        WorldSizeButton(
-                            imageVector = Icons.Outlined.ArrowCircleUp,
+                        Button(
+                            modifier = Modifier.size(36.dp),
+                            shape = RoundedCornerShape(
+                                topStart = 50f,
+                                topEnd = 50f
+                            ),
+                            contentPadding = PaddingValues(all = 0.dp),
                             onClick = component::increaseTop
-                        )
-                        Spacer(
-                            modifier = Modifier.width(8.dp)
-                        )
-                        WorldSizeButton(
-                            imageVector = Icons.Outlined.ArrowCircleDown,
-                            onClick = component::decreaseTop,
-                            enabled = model.allowDecreaseHeight
-                        )
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.ArrowCircleUp,
+                                contentDescription = null
+                            )
+                        }
+                        Button(
+                            modifier = Modifier.size(36.dp),
+                            shape = RoundedCornerShape(
+                                bottomStart = 50f,
+                                bottomEnd = 50f
+                            ),
+                            contentPadding = PaddingValues(all = 0.dp),
+                            enabled = model.allowDecreaseHeight,
+                            onClick = component::decreaseTop
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.ArrowCircleDown,
+                                contentDescription = null
+                            )
+                        }
                     }
-                    Column(
+                    Row(
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
                             .padding(end = 16.dp)
                     ) {
-                        WorldSizeButton(
-                            imageVector = Icons.Outlined.ArrowCircleRight,
+                        Button(
+                            modifier = Modifier.size(36.dp),
+                            shape = RoundedCornerShape(
+                                topStart = 50f,
+                                bottomStart = 50f
+                            ),
+                            contentPadding = PaddingValues(all = 0.dp),
+                            enabled = model.allowDecreaseWidth,
+                            onClick = component::decreaseRight
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.ArrowCircleLeft,
+                                contentDescription = null
+                            )
+                        }
+                        Button(
+                            modifier = Modifier.size(36.dp),
+                            shape = RoundedCornerShape(
+                                topEnd = 50f,
+                                bottomEnd = 50f
+                            ),
+                            contentPadding = PaddingValues(all = 0.dp),
                             onClick = component::increaseRight
-                        )
-                        Spacer(
-                            modifier = Modifier.height(8.dp)
-                        )
-                        WorldSizeButton(
-                            imageVector = Icons.Outlined.ArrowCircleLeft,
-                            onClick = component::decreaseRight,
-                            enabled = model.allowDecreaseWidth
-                        )
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.ArrowCircleRight,
+                                contentDescription = null
+                            )
+                        }
                     }
-                    Row(
+                    Column(
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
                             .padding(bottom = 16.dp)
                     ) {
-                        WorldSizeButton(
-                            imageVector = Icons.Outlined.ArrowCircleDown,
+                        Button(
+                            modifier = Modifier.size(36.dp),
+                            shape = RoundedCornerShape(
+                                topStart = 50f,
+                                topEnd = 50f
+                            ),
+                            contentPadding = PaddingValues(all = 0.dp),
+                            enabled = model.allowDecreaseHeight,
+                            onClick = component::decreaseBottom
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.ArrowCircleUp,
+                                contentDescription = null
+                            )
+                        }
+                        Button(
+                            modifier = Modifier.size(36.dp),
+                            shape = RoundedCornerShape(
+                                bottomStart = 50f,
+                                bottomEnd = 50f
+                            ),
+                            contentPadding = PaddingValues(all = 0.dp),
                             onClick = component::increaseBottom
-                        )
-                        Spacer(
-                            modifier = Modifier.width(8.dp)
-                        )
-                        WorldSizeButton(
-                            imageVector = Icons.Outlined.ArrowCircleUp,
-                            onClick = component::decreaseBottom,
-                            enabled = model.allowDecreaseHeight
-                        )
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.ArrowCircleDown,
+                                contentDescription = null
+                            )
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun WorldSizeButton(
-    imageVector: ImageVector,
-    onClick: () -> Unit,
-    enabled: Boolean = true
-) {
-    Button(
-        modifier = Modifier
-            .size(36.dp),
-        shape = CircleShape,
-        contentPadding = PaddingValues(all = 0.dp),
-        enabled = enabled,
-        onClick = onClick
-    ) {
-        Icon(
-            imageVector = imageVector,
-            contentDescription = null
-        )
     }
 }

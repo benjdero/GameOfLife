@@ -1,6 +1,7 @@
 plugins {
-    id("com.android.application")
+    alias(libs.plugins.androidApplication)
     kotlin("android")
+    alias(libs.plugins.composeCompiler)
 }
 
 android {
@@ -33,16 +34,12 @@ android {
     buildFeatures {
         compose = true
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
 }
 
 dependencies {
-    implementation(project(":shared"))
-    implementation(project(":sharedUi"))
-    implementation("androidx.activity:activity-compose:${libs.versions.activityCompose.get()}")
-    implementation("androidx.appcompat:appcompat:${libs.versions.appcompat.get()}")
-    implementation("com.google.android.material:material:${libs.versions.material.get()}")
+    implementation(projects.shared)
+    implementation(projects.sharedUi)
+    implementation(libs.activityCompose)
+    implementation(libs.appcompat)
+    implementation(libs.material)
 }

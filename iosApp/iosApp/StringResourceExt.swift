@@ -1,4 +1,4 @@
-import shared
+import Shared
 
 extension StringResource {
     func localized() -> String {

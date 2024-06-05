@@ -1,4 +1,4 @@
-package com.benjdero.gameoflife.ui.draw
+package com.benjdero.gameoflife.ui.menu
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.runtime.Composable
@@ -8,7 +8,7 @@ import com.benjdero.gameoflife.ui.theme.MyTheme
 
 @Preview
 @Composable
-fun MenuPreview() {
+private fun MenuPreview() {
     MyTheme {
         MenuView(
             component = MenuMock()

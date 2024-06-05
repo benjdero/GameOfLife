@@ -26,7 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.load.Load
@@ -116,6 +116,7 @@ fun LoadView(
                                 modifier = Modifier
                                     .height(240.dp)
                                     .fillMaxWidth(),
+                                showCursor = false,
                                 world = world
                             )
                         }

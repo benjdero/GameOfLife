@@ -1,44 +1,36 @@
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.compose") version libs.versions.compose.get()
-    id("com.android.library")
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.composeCompiler)
 }
 
 kotlin {
     androidTarget()
-    jvm("desktop") {
+    jvm {
         compilations.all {
             kotlinOptions.jvmTarget = "18"
         }
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":shared"))
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material)
-                implementation(compose.animation)
-                implementation(compose.uiTooling)
-                implementation(compose.materialIconsExtended)
-                api("com.arkivanov.decompose:extensions-compose-jetbrains:${libs.versions.decompose.get()}")
-                implementation("dev.icerock.moko:resources-compose:${libs.versions.mokoResources.get()}")
-            }
+        commonMain.dependencies {
+            implementation(projects.shared)
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material)
+            implementation(compose.animation)
+            implementation(compose.uiTooling)
+            implementation(compose.materialIconsExtended)
+            api(libs.decomposeCompose)
+            implementation(libs.mokoResourcesCompose)
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
         }
-        val androidMain by getting
-        val androidUnitTest by getting
-        val desktopMain by getting {
-            dependencies {
-                implementation(compose.desktop.currentOs)
-            }
+        jvmMain.dependencies {
+            implementation(compose.desktop.currentOs)
         }
-        val desktopTest by getting
     }
 }
 

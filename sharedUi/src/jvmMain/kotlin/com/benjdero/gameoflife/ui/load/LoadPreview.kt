@@ -1,4 +1,4 @@
-package com.benjdero.gameoflife.ui.draw
+package com.benjdero.gameoflife.ui.load
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.runtime.Composable
@@ -8,7 +8,7 @@ import com.benjdero.gameoflife.ui.theme.MyTheme
 
 @Preview
 @Composable
-fun LoadPreview() {
+private fun LoadPreview() {
     MyTheme {
         LoadView(
             component = LoadMock()

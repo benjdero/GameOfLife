@@ -1,3 +1,6 @@
+rootProject.name = "GameOfLife"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google()
@@ -6,7 +9,13 @@ pluginManagement {
     }
 }
 
-rootProject.name = "GameOfLife"
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
 include(":androidApp")
 include(":desktopApp")
 include(":shared")

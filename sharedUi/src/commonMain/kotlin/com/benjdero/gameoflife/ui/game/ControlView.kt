@@ -8,7 +8,9 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountTree
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material.icons.filled.ZoomIn
@@ -19,6 +21,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
 import com.benjdero.gameoflife.Res
+import com.benjdero.gameoflife.Speed
 import com.benjdero.gameoflife.game.Game
 import com.benjdero.gameoflife.ui.common.ToggleGridButton
 import dev.icerock.moko.resources.compose.stringResource
@@ -31,6 +34,10 @@ internal fun RowScope.ControlView(
     goBack: () -> Unit,
     prevStep: () -> Unit,
     nextStep: () -> Unit,
+    canSpeedUp: Boolean,
+    canSpeedDown: Boolean,
+    speedUp: () -> Unit,
+    speedDown: () -> Unit,
     showGrid: Boolean,
     toggleGrid: () -> Unit,
     scale: Float,
@@ -81,6 +88,35 @@ internal fun RowScope.ControlView(
     Text(
         text = model.generation.toString()
     )
+    Spacer(
+        modifier = Modifier.width(4.dp)
+    )
+    IconButton(
+        onClick = speedDown,
+        enabled = canSpeedDown
+    ) {
+        Icon(
+            imageVector = Icons.Default.Remove,
+            contentDescription = null
+        )
+    }
+    Text(
+        text = when (model.speed) {
+            Speed.NORMAL -> "x1"
+            Speed.FAST_2X -> "x2"
+            Speed.FAST_4X -> "x4"
+            Speed.FAST_10X -> "x10"
+        }
+    )
+    IconButton(
+        onClick = speedUp,
+        enabled = canSpeedUp
+    ) {
+        Icon(
+            imageVector = Icons.Default.Add,
+            contentDescription = null
+        )
+    }
     Spacer(
         modifier = Modifier.weight(1f)
     )

@@ -1,14 +1,17 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("kotlin-parcelize")
-    id("app.cash.sqldelight")
-    id("dev.icerock.mobile.multiplatform-resources")
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.sqldelight)
+    alias(libs.plugins.mokoResources)
+    alias(libs.plugins.serialization)
 }
 
 kotlin {
+    targetHierarchy.default()
     androidTarget()
-    jvm("desktop") {
+    jvm {
         compilations.all {
             kotlinOptions.jvmTarget = "18"
         }
@@ -17,75 +20,52 @@ kotlin {
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "shared"
-            export("com.arkivanov.mvikotlin:mvikotlin:${libs.versions.mvikotlin.get()}")
-            export("com.arkivanov.mvikotlin:mvikotlin-logging:${libs.versions.mvikotlin.get()}")
-            export("com.arkivanov.mvikotlin:mvikotlin-timetravel:${libs.versions.mvikotlin.get()}")
-            export("com.arkivanov.decompose:decompose:${libs.versions.decompose.get()}")
-            export("com.arkivanov.essenty:lifecycle:${libs.versions.essenty.get()}")
-            export("dev.icerock.moko:resources:${libs.versions.mokoResources.get()}")
+    ).forEach { iosTarget: KotlinNativeTarget ->
+        iosTarget.binaries.framework {
+            baseName = "Shared"
+            export(libs.mvikotlin)
+            export(libs.mvikotlinLogging)
+            export(libs.mvikotlinTimetravel)
+            export(libs.decompose)
+            export(libs.essenty)
+            export(libs.mokoResources)
+        }
+    }
+
+    // Fix temporaire pour MokoResources
+    // Voir https://github.com/icerockdev/moko-resources/issues/531
+    sourceSets {
+        jvmMain {
+            dependsOn(commonMain.get())
         }
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${libs.versions.coroutines.get()}")
-                api("com.arkivanov.mvikotlin:mvikotlin:${libs.versions.mvikotlin.get()}")
-                api("com.arkivanov.mvikotlin:mvikotlin-logging:${libs.versions.mvikotlin.get()}")
-                api("com.arkivanov.mvikotlin:mvikotlin-timetravel:${libs.versions.mvikotlin.get()}")
-                implementation("com.arkivanov.mvikotlin:rx:${libs.versions.mvikotlin.get()}")
-                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:${libs.versions.mvikotlin.get()}")
-                api("com.arkivanov.decompose:decompose:${libs.versions.decompose.get()}")
-                api("com.arkivanov.essenty:lifecycle:${libs.versions.essenty.get()}")
-                implementation("app.cash.sqldelight:runtime:${libs.versions.sqldelight.get()}")
-                implementation("app.cash.sqldelight:primitive-adapters:${libs.versions.sqldelight.get()}")
-                api("dev.icerock.moko:resources:${libs.versions.mokoResources.get()}")
-            }
+        commonMain.dependencies {
+            implementation(libs.coroutines)
+            api(libs.mvikotlin)
+            api(libs.mvikotlinLogging)
+            api(libs.mvikotlinTimetravel)
+            implementation(libs.mvikotlinCoroutines)
+            api(libs.decompose)
+            api(libs.essenty)
+            implementation(libs.sqldelightRuntime)
+            implementation(libs.sqldelightPrimitive)
+            api(libs.mokoResources)
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation("dev.icerock.moko:resources-test:${libs.versions.mokoResources.get()}")
-            }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.mokoResourcesTest)
         }
-        val androidMain by getting {
-            dependsOn(commonMain)
-            dependencies {
-                implementation("app.cash.sqldelight:android-driver:${libs.versions.sqldelight.get()}")
-            }
+        androidMain.dependencies {
+            implementation(libs.sqldelightAndroidDriver)
         }
-        val androidUnitTest by getting
-        val desktopMain by getting {
-            dependsOn(commonMain)
-            dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:${libs.versions.coroutines.get()}")
-                implementation("app.cash.sqldelight:sqlite-driver:${libs.versions.sqldelight.get()}")
-            }
+        jvmMain.dependencies {
+            implementation(libs.coroutinesDesktop)
+            implementation(libs.sqldelightDesktopDriver)
         }
-        val desktopTest by getting
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation("app.cash.sqldelight:native-driver:${libs.versions.sqldelight.get()}")
-            }
-        }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
-            dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
+        iosMain.dependencies {
+            implementation(libs.sqldelightNativeDriver)
         }
     }
 }
@@ -95,6 +75,7 @@ android {
     namespace = "com.benjdero.gameoflife"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].java.srcDirs("build/generated/moko/androidMain/src")
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()

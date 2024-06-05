@@ -1,16 +1,15 @@
 package com.benjdero.gameoflife
 
-import com.arkivanov.essenty.parcelable.Parcelable
-import com.arkivanov.essenty.parcelable.Parcelize
+import kotlinx.serialization.Serializable
 import kotlin.random.Random
 
-@Parcelize
+@Serializable
 data class World(
     val saved: Saved,
     val width: Int,
     val height: Int,
     val cells: BooleanArray
-) : Parcelable {
+) {
     companion object {
         fun random(): World =
             random(15, 10)
@@ -57,8 +56,8 @@ data class World(
             )
         }
 
-    @Parcelize
-    sealed class Saved : Parcelable {
+    @Serializable
+    sealed class Saved {
         data object Not : Saved()
         data class AsWorld(val id: Long, val name: String) : Saved()
     }
