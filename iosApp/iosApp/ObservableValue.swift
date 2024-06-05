@@ -7,9 +7,9 @@ public class ObservableValue<T: AnyObject>: ObservableObject {
 
     private var cancellation: Cancellation?
 
-    init(_ value: Value<T>) {
-        self.value = value.value
-        cancellation = value.observe { [weak self] value in self?.value = value }
+    init(_ val: Value<T>) {
+        value = val.value
+        cancellation = val.subscribe { [weak self] value in self?.value = value }
     }
 
     deinit {

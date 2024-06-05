@@ -3,6 +3,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.composeCompiler)
 }
 
 kotlin {
@@ -10,14 +11,11 @@ kotlin {
     jvm()
 
     sourceSets {
-        val jvmMain by getting {
-            dependencies {
-                implementation(projects.shared)
-                implementation(projects.sharedUi)
-                implementation(compose.desktop.currentOs)
-            }
+        jvmMain.dependencies {
+            implementation(projects.shared)
+            implementation(projects.sharedUi)
+            implementation(compose.desktop.currentOs)
         }
-        val jvmTest by getting
     }
 }
 

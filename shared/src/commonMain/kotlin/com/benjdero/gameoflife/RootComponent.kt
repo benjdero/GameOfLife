@@ -8,8 +8,6 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.essenty.parcelable.Parcelable
-import com.arkivanov.essenty.parcelable.Parcelize
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.benjdero.gameoflife.draw.Draw
 import com.benjdero.gameoflife.draw.DrawComponent
@@ -22,6 +20,7 @@ import com.benjdero.gameoflife.menu.MenuComponent
 import com.benjdero.gameoflife.model.dao.DaoService
 import com.benjdero.gameoflife.save.Save
 import com.benjdero.gameoflife.save.SaveComponent
+import kotlinx.serialization.Serializable
 
 class RootComponent(
     componentContext: ComponentContext,
@@ -30,8 +29,10 @@ class RootComponent(
 ) : Root, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<Configuration>()
+
     private val stack = childStack(
         source = navigation,
+        serializer = Configuration.serializer(),
         initialConfiguration = Configuration.Menu,
         handleBackButton = true,
         childFactory = { configuration: Configuration, componentContext: ComponentContext ->
@@ -115,20 +116,22 @@ class RootComponent(
 
     override val childStack: Value<ChildStack<*, Root.Child>> = stack
 
-    private sealed class Configuration : Parcelable {
-        @Parcelize
+    @Serializable
+    private sealed class Configuration {
+
+        @Serializable
         data object Menu : Configuration()
 
-        @Parcelize
+        @Serializable
         data class Draw(val world: World?) : Configuration()
 
-        @Parcelize
+        @Serializable
         data object Load : Configuration()
 
-        @Parcelize
+        @Serializable
         data class Save(val world: World) : Configuration()
 
-        @Parcelize
+        @Serializable
         data class Game(val world: World?) : Configuration()
     }
 }

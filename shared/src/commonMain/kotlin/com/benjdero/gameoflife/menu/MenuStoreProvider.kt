@@ -23,13 +23,12 @@ internal class MenuStoreProvider(
     private sealed class Msg
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {
-        override fun executeIntent(intent: Intent, getState: () -> State) {
-            TODO()
-        }
+
+        override fun executeIntent(intent: Intent) {}
     }
 
     private object ReducerImpl : Reducer<State, Msg> {
         override fun State.reduce(msg: Msg): State =
-            TODO()
+            this
     }
 }

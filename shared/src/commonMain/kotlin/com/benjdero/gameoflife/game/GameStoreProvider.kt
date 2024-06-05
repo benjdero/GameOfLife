@@ -36,14 +36,15 @@ internal class GameStoreProvider(
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {
-        override fun executeIntent(intent: Intent, getState: () -> State) {
+
+        override fun executeIntent(intent: Intent) {
             when (intent) {
-                Intent.RunGame -> runGame(getState)
+                Intent.RunGame -> runGame(::state)
                 Intent.PrevStep -> prevStep()
-                Intent.NextStep -> nextStep(getState())
+                Intent.NextStep -> nextStep(state())
                 Intent.ShowGrid -> showGrid()
-                Intent.SpeedUp -> speedUp(getState())
-                Intent.SpeedDown -> speedDown(getState())
+                Intent.SpeedUp -> speedUp(state())
+                Intent.SpeedDown -> speedDown(state())
             }
         }
 

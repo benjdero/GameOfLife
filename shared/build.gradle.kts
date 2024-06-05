@@ -5,10 +5,11 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.mokoResources)
-    alias(libs.plugins.kotlinParcelize)
+    alias(libs.plugins.serialization)
 }
 
 kotlin {
+    targetHierarchy.default()
     androidTarget()
     jvm {
         compilations.all {
@@ -31,9 +32,9 @@ kotlin {
         }
     }
 
+    // Fix temporaire pour MokoResources
+    // Voir https://github.com/icerockdev/moko-resources/issues/531
     sourceSets {
-        // Fix temporaire pour MokoResources
-        // Voir https://github.com/icerockdev/moko-resources/issues/531
         jvmMain {
             dependsOn(commonMain.get())
         }
@@ -45,7 +46,6 @@ kotlin {
             api(libs.mvikotlin)
             api(libs.mvikotlinLogging)
             api(libs.mvikotlinTimetravel)
-            implementation(libs.mvikotlinRx)
             implementation(libs.mvikotlinCoroutines)
             api(libs.decompose)
             api(libs.essenty)

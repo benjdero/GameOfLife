@@ -41,17 +41,18 @@ internal class SaveStoreProvider(
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Action, State, Msg, Nothing>() {
-        override fun executeAction(action: Action, getState: () -> State) {
+
+        override fun executeAction(action: Action) {
             when (action) {
                 Action.Initialize -> initialize()
             }
         }
 
-        override fun executeIntent(intent: Intent, getState: () -> State) {
+        override fun executeIntent(intent: Intent) {
             when (intent) {
                 is Intent.SetName -> setName(intent.name)
                 Intent.ClearName -> clearName()
-                Intent.Save -> save(getState())
+                Intent.Save -> save(state())
             }
         }
 

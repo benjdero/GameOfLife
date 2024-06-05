@@ -36,15 +36,16 @@ internal class LoadStoreProvider(
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Action, State, Msg, Nothing>() {
-        override fun executeAction(action: Action, getState: () -> State) {
+
+        override fun executeAction(action: Action) {
             when (action) {
                 Action.Initialize -> initialize()
             }
         }
 
-        override fun executeIntent(intent: Intent, getState: () -> State) {
+        override fun executeIntent(intent: Intent) {
             when (intent) {
-                is Intent.DeleteWorld -> deleteWorld(intent.id, getState())
+                is Intent.DeleteWorld -> deleteWorld(intent.id, state())
             }
         }
 

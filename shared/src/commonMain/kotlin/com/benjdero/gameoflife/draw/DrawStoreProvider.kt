@@ -32,21 +32,22 @@ internal class DrawStoreProvider(
     }
 
     private inner class ExecutorImpl : CoroutineExecutor<Intent, Unit, State, Msg, Nothing>() {
-        override fun executeIntent(intent: Intent, getState: () -> State) {
+
+        override fun executeIntent(intent: Intent) {
             when (intent) {
-                is Intent.OnDraw -> onDraw(intent.x, intent.y, getState())
-                is Intent.OnDrawValue -> onDrawValue(intent.x, intent.y, intent.cell, getState())
-                Intent.ClearWorld -> clearWorld(getState())
-                Intent.RandomWorld -> randomWorld(getState())
+                is Intent.OnDraw -> onDraw(intent.x, intent.y, state())
+                is Intent.OnDrawValue -> onDrawValue(intent.x, intent.y, intent.cell, state())
+                Intent.ClearWorld -> clearWorld(state())
+                Intent.RandomWorld -> randomWorld(state())
                 Intent.ShowGrid -> showGrid()
-                Intent.IncreaseLeft -> increaseLeft(getState())
-                Intent.DecreaseLeft -> decreaseLeft(getState())
-                Intent.IncreaseTop -> increaseTop(getState())
-                Intent.DecreaseTop -> decreaseTop(getState())
-                Intent.IncreaseRight -> increaseRight(getState())
-                Intent.DecreaseRight -> decreaseRight(getState())
-                Intent.IncreaseBottom -> increaseBottom(getState())
-                Intent.DecreaseBottom -> decreaseBottom(getState())
+                Intent.IncreaseLeft -> increaseLeft(state())
+                Intent.DecreaseLeft -> decreaseLeft(state())
+                Intent.IncreaseTop -> increaseTop(state())
+                Intent.DecreaseTop -> decreaseTop(state())
+                Intent.IncreaseRight -> increaseRight(state())
+                Intent.DecreaseRight -> decreaseRight(state())
+                Intent.IncreaseBottom -> increaseBottom(state())
+                Intent.DecreaseBottom -> decreaseBottom(state())
             }
         }
 

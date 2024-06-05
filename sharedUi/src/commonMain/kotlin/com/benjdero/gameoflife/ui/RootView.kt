@@ -2,7 +2,7 @@ package com.benjdero.gameoflife.ui
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
+import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.benjdero.gameoflife.Root
 import com.benjdero.gameoflife.ui.draw.DrawView
 import com.benjdero.gameoflife.ui.game.GameView

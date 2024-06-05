@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     kotlin("android")
+    alias(libs.plugins.composeCompiler)
 }
 
 android {
@@ -32,10 +33,6 @@ android {
 
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 }
 

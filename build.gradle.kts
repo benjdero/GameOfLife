@@ -8,7 +8,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.sqldelight) apply false
     alias(libs.plugins.mokoResources) apply false
-    alias(libs.plugins.kotlinParcelize) apply false
+    alias(libs.plugins.serialization) apply false
+    alias(libs.plugins.composeCompiler) apply false
 }
 
 fun isNonStable(version: String): Boolean {
@@ -19,6 +20,7 @@ fun isNonStable(version: String): Boolean {
 }
 
 tasks.withType<DependencyUpdatesTask> {
+    gradleReleaseChannel = "current"
     rejectVersionIf {
         isNonStable(candidate.version) && !isNonStable(currentVersion)
     }

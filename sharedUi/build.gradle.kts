@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.composeCompiler)
 }
 
 kotlin {
@@ -14,15 +15,15 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-                implementation(projects.shared)
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material)
-                implementation(compose.animation)
-                implementation(compose.uiTooling)
-                implementation(compose.materialIconsExtended)
-                api(libs.decomposeCompose)
-                implementation(libs.mokoResourcesCompose)
+            implementation(projects.shared)
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material)
+            implementation(compose.animation)
+            implementation(compose.uiTooling)
+            implementation(compose.materialIconsExtended)
+            api(libs.decomposeCompose)
+            implementation(libs.mokoResourcesCompose)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
