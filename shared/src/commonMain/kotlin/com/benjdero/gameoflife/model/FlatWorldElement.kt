@@ -1,4 +1,4 @@
-package com.benjdero.gameoflife
+package com.benjdero.gameoflife.model
 
 data class FlatWorldElement(
     val id: Int,

@@ -46,15 +46,15 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.benjdero.gameoflife.draw.Draw
-import com.benjdero.gameoflife.draw.Draw.Model
+import com.benjdero.gameoflife.draw.DrawComponent
+import com.benjdero.gameoflife.draw.DrawComponent.Model
 import com.benjdero.gameoflife.ui.common.CellGridView
 import com.benjdero.gameoflife.ui.common.ToggleGridButton
 import kotlin.math.min
 
 @Composable
 fun DrawView(
-    component: Draw
+    component: DrawComponent
 ) {
 
     fun getCellFromOffset(canvasSize: IntSize, worldWidth: Int, worldHeight: Int, offset: Offset): IntOffset {

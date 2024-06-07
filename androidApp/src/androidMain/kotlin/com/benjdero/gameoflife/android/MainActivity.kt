@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import com.arkivanov.decompose.defaultComponentContext
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
-import com.benjdero.gameoflife.Root
 import com.benjdero.gameoflife.RootComponent
+import com.benjdero.gameoflife.RootComponentImpl
 import com.benjdero.gameoflife.model.dao.DaoService
 import com.benjdero.gameoflife.model.dao.SqlDriverFactory
 import com.benjdero.gameoflife.ui.RootView
@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val component: Root = RootComponent(
+        val component: RootComponent = RootComponentImpl(
             componentContext = defaultComponentContext(),
             storeFactory = LoggingStoreFactory(TimeTravelStoreFactory()),
             daoService = DaoService(
@@ -27,7 +27,9 @@ class MainActivity : ComponentActivity() {
         )
 
         setContent {
-            RootView(component)
+            RootView(
+                component = component
+            )
         }
     }
 }

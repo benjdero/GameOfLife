@@ -20,13 +20,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.benjdero.gameoflife.save.Save
-import com.benjdero.gameoflife.save.Save.Model
+import com.benjdero.gameoflife.save.SaveComponent
+import com.benjdero.gameoflife.save.SaveComponent.Model
 import com.benjdero.gameoflife.ui.common.CellGridView
 
 @Composable
 fun SaveView(
-    component: Save
+    component: SaveComponent
 ) {
     val model: Model by component.models.subscribeAsState()
 

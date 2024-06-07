@@ -21,8 +21,8 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
 import com.benjdero.gameoflife.Res
-import com.benjdero.gameoflife.Speed
-import com.benjdero.gameoflife.game.Game
+import com.benjdero.gameoflife.game.GameComponent
+import com.benjdero.gameoflife.model.Speed
 import com.benjdero.gameoflife.ui.common.ToggleGridButton
 import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.max
@@ -30,7 +30,7 @@ import kotlin.math.roundToInt
 
 @Composable
 internal fun RowScope.ControlView(
-    model: Game.Model,
+    model: GameComponent.Model,
     goBack: () -> Unit,
     prevStep: () -> Unit,
     nextStep: () -> Unit,

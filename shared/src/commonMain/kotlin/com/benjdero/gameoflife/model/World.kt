@@ -1,4 +1,4 @@
-package com.benjdero.gameoflife
+package com.benjdero.gameoflife.model
 
 import kotlinx.serialization.Serializable
 import kotlin.random.Random

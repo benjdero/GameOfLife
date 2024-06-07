@@ -11,7 +11,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.IntOffset
-import com.benjdero.gameoflife.World
+import com.benjdero.gameoflife.model.World
 import kotlin.math.min
 
 private const val PADDING_HORIZONTAL = 1f

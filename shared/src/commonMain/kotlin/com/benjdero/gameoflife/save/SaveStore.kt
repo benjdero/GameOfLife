@@ -1,7 +1,7 @@
 package com.benjdero.gameoflife.save
 
 import com.arkivanov.mvikotlin.core.store.Store
-import com.benjdero.gameoflife.World
+import com.benjdero.gameoflife.model.World
 import com.benjdero.gameoflife.save.SaveStore.Action
 import com.benjdero.gameoflife.save.SaveStore.Intent
 import com.benjdero.gameoflife.save.SaveStore.State

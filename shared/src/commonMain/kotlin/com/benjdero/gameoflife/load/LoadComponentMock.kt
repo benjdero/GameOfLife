@@ -2,11 +2,11 @@ package com.benjdero.gameoflife.load
 
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
-import com.benjdero.gameoflife.World
-import com.benjdero.gameoflife.load.Load.Model
-import com.benjdero.gameoflife.mockWorld
+import com.benjdero.gameoflife.load.LoadComponent.Model
+import com.benjdero.gameoflife.model.World
+import com.benjdero.gameoflife.model.mockWorld
 
-class LoadMock : Load {
+class LoadComponentMock : LoadComponent {
     override val models: Value<Model> = MutableValue(
         initialValue = Model(
             worldList = listOf(

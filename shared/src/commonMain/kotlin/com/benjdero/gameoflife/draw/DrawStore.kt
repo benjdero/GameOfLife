@@ -1,9 +1,9 @@
 package com.benjdero.gameoflife.draw
 
 import com.arkivanov.mvikotlin.core.store.Store
-import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.draw.DrawStore.Intent
 import com.benjdero.gameoflife.draw.DrawStore.State
+import com.benjdero.gameoflife.model.World
 
 internal interface DrawStore : Store<Intent, State, Nothing> {
     sealed class Intent {

@@ -2,11 +2,11 @@ package com.benjdero.gameoflife.game
 
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
-import com.benjdero.gameoflife.Speed
-import com.benjdero.gameoflife.game.Game.Model
-import com.benjdero.gameoflife.mockWorld
+import com.benjdero.gameoflife.game.GameComponent.Model
+import com.benjdero.gameoflife.model.Speed
+import com.benjdero.gameoflife.model.mockWorld
 
-class GameMock : Game {
+class GameComponentMock : GameComponent {
     override val models: Value<Model> = MutableValue(
         initialValue = Model(
             running = false,

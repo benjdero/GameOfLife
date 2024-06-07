@@ -28,15 +28,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.benjdero.gameoflife.Res
-import com.benjdero.gameoflife.World
-import com.benjdero.gameoflife.load.Load
-import com.benjdero.gameoflife.load.Load.Model
+import com.benjdero.gameoflife.load.LoadComponent
+import com.benjdero.gameoflife.load.LoadComponent.Model
+import com.benjdero.gameoflife.model.World
 import com.benjdero.gameoflife.ui.common.CellGridView
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun LoadView(
-    component: Load
+    component: LoadComponent
 ) {
     val model: Model by component.models.subscribeAsState()
 

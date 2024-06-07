@@ -1,50 +1,23 @@
 package com.benjdero.gameoflife.load
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.decompose.value.operator.map
-import com.arkivanov.mvikotlin.core.instancekeeper.getStore
-import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.benjdero.gameoflife.World
-import com.benjdero.gameoflife.asValue
-import com.benjdero.gameoflife.load.Load.Model
-import com.benjdero.gameoflife.load.Load.Output
-import com.benjdero.gameoflife.load.LoadStore.Intent
-import com.benjdero.gameoflife.model.dao.DaoService
+import com.benjdero.gameoflife.model.World
 
-class LoadComponent(
-    componentContext: ComponentContext,
-    storeFactory: StoreFactory,
-    daoService: DaoService,
-    private val output: (Output) -> Unit
-) : Load, ComponentContext by componentContext {
+interface LoadComponent {
+    val models: Value<Model>
 
-    private val store =
-        instanceKeeper.getStore {
-            LoadStoreProvider(
-                storeFactory = storeFactory,
-                daoService = daoService
-            ).provide()
-        }
+    fun onWorldSelected(world: World)
 
-    override val models: Value<Model> = store.asValue().map {
-        Model(
-            worldList = it.worldList
-        )
-    }
+    fun deleteWorld(world: World)
 
-    override fun onWorldSelected(world: World) {
-        output(Output.WorldSelected(world))
-    }
+    fun goBack()
 
-    override fun deleteWorld(world: World) {
-        world.saved.let {
-            if (it is World.Saved.AsWorld)
-                store.accept(Intent.DeleteWorld(it.id))
-        }
-    }
+    data class Model(
+        val worldList: List<World>
+    )
 
-    override fun goBack() {
-        output(Output.GoBack)
+    sealed class Output {
+        data object GoBack : Output()
+        data class WorldSelected(val world: World) : Output()
     }
 }

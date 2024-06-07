@@ -1,4 +1,4 @@
-package com.benjdero.gameoflife
+package com.benjdero.gameoflife.model
 
 enum class Speed {
     NORMAL,

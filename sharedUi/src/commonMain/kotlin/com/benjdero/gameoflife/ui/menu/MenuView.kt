@@ -15,13 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.benjdero.gameoflife.Res
-import com.benjdero.gameoflife.menu.Menu
+import com.benjdero.gameoflife.menu.MenuComponent
 import com.benjdero.gameoflife.ui.AppIcon
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun MenuView(
-    component: Menu
+    component: MenuComponent
 ) {
     Scaffold {
         Column(

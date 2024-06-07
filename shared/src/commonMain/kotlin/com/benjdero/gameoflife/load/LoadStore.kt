@@ -1,10 +1,10 @@
 package com.benjdero.gameoflife.load
 
 import com.arkivanov.mvikotlin.core.store.Store
-import com.benjdero.gameoflife.World
 import com.benjdero.gameoflife.load.LoadStore.Action
 import com.benjdero.gameoflife.load.LoadStore.Intent
 import com.benjdero.gameoflife.load.LoadStore.State
+import com.benjdero.gameoflife.model.World
 
 internal interface LoadStore : Store<Intent, State, Action> {
     sealed class Intent {

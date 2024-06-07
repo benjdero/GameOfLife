@@ -2,11 +2,11 @@ package com.benjdero.gameoflife.draw
 
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
-import com.benjdero.gameoflife.World
-import com.benjdero.gameoflife.draw.Draw.Model
-import com.benjdero.gameoflife.mockWorld
+import com.benjdero.gameoflife.draw.DrawComponent.Model
+import com.benjdero.gameoflife.model.World
+import com.benjdero.gameoflife.model.mockWorld
 
-class DrawMock : Draw {
+class DrawComponentMock : DrawComponent {
     override val models: Value<Model> = MutableValue(
         initialValue = Model(
             world = mockWorld(),

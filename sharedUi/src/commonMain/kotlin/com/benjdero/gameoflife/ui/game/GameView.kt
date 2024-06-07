@@ -33,8 +33,8 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.benjdero.gameoflife.Res
-import com.benjdero.gameoflife.game.Game
-import com.benjdero.gameoflife.game.Game.Model
+import com.benjdero.gameoflife.game.GameComponent
+import com.benjdero.gameoflife.game.GameComponent.Model
 import com.benjdero.gameoflife.ui.common.CellGridView
 import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.max
@@ -42,7 +42,7 @@ import kotlin.math.sqrt
 
 @Composable
 fun GameView(
-    component: Game
+    component: GameComponent
 ) {
     val model: Model by component.models.subscribeAsState()
     var scale: Float by remember { mutableStateOf(1f) }
