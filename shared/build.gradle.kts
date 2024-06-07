@@ -2,15 +2,14 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.sqldelight)
-    alias(libs.plugins.mokoResources)
     alias(libs.plugins.serialization)
 }
 
 kotlin {
-    targetHierarchy.default()
-
     androidTarget {
         compilations.all {
             kotlinOptions.jvmTarget = "18"
@@ -35,15 +34,6 @@ kotlin {
             export(libs.mvikotlinTimetravel)
             export(libs.decompose)
             export(libs.essenty)
-            export(libs.mokoResources)
-        }
-    }
-
-    // Fix temporaire pour MokoResources
-    // Voir https://github.com/icerockdev/moko-resources/issues/531
-    sourceSets {
-        jvmMain {
-            dependsOn(commonMain.get())
         }
     }
 
@@ -58,11 +48,11 @@ kotlin {
             api(libs.essenty)
             implementation(libs.sqldelightRuntime)
             implementation(libs.sqldelightPrimitive)
-            api(libs.mokoResources)
+            implementation(compose.runtime)
+            api(compose.components.resources)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
-            implementation(libs.mokoResourcesTest)
         }
         androidMain.dependencies {
             implementation(libs.sqldelightAndroidDriver)
@@ -82,7 +72,6 @@ android {
     namespace = "com.benjdero.gameoflife"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    sourceSets["main"].java.srcDirs("build/generated/moko/androidMain/src")
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
@@ -107,7 +96,8 @@ sqldelight {
     }
 }
 
-multiplatformResources {
-    multiplatformResourcesPackage = "com.benjdero.gameoflife"
-    multiplatformResourcesClassName = "Res"
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.benjdero.gameoflife.resources"
+    generateResClass = always
 }
