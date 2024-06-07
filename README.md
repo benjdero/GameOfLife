@@ -10,6 +10,15 @@ The UI for Android and Desktop/JVM use Jetbrains Compose.
 
 The UI for iPhone is written using SwiftUI.
 
+Dark primary color#1976d2
+Light primary color#bbdefb
+Primary color#2196f3
+Text / Icons#FFFFFF
+Accent color#ffc107
+Primary text#212121
+Secondary text#757575
+Divider color#BDBDBD
+
 ## Screenshots
 
 <p align="middle">
