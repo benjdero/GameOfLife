@@ -7,8 +7,11 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(18)
-    jvm()
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "18"
+        }
+    }
 
     sourceSets {
         jvmMain.dependencies {

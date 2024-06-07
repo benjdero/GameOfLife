@@ -6,7 +6,12 @@ plugins {
 }
 
 kotlin {
-    androidTarget()
+    androidTarget {
+        compilations.all {
+            kotlinOptions.jvmTarget = "18"
+        }
+    }
+
     jvm {
         compilations.all {
             kotlinOptions.jvmTarget = "18"
