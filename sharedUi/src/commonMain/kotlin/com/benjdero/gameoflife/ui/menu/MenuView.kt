@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.twotone.Speed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +22,7 @@ import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.menu.MenuComponent
 import com.benjdero.gameoflife.menu.MenuComponentMock
 import com.benjdero.gameoflife.ui.AppIcon
+import com.benjdero.gameoflife.ui.common.TestBtnView2
 import com.benjdero.gameoflife.ui.theme.MyTheme
 import dev.icerock.moko.resources.compose.stringResource
 
@@ -32,6 +36,17 @@ fun MenuView(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            TestBtnView2(
+                icon = Icons.Default.Search,
+                text = "100%"
+            )
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
+            TestBtnView2(
+                icon = Icons.TwoTone.Speed,
+                text = "x4"
+            )
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.Center,
