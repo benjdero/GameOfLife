@@ -1,5 +1,6 @@
 package com.benjdero.gameoflife.ui.draw
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -48,8 +49,10 @@ import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.benjdero.gameoflife.draw.DrawComponent
 import com.benjdero.gameoflife.draw.DrawComponent.Model
+import com.benjdero.gameoflife.draw.DrawComponentMock
 import com.benjdero.gameoflife.ui.common.CellGridView
 import com.benjdero.gameoflife.ui.common.ToggleGridButton
+import com.benjdero.gameoflife.ui.theme.MyTheme
 import kotlin.math.min
 
 @Composable
@@ -338,5 +341,15 @@ fun DrawView(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun DrawPreview() {
+    MyTheme {
+        DrawView(
+            component = DrawComponentMock()
+        )
     }
 }

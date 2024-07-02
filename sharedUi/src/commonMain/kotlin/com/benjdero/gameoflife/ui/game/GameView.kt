@@ -1,5 +1,6 @@
 package com.benjdero.gameoflife.ui.game
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.forEachGesture
@@ -35,7 +36,9 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.game.GameComponent
 import com.benjdero.gameoflife.game.GameComponent.Model
+import com.benjdero.gameoflife.game.GameComponentMock
 import com.benjdero.gameoflife.ui.common.CellGridView
+import com.benjdero.gameoflife.ui.theme.MyTheme
 import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.max
 import kotlin.math.sqrt
@@ -177,5 +180,15 @@ suspend fun PointerInputScope.detectAllGestures(drag: (Offset) -> Unit, zoom: (F
                 }
             } while (event.changes.any { it.pressed })
         }
+    }
+}
+
+@Preview
+@Composable
+private fun GamePreview() {
+    MyTheme {
+        GameView(
+            component = GameComponentMock()
+        )
     }
 }

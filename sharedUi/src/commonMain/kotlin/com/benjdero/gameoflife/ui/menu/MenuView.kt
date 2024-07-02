@@ -1,5 +1,6 @@
 package com.benjdero.gameoflife.ui.menu
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.menu.MenuComponent
+import com.benjdero.gameoflife.menu.MenuComponentMock
 import com.benjdero.gameoflife.ui.AppIcon
+import com.benjdero.gameoflife.ui.theme.MyTheme
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
@@ -61,5 +64,15 @@ fun MenuView(
                 modifier = Modifier.height(32.dp)
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun MenuPreview() {
+    MyTheme {
+        MenuView(
+            component = MenuComponentMock()
+        )
     }
 }

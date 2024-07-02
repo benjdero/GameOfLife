@@ -1,5 +1,6 @@
 package com.benjdero.gameoflife.ui.load
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,8 +31,10 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.load.LoadComponent
 import com.benjdero.gameoflife.load.LoadComponent.Model
+import com.benjdero.gameoflife.load.LoadComponentMock
 import com.benjdero.gameoflife.model.World
 import com.benjdero.gameoflife.ui.common.CellGridView
+import com.benjdero.gameoflife.ui.theme.MyTheme
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
@@ -121,5 +124,15 @@ fun LoadView(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun LoadPreview() {
+    MyTheme {
+        LoadView(
+            component = LoadComponentMock()
+        )
     }
 }

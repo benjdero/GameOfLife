@@ -1,5 +1,6 @@
 package com.benjdero.gameoflife.ui.save
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,7 +23,9 @@ import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.benjdero.gameoflife.save.SaveComponent
 import com.benjdero.gameoflife.save.SaveComponent.Model
+import com.benjdero.gameoflife.save.SaveComponentMock
 import com.benjdero.gameoflife.ui.common.CellGridView
+import com.benjdero.gameoflife.ui.theme.MyTheme
 
 @Composable
 fun SaveView(
@@ -90,5 +93,15 @@ fun SaveView(
     LaunchedEffect(model.saved) {
         if (model.saved)
             component.exit()
+    }
+}
+
+@Preview
+@Composable
+private fun SavePreview() {
+    MyTheme {
+        SaveView(
+            component = SaveComponentMock()
+        )
     }
 }
