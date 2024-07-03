@@ -2,14 +2,14 @@ import Shared
 import SwiftUI
 
 struct LoadView: View {
-    private let component: Load
+    private let component: LoadComponent
 
     @ObservedObject
-    private var observableModel: ObservableValue<LoadModel>
+    private var observableModel: ObservableValue<LoadComponentModel>
 
-    private var model: LoadModel { observableModel.value }
+    private var model: LoadComponentModel { observableModel.value }
 
-    init(component: Load) {
+    init(component: LoadComponent) {
         self.component = component
         observableModel = ObservableValue(component.models)
     }
@@ -42,6 +42,6 @@ struct LoadView: View {
 
 struct LoadView_Previews: PreviewProvider {
     static var previews: some View {
-        LoadView(component: LoadMock())
+        LoadView(component: LoadComponentMock())
     }
 }

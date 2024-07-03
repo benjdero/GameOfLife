@@ -2,14 +2,14 @@ import Shared
 import SwiftUI
 
 struct GameView: View {
-    private let component: Game
+    private let component: GameComponent
 
     @ObservedObject
-    private var observableModel: ObservableValue<GameModel>
+    private var observableModel: ObservableValue<GameComponentModel>
 
-    private var model: GameModel { observableModel.value }
+    private var model: GameComponentModel { observableModel.value }
 
-    init(component: Game) {
+    init(component: GameComponent) {
         self.component = component
         observableModel = ObservableValue(component.models)
     }
@@ -60,7 +60,7 @@ struct GameView: View {
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         GameView(
-            component: GameMock()
+            component: GameComponentMock()
         )
     }
 }

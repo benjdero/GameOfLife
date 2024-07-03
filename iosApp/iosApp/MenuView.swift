@@ -2,14 +2,14 @@ import Shared
 import SwiftUI
 
 struct MenuView: View {
-    private let component: Shared.Menu
+    private let component: MenuComponent
 
     @ObservedObject
-    private var observableModel: ObservableValue<MenuModel>
+    private var observableModel: ObservableValue<MenuComponentModel>
 
-    private var model: MenuModel { observableModel.value }
+    private var model: MenuComponentModel { observableModel.value }
 
-    init(component: Shared.Menu) {
+    init(component: MenuComponent) {
         self.component = component
         observableModel = ObservableValue(component.models)
     }
@@ -34,9 +34,9 @@ struct MenuView_Previews: PreviewProvider {
     }
 }
 
-class MenuPreview: Shared.Menu {
-    let models: Value<MenuModel> = valueOf(
-        MenuModel(
+class MenuPreview: MenuComponent {
+    let models: Value<MenuComponentModel> = valueOf(
+        MenuComponentModel(
             unused: 0
         )
     )

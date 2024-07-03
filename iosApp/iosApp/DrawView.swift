@@ -2,14 +2,14 @@ import Shared
 import SwiftUI
 
 struct DrawView: View {
-    private let component: Draw
+    private let component: DrawComponent
 
     @ObservedObject
-    private var observableModel: ObservableValue<DrawModel>
+    private var observableModel: ObservableValue<DrawComponentModel>
 
-    private var model: DrawModel { observableModel.value }
+    private var model: DrawComponentModel { observableModel.value }
 
-    init(component: Draw) {
+    init(component: DrawComponent) {
         self.component = component
         observableModel = ObservableValue(component.models)
     }
@@ -68,6 +68,6 @@ struct DrawView: View {
 
 struct DrawView_Previews: PreviewProvider {
     static var previews: some View {
-        DrawView(component: DrawMock())
+        DrawView(component: DrawComponentMock())
     }
 }
