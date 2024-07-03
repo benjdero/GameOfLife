@@ -17,6 +17,7 @@ struct MenuView: View {
     var body: some View {
         VStack {
             Spacer()
+            AppIconView()
             Text(Res.strings().app_name.localized())
                 .font(.title)
             Spacer()
