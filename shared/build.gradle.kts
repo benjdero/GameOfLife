@@ -9,8 +9,6 @@ plugins {
 }
 
 kotlin {
-    targetHierarchy.default()
-
     androidTarget {
         compilations.all {
             kotlinOptions.jvmTarget = "18"
@@ -36,14 +34,6 @@ kotlin {
             export(libs.decompose)
             export(libs.essenty)
             export(libs.mokoResources)
-        }
-    }
-
-    // Fix temporaire pour MokoResources
-    // Voir https://github.com/icerockdev/moko-resources/issues/531
-    sourceSets {
-        jvmMain {
-            dependsOn(commonMain.get())
         }
     }
 
@@ -108,6 +98,6 @@ sqldelight {
 }
 
 multiplatformResources {
-    multiplatformResourcesPackage = "com.benjdero.gameoflife"
-    multiplatformResourcesClassName = "Res"
+    resourcesPackage.set("com.benjdero.gameoflife")
+    resourcesClassName.set("Res")
 }
