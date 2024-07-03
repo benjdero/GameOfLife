@@ -40,8 +40,8 @@ struct LoadView: View {
     }
 }
 
-struct LoadView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoadView(component: LoadComponentMock())
-    }
+#Preview {
+    LoadView(
+        component: LoadComponentMock()
+    )
 }

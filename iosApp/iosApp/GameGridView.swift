@@ -46,20 +46,18 @@ struct GameGridView: View {
     }
 }
 
-struct GameGridView_Previews: PreviewProvider {
-    static var previews: some View {
-        GameGridView(
-            world: World(
-                saved: World.SavedNot(),
-                width: 15,
-                height: 8,
-                cells: KotlinBooleanArray(
-                    size: 120,
-                    init: { (index: KotlinInt) -> (KotlinBoolean) in
-                        KotlinBoolean(value: Int(index) % 2 == 0)
-                    }
-                )
+#Preview {
+    GameGridView(
+        world: World(
+            saved: World.SavedNot(),
+            width: 15,
+            height: 8,
+            cells: KotlinBooleanArray(
+                size: 120,
+                init: { (index: KotlinInt) -> (KotlinBoolean) in
+                    KotlinBoolean(value: Int(index) % 2 == 0)
+                }
             )
         )
-    }
+    )
 }

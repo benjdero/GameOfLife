@@ -31,8 +31,8 @@ struct SaveView: View {
     }
 }
 
-struct SaveView_Previews: PreviewProvider {
-    static var previews: some View {
-        SaveView(component: SaveComponentMock())
-    }
+#Preview {
+    SaveView(
+        component: SaveComponentMock()
+    )
 }

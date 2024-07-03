@@ -26,22 +26,8 @@ struct MenuView: View {
     }
 }
 
-struct MenuView_Previews: PreviewProvider {
-    static var previews: some View {
-        MenuView(
-            component: MenuPreview()
-        )
-    }
-}
-
-class MenuPreview: MenuComponent {
-    let models: Value<MenuComponentModel> = valueOf(
-        MenuComponentModel(
-            unused: 0
-        )
+#Preview {
+    MenuView(
+        component: MenuComponentMock()
     )
-
-    func onStartDraw() {}
-
-    func onStartGame() {}
 }

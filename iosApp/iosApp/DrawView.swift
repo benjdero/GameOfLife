@@ -66,8 +66,8 @@ struct DrawView: View {
     }
 }
 
-struct DrawView_Previews: PreviewProvider {
-    static var previews: some View {
-        DrawView(component: DrawComponentMock())
-    }
+#Preview {
+    DrawView(
+        component: DrawComponentMock()
+    )
 }
