@@ -20,11 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
-import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.game.GameComponent
 import com.benjdero.gameoflife.model.Speed
+import com.benjdero.gameoflife.resources.Res
+import com.benjdero.gameoflife.resources.game_next_step
+import com.benjdero.gameoflife.resources.game_prev_step
+import com.benjdero.gameoflife.resources.game_zoom_in
+import com.benjdero.gameoflife.resources.game_zoom_out
 import com.benjdero.gameoflife.ui.common.ToggleGridButton
-import dev.icerock.moko.resources.compose.stringResource
+import org.jetbrains.compose.resources.stringResource
 import kotlin.math.max
 import kotlin.math.roundToInt
 
@@ -62,7 +66,7 @@ internal fun RowScope.ControlView(
     ) {
         Icon(
             imageVector = Icons.Default.SkipPrevious,
-            contentDescription = stringResource(Res.strings.game_prev_step)
+            contentDescription = stringResource(Res.string.game_prev_step)
         )
     }
     IconButton(
@@ -71,7 +75,7 @@ internal fun RowScope.ControlView(
     ) {
         Icon(
             imageVector = Icons.Default.SkipNext,
-            contentDescription = stringResource(Res.strings.game_next_step)
+            contentDescription = stringResource(Res.string.game_next_step)
         )
     }
     Spacer(
@@ -136,7 +140,7 @@ internal fun RowScope.ControlView(
     ) {
         Icon(
             imageVector = Icons.Default.ZoomOut,
-            contentDescription = stringResource(Res.strings.game_zoom_out)
+            contentDescription = stringResource(Res.string.game_zoom_out)
         )
     }
     Text(
@@ -149,7 +153,7 @@ internal fun RowScope.ControlView(
     ) {
         Icon(
             imageVector = Icons.Default.ZoomIn,
-            contentDescription = stringResource(Res.strings.game_zoom_in)
+            contentDescription = stringResource(Res.string.game_zoom_in)
         )
     }
 }

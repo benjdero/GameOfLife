@@ -28,7 +28,6 @@ kotlin {
             implementation(compose.uiTooling)
             implementation(compose.materialIconsExtended)
             api(libs.decomposeCompose)
-            implementation(libs.mokoResourcesCompose)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

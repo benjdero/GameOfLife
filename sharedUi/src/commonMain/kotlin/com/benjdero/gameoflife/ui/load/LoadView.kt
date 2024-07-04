@@ -27,12 +27,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.load.LoadComponent
 import com.benjdero.gameoflife.load.LoadComponent.Model
 import com.benjdero.gameoflife.model.World
+import com.benjdero.gameoflife.resources.Res
+import com.benjdero.gameoflife.resources.load_list_empty
 import com.benjdero.gameoflife.ui.common.CellGridView
-import dev.icerock.moko.resources.compose.stringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun LoadView(
@@ -65,7 +66,7 @@ fun LoadView(
                 Text(
                     modifier = Modifier
                         .align(Alignment.Center),
-                    text = stringResource(Res.strings.load_list_empty)
+                    text = stringResource(Res.string.load_list_empty)
                 )
             }
         }

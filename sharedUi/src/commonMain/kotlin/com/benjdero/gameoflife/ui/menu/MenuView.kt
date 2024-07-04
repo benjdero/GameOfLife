@@ -14,10 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.menu.MenuComponent
+import com.benjdero.gameoflife.resources.Res
+import com.benjdero.gameoflife.resources.app_name
+import com.benjdero.gameoflife.resources.menu_start_draw
+import com.benjdero.gameoflife.resources.menu_start_game
 import com.benjdero.gameoflife.ui.AppIcon
-import dev.icerock.moko.resources.compose.stringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun MenuView(
@@ -38,15 +41,16 @@ fun MenuView(
                     modifier = Modifier.size(200.dp)
                 )
                 Text(
-                    text = stringResource(Res.strings.app_name)
+                    text = stringResource(Res.string.app_name)
                 )
             }
             Button(
                 modifier = Modifier.width(128.dp),
                 onClick = component::onStartDraw
             ) {
+
                 Text(
-                    text = stringResource(Res.strings.menu_start_draw).uppercase()
+                    text = stringResource(Res.string.menu_start_draw).uppercase()
                 )
             }
             Button(
@@ -54,7 +58,7 @@ fun MenuView(
                 onClick = component::onStartGame
             ) {
                 Text(
-                    text = stringResource(Res.strings.menu_start_game).uppercase()
+                    text = stringResource(Res.string.menu_start_game).uppercase()
                 )
             }
             Spacer(

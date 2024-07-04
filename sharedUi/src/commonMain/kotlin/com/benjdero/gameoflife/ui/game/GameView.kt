@@ -32,11 +32,13 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.game.GameComponent
 import com.benjdero.gameoflife.game.GameComponent.Model
+import com.benjdero.gameoflife.resources.Res
+import com.benjdero.gameoflife.resources.game_pause
+import com.benjdero.gameoflife.resources.game_run
 import com.benjdero.gameoflife.ui.common.CellGridView
-import dev.icerock.moko.resources.compose.stringResource
+import org.jetbrains.compose.resources.stringResource
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -101,10 +103,12 @@ fun GameView(
                         Icons.Default.Pause
                     else
                         Icons.Default.PlayArrow,
-                    contentDescription = if (model.running)
-                        stringResource(Res.strings.game_pause)
-                    else
-                        stringResource(Res.strings.game_run),
+                    contentDescription = stringResource(
+                        if (model.running)
+                            Res.string.game_pause
+                        else
+                            Res.string.game_run
+                    ),
                 )
             }
         }
