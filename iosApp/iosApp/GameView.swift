@@ -19,6 +19,35 @@ struct GameView: View {
             GameGridView(world: model.world)
             HStack {
                 Button(
+                    action: component.speedDown,
+                    label: {
+                        Image(systemName: "minus")
+                    }
+                )
+                .disabled(!model.canSpeedDown)
+                let speed: String = switch model.speed {
+                case Speed.normal:
+                    "x1"
+                case Speed.fast2x:
+                    "x2"
+                case Speed.fast4x:
+                    "x4"
+                case Speed.fast10x:
+                    "x10"
+                default:
+                    ""
+                }
+                Text(speed)
+                Button(
+                    action: component.speedUp,
+                    label: {
+                        Image(systemName: "plus")
+                    }
+                )
+                .disabled(!model.canSpeedUp)
+            }
+            HStack {
+                Button(
                     action: component.goBack,
                     label: {
                         Image(systemName: "chevron.backward")
@@ -27,6 +56,13 @@ struct GameView: View {
                 Spacer()
                 Image(systemName: "person.3.fill")
                 Text("\(model.generation)")
+                Spacer()
+                Button(
+                    action: component.prevStep,
+                    label: {
+                        Image(systemName: "backward.fill")
+                    }
+                ).disabled(model.running || model.history.count == 0)
                 Spacer()
                 Button(
                     action: component.runGame,
@@ -38,13 +74,6 @@ struct GameView: View {
                         )
                     }
                 )
-                Spacer()
-                Button(
-                    action: component.prevStep,
-                    label: {
-                        Image(systemName: "backward.fill")
-                    }
-                ).disabled(model.running || model.history.count == 0)
                 Spacer()
                 Button(
                     action: component.nextStep,

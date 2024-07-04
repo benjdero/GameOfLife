@@ -14,19 +14,33 @@ struct SaveView: View {
         observableModel = ObservableValue(component.models)
     }
 
+    @State private var worldName: String = "World 1"
+
     var body: some View {
         VStack {
-            Button {
-                component.exit()
-            } label: {
-                Image(systemName: "chevron.backward")
-            }
             GameGridView(world: model.world)
-            Button {
-                component.save()
-            } label: {
-                Image(systemName: "square.and.pencil")
+            HStack {
+                let binding = Binding<String>(
+                    get: { model.name },
+                    set: { component.setName(name: $0) }
+                )
+                Button {
+                    component.exit()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                }
+                TextField(
+                    "",
+                    text: binding
+                )
+                .padding(.horizontal, 16.0)
+                Button {
+                    component.save()
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                }
             }
+            .padding(.horizontal, 16.0)
         }
     }
 }

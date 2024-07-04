@@ -16,7 +16,73 @@ struct DrawView: View {
 
     var body: some View {
         VStack {
-            GameGridView(world: model.world)
+            ZStack {
+                GameGridView(world: model.world)
+                HStack {
+                    Button(
+                        action: component.increaseLeft,
+                        label: {
+                            Image(systemName: "arrow.left.circle")
+                        }
+                    )
+                    Button(
+                        action: component.decreaseLeft,
+                        label: {
+                            Image(systemName: "arrow.right.circle")
+                        }
+                    )
+                    .disabled(!model.allowDecreaseWidth)
+                    Spacer()
+                }
+                VStack {
+                    Button(
+                        action: component.increaseTop,
+                        label: {
+                            Image(systemName: "arrow.up.circle")
+                        }
+                    )
+                    Button(
+                        action: component.decreaseTop,
+                        label: {
+                            Image(systemName: "arrow.down.circle")
+                        }
+                    )
+                    .disabled(!model.allowDecreaseHeight)
+                    Spacer()
+                }
+                HStack {
+                    Spacer()
+                    Button(
+                        action: component.decreaseRight,
+                        label: {
+                            Image(systemName: "arrow.left.circle")
+                        }
+                    )
+                    .disabled(!model.allowDecreaseWidth)
+                    Button(
+                        action: component.increaseRight,
+                        label: {
+                            Image(systemName: "arrow.right.circle")
+                        }
+                    )
+                }
+                VStack {
+                    Spacer()
+                    Button(
+                        action: component.decreaseBottom,
+                        label: {
+                            Image(systemName: "arrow.up.circle")
+                        }
+                    )
+                    .disabled(!model.allowDecreaseHeight)
+                    Button(
+                        action: component.increaseBottom,
+                        label: {
+                            Image(systemName: "arrow.down.circle")
+                        }
+                    )
+                }
+            }
             HStack {
                 Button(
                     action: component.goBack,
