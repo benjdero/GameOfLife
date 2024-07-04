@@ -43,7 +43,8 @@ struct LoadView: View {
                                 }
                                 .padding(.horizontal, 8.0)
                                 GameGridView(
-                                    world: item
+                                    world: item,
+                                    onTap: { _, _ in }
                                 )
                                 .frame(maxWidth: .infinity, minHeight: 200.0, maxHeight: 200.0)
                             }

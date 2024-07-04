@@ -17,7 +17,12 @@ struct DrawView: View {
     var body: some View {
         VStack {
             ZStack {
-                GameGridView(world: model.world)
+                GameGridView(
+                    world: model.world,
+                    onTap: { x, y in
+                        component.onDraw(x: Int32(x), y: Int32(y))
+                    }
+                )
                 HStack {
                     Button(
                         action: component.increaseLeft,

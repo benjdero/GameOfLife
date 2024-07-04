@@ -18,7 +18,10 @@ struct SaveView: View {
 
     var body: some View {
         VStack {
-            GameGridView(world: model.world)
+            GameGridView(
+                world: model.world,
+                onTap: { _, _ in }
+            )
             HStack {
                 let binding = Binding<String>(
                     get: { model.name },

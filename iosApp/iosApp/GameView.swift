@@ -16,7 +16,10 @@ struct GameView: View {
 
     var body: some View {
         VStack {
-            GameGridView(world: model.world)
+            GameGridView(
+                world: model.world,
+                onTap: { _, _ in }
+            )
             HStack {
                 Button(
                     action: component.speedDown,
