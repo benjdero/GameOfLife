@@ -8,13 +8,13 @@ plugins {
 kotlin {
     androidTarget {
         compilations.all {
-            kotlinOptions.jvmTarget = "18"
+            kotlinOptions.jvmTarget = "17"
         }
     }
 
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "18"
+            kotlinOptions.jvmTarget = "17"
         }
     }
 
@@ -50,11 +50,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlin {
-        jvmToolchain(18)
+        jvmToolchain(17)
     }
 }
