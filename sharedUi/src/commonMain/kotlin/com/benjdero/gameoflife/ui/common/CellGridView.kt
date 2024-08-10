@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -50,7 +51,7 @@ internal fun CellGridView(
         }
 
         world.forEachIndexed { x: Int, y: Int, cell: Boolean ->
-            drawRect(
+            drawRoundRect(
                 color = if (cell) aliveCellColor else deadCellColor,
                 topLeft = Offset(
                     x = x * cellSize + (PADDING_HORIZONTAL + outsidePaddingHorizontal) / 2,
@@ -59,11 +60,15 @@ internal fun CellGridView(
                 size = Size(
                     width = cellSize - PADDING_HORIZONTAL,
                     height = cellSize - PADDING_VERTICAL
+                ),
+                cornerRadius = CornerRadius(
+                    x = cellSize / 8,
+                    y = cellSize / 8
                 )
             )
         }
         if (cursorCell != null) {
-            drawRect(
+            drawRoundRect(
                 color = cursorColor,
                 topLeft = Offset(
                     x = cursorCell.x * cellSize + (PADDING_HORIZONTAL + outsidePaddingHorizontal) / 2,
@@ -75,6 +80,10 @@ internal fun CellGridView(
                 ),
                 style = Stroke(
                     width = 3f
+                ),
+                cornerRadius = CornerRadius(
+                    x = cellSize / 8,
+                    y = cellSize / 8
                 )
             )
         }

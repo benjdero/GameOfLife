@@ -13,10 +13,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.menu.MenuComponent
 import com.benjdero.gameoflife.ui.AppIcon
+import dev.icerock.moko.resources.compose.fontFamilyResource
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
@@ -38,7 +41,10 @@ fun MenuView(
                     modifier = Modifier.size(200.dp)
                 )
                 Text(
-                    text = stringResource(Res.strings.app_name)
+                    text = stringResource(Res.strings.app_name),
+                    fontSize = 42.sp,
+                    fontFamily = fontFamilyResource(Res.fonts.good_bakwan),
+                    color = Color(0xFF444444)
                 )
             }
             Button(

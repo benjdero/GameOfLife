@@ -16,6 +16,7 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
@@ -63,15 +64,15 @@ fun GameView(
 
     Scaffold(
         bottomBar = {
-            BottomAppBar(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                cutoutShape = CircleShape
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colors.primary
             ) {
                 ControlView(
                     model = model,
                     goBack = component::goBack,
                     prevStep = component::prevStep,
+                    runGame = component::runGame,
                     nextStep = component::nextStep,
                     canSpeedUp = model.canSpeedUp,
                     canSpeedDown = model.canSpeedDown,
@@ -87,24 +88,6 @@ fun GameView(
                     setOffset = {
                         offset = coerceInOffset(it)
                     }
-                )
-            }
-        },
-        isFloatingActionButtonDocked = true,
-        floatingActionButtonPosition = FabPosition.Center,
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = component::runGame
-            ) {
-                Icon(
-                    imageVector = if (model.running)
-                        Icons.Default.Pause
-                    else
-                        Icons.Default.PlayArrow,
-                    contentDescription = if (model.running)
-                        stringResource(Res.strings.game_pause)
-                    else
-                        stringResource(Res.strings.game_run),
                 )
             }
         }
