@@ -26,3 +26,14 @@ The UI for iPhone is written using SwiftUI.
     <img src="img/screenshot_iphone_1.png" alt="iPhone screenshot 1" width="30%" />
     <img src="img/screenshot_iphone_2.png" alt="iPhone screenshot 2" width="30%" /> 
 </p>
+
+## Todo
+
+- Save/Load only sub-areas of the game world to make reusable patterns
+- Add pre-made interesting patterns
+- Cells of different colors
+- Dynamically alterable game rules
+- Improve the ergonomics of the UI
+- Add decorations to the screenshots (device frame, captions..)
+- Android EdgeToEdge
+- Android pinch zoom on location
