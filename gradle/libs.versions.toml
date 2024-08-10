@@ -9,7 +9,7 @@ essenty = "2.1.0"
 sqldelight = "2.0.2"
 mokoResources = "0.24.1"
 composePlugin = "1.6.11"
-activityCompose = "1.9.1"
+activity = "1.9.1"
 appcompat = "1.7.0"
 material = "1.12.0"
 compileSdk = "34"
@@ -17,24 +17,24 @@ minSdk = "24"
 targetSdk = "34"
 
 [libraries]
-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
-coroutinesDesktop = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "coroutines" }
-mvikotlin = { group = "com.arkivanov.mvikotlin", name = "mvikotlin", version.ref = "mvikotlin" }
-mvikotlinLogging = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-logging", version.ref = "mvikotlin" }
-mvikotlinTimetravel = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-timetravel", version.ref = "mvikotlin" }
-mvikotlinCoroutines = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-extensions-coroutines", version.ref = "mvikotlin" }
-decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
-decomposeCompose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
+coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-desktop = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "coroutines" }
+mvikotlin-core = { group = "com.arkivanov.mvikotlin", name = "mvikotlin", version.ref = "mvikotlin" }
+mvikotlin-logging = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-logging", version.ref = "mvikotlin" }
+mvikotlin-timetravel = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-timetravel", version.ref = "mvikotlin" }
+mvikotlin-coroutines = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-extensions-coroutines", version.ref = "mvikotlin" }
+decompose-core = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
+decompose-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
 essenty = { group = "com.arkivanov.essenty", name = "lifecycle", version.ref = "essenty" }
-sqldelightRuntime = { group = "app.cash.sqldelight", name = "runtime", version.ref = "sqldelight" }
-sqldelightPrimitive = { group = "app.cash.sqldelight", name = "primitive-adapters", version.ref = "sqldelight" }
-sqldelightAndroidDriver = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
-sqldelightDesktopDriver = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
-sqldelightNativeDriver = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sqldelight" }
-mokoResources = { group = "dev.icerock.moko", name = "resources", version.ref = "mokoResources" }
-mokoResourcesCompose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "mokoResources" }
-mokoResourcesTest = { group = "dev.icerock.moko", name = "resources-test", version.ref = "mokoResources" }
-activityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+sqldelight-runtime = { group = "app.cash.sqldelight", name = "runtime", version.ref = "sqldelight" }
+sqldelight-primitive = { group = "app.cash.sqldelight", name = "primitive-adapters", version.ref = "sqldelight" }
+sqldelight-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
+sqldelight-desktop = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
+sqldelight-native = { group = "app.cash.sqldelight", name = "native-driver", version.ref = "sqldelight" }
+mokoResources-core = { group = "dev.icerock.moko", name = "resources", version.ref = "mokoResources" }
+mokoResources-compose = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "mokoResources" }
+mokoResources-test = { group = "dev.icerock.moko", name = "resources-test", version.ref = "mokoResources" }
+activityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 

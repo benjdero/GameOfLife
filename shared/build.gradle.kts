@@ -28,41 +28,41 @@ kotlin {
     ).forEach { iosTarget: KotlinNativeTarget ->
         iosTarget.binaries.framework {
             baseName = "Shared"
-            export(libs.mvikotlin)
-            export(libs.mvikotlinLogging)
-            export(libs.mvikotlinTimetravel)
-            export(libs.decompose)
+            export(libs.mvikotlin.core)
+            export(libs.mvikotlin.logging)
+            export(libs.mvikotlin.timetravel)
+            export(libs.decompose.core)
             export(libs.essenty)
-            export(libs.mokoResources)
+            export(libs.mokoResources.core)
         }
     }
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.coroutines)
-            api(libs.mvikotlin)
-            api(libs.mvikotlinLogging)
-            api(libs.mvikotlinTimetravel)
-            implementation(libs.mvikotlinCoroutines)
-            api(libs.decompose)
+            implementation(libs.coroutines.core)
+            api(libs.mvikotlin.core)
+            api(libs.mvikotlin.logging)
+            api(libs.mvikotlin.timetravel)
+            implementation(libs.mvikotlin.coroutines)
+            api(libs.decompose.core)
             api(libs.essenty)
-            implementation(libs.sqldelightRuntime)
-            implementation(libs.sqldelightPrimitive)
-            api(libs.mokoResources)
+            implementation(libs.sqldelight.runtime)
+            implementation(libs.sqldelight.primitive)
+            api(libs.mokoResources.core)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
-            implementation(libs.mokoResourcesTest)
+            implementation(libs.mokoResources.test)
         }
         androidMain.dependencies {
-            implementation(libs.sqldelightAndroidDriver)
+            implementation(libs.sqldelight.android)
         }
         jvmMain.dependencies {
-            implementation(libs.coroutinesDesktop)
-            implementation(libs.sqldelightDesktopDriver)
+            implementation(libs.coroutines.desktop)
+            implementation(libs.sqldelight.desktop)
         }
         iosMain.dependencies {
-            implementation(libs.sqldelightNativeDriver)
+            implementation(libs.sqldelight.native)
         }
     }
 }
