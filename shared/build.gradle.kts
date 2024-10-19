@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -10,14 +11,14 @@ plugins {
 
 kotlin {
     androidTarget {
-        compilations.all {
-            kotlinOptions.jvmTarget = "17"
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 
     jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "17"
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 

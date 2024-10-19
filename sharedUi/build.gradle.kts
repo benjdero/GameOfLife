@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
@@ -7,14 +9,14 @@ plugins {
 
 kotlin {
     androidTarget {
-        compilations.all {
-            kotlinOptions.jvmTarget = "17"
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 
     jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "17"
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 

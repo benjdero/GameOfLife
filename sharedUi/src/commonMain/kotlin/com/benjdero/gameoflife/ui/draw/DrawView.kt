@@ -21,7 +21,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.BorderClear
 import androidx.compose.material.icons.filled.BrowserUpdated
 import androidx.compose.material.icons.filled.Casino
@@ -79,7 +79,7 @@ fun DrawView(
                     onClick = component::goBack
                 ) {
                     Icon(
-                        imageVector = Icons.Default.ArrowBack,
+                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
                         contentDescription = null
                     )
                 }

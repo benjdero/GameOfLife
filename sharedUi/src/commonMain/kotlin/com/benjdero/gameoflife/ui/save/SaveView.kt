@@ -11,7 +11,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.Composable
@@ -40,7 +40,7 @@ fun SaveView(
                     onClick = component::exit
                 ) {
                     Icon(
-                        imageVector = Icons.Default.ArrowBack,
+                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
                         contentDescription = null
                     )
                 }
