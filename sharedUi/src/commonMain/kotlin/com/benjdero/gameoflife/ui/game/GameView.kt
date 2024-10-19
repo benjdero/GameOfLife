@@ -16,6 +16,7 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
@@ -33,17 +34,16 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.benjdero.gameoflife.Res
-import com.benjdero.gameoflife.game.Game
-import com.benjdero.gameoflife.game.Game.Model
+import com.benjdero.gameoflife.game.GameComponent
+import com.benjdero.gameoflife.game.GameComponent.Model
 import com.benjdero.gameoflife.ui.common.CellGridView
-import com.benjdero.gameoflife.ui.theme.MyTheme
 import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.max
 import kotlin.math.sqrt
 
 @Composable
 fun GameView(
-    component: Game
+    component: GameComponent
 ) {
     val model: Model by component.models.subscribeAsState()
     var scale: Float by remember { mutableStateOf(1f) }
@@ -62,97 +62,77 @@ fun GameView(
         )
     }
 
-    MyTheme {
-        Scaffold(
-            bottomBar = {
-                BottomAppBar(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    cutoutShape = CircleShape
-                ) {
-                    ControlView(
-                        model = model,
-                        goBack = component::goBack,
-                        prevStep = component::prevStep,
-                        nextStep = component::nextStep,
-                        canSpeedUp = model.canSpeedUp,
-                        canSpeedDown = model.canSpeedDown,
-                        speedUp = component::speedUp,
-                        speedDown = component::speedDown,
-                        showGrid = model.showGrid,
-                        toggleGrid = component::toggleGrid,
-                        scale = scale,
-                        setScale = {
-                            scale = it
-                        },
-                        offset = offset,
-                        setOffset = {
-                            offset = coerceInOffset(it)
-                        }
-                    )
-                }
-            },
-            isFloatingActionButtonDocked = true,
-            floatingActionButtonPosition = FabPosition.Center,
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = component::runGame
-                ) {
-                    Icon(
-                        imageVector = if (model.running)
-                            Icons.Default.Pause
-                        else
-                            Icons.Default.PlayArrow,
-                        contentDescription = if (model.running)
-                            stringResource(Res.strings.game_pause)
-                        else
-                            stringResource(Res.strings.game_run),
-                    )
-                }
-            }
-        ) { scaffoldPadding: PaddingValues ->
-            Column(
-                modifier = Modifier.padding(scaffoldPadding)
+    Scaffold(
+        bottomBar = {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colors.primary
             ) {
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                        .onSizeChanged {
-                            viewSize = it
-                        }
-                        .graphicsLayer(
-                            scaleX = scale,
-                            scaleY = scale,
-                            translationX = offset.x,
-                            translationY = offset.y
-                        )
-                        .pointerInput(Unit) {
-                            detectAllGestures(
-                                drag = { drag: Offset ->
-                                    offset = coerceInOffset(offset + drag)
-                                },
-                                zoom = { zoom: Float ->
-                                    scale = max(scale * zoom, 1f)
-                                    if (zoom < 1f)
-                                        offset = coerceInOffset(offset)
-                                }
-                            )
-                        }
-                ) {
-                    CellGridView(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                if (model.showGrid)
-                                    MaterialTheme.colors.onBackground
-                                else
-                                    MaterialTheme.colors.background
-                            ),
-                        showCursor = false,
-                        world = model.world
+                ControlView(
+                    model = model,
+                    goBack = component::goBack,
+                    prevStep = component::prevStep,
+                    runGame = component::runGame,
+                    nextStep = component::nextStep,
+                    canSpeedUp = model.canSpeedUp,
+                    canSpeedDown = model.canSpeedDown,
+                    speedUp = component::speedUp,
+                    speedDown = component::speedDown,
+                    showGrid = model.showGrid,
+                    toggleGrid = component::toggleGrid,
+                    scale = scale,
+                    setScale = {
+                        scale = it
+                    },
+                    offset = offset,
+                    setOffset = {
+                        offset = coerceInOffset(it)
+                    }
+                )
+            }
+        }
+    ) { scaffoldPadding: PaddingValues ->
+        Column(
+            modifier = Modifier.padding(scaffoldPadding)
+        ) {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .onSizeChanged {
+                        viewSize = it
+                    }
+                    .graphicsLayer(
+                        scaleX = scale,
+                        scaleY = scale,
+                        translationX = offset.x,
+                        translationY = offset.y
                     )
-                }
+                    .pointerInput(Unit) {
+                        detectAllGestures(
+                            drag = { drag: Offset ->
+                                offset = coerceInOffset(offset + drag)
+                            },
+                            zoom = { zoom: Float ->
+                                scale = max(scale * zoom, 1f)
+                                if (zoom < 1f)
+                                    offset = coerceInOffset(offset)
+                            }
+                        )
+                    }
+            ) {
+                CellGridView(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            if (model.showGrid)
+                                MaterialTheme.colors.onBackground
+                            else
+                                MaterialTheme.colors.background
+                        ),
+                    showCursor = false,
+                    world = model.world
+                )
             }
         }
     }

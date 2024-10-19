@@ -1,105 +1,56 @@
 package com.benjdero.gameoflife.draw
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.decompose.value.operator.map
-import com.arkivanov.mvikotlin.core.instancekeeper.getStore
-import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.benjdero.gameoflife.World
-import com.benjdero.gameoflife.asValue
-import com.benjdero.gameoflife.draw.Draw.Model
-import com.benjdero.gameoflife.draw.Draw.Output
-import com.benjdero.gameoflife.draw.DrawStore.Intent
+import com.benjdero.gameoflife.model.World
 
-class DrawComponent(
-    componentContext: ComponentContext,
-    storeFactory: StoreFactory,
-    world: World?,
-    private val output: (Output) -> Unit
-) : Draw, ComponentContext by componentContext {
+interface DrawComponent {
+    val models: Value<Model>
 
-    private val store =
-        instanceKeeper.getStore {
-            DrawStoreProvider(
-                storeFactory = storeFactory,
-                world = world
-            ).provide()
-        }
+    fun onDraw(x: Int, y: Int)
 
-    override val models: Value<Model> = store.asValue().map {
-        Model(
-            world = it.world,
-            showGrid = it.showGrid,
-            allowDecreaseWidth = it.allowDecreaseWidth,
-            allowDecreaseHeight = it.allowDecreaseHeight
-        )
-    }
+    fun onDrawValue(x: Int, y: Int, cell: Boolean)
 
-    override fun onDraw(x: Int, y: Int) {
-        store.accept(Intent.OnDraw(x, y))
-    }
+    fun clearWorld()
 
-    override fun onDrawValue(x: Int, y: Int, cell: Boolean) {
-        store.accept(Intent.OnDrawValue(x, y, cell))
-    }
+    fun randomWorld()
 
-    override fun clearWorld() {
-        store.accept(Intent.ClearWorld)
-    }
+    fun toggleGrid()
 
-    override fun randomWorld() {
-        store.accept(Intent.RandomWorld)
-    }
+    fun increaseLeft()
 
-    override fun toggleGrid() {
-        store.accept(Intent.ShowGrid)
-    }
+    fun decreaseLeft()
 
-    override fun increaseLeft() {
-        store.accept(Intent.IncreaseLeft)
-    }
+    fun increaseTop()
 
-    override fun decreaseLeft() {
-        store.accept(Intent.DecreaseLeft)
-    }
+    fun decreaseTop()
 
-    override fun increaseTop() {
-        store.accept(Intent.IncreaseTop)
-    }
+    fun increaseRight()
 
-    override fun decreaseTop() {
-        store.accept(Intent.DecreaseTop)
-    }
+    fun decreaseRight()
 
-    override fun increaseRight() {
-        store.accept(Intent.IncreaseRight)
-    }
+    fun increaseBottom()
 
-    override fun decreaseRight() {
-        store.accept(Intent.DecreaseRight)
-    }
+    fun decreaseBottom()
 
-    override fun increaseBottom() {
-        store.accept(Intent.IncreaseBottom)
-    }
+    fun load()
 
-    override fun decreaseBottom() {
-        store.accept(Intent.DecreaseBottom)
-    }
+    fun save(world: World)
 
-    override fun load() {
-        output(Output.Load)
-    }
+    fun finish()
 
-    override fun save(world: World) {
-        output(Output.Save(world))
-    }
+    fun goBack()
 
-    override fun finish() {
-        output(Output.Finish(store.state.world))
-    }
+    data class Model(
+        val world: World,
+        val showGrid: Boolean,
+        val allowDecreaseWidth: Boolean,
+        val allowDecreaseHeight: Boolean,
+    )
 
-    override fun goBack() {
-        output(Output.GoBack)
+    sealed class Output {
+        data class Finish(val world: World) : Output()
+        data object GoBack : Output()
+        data object Load : Output()
+        data class Save(val world: World) : Output()
     }
 }

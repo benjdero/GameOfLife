@@ -2,37 +2,54 @@ import Shared
 import SwiftUI
 
 struct SaveView: View {
-    private let component: Save
+    private let component: SaveComponent
 
     @ObservedObject
-    private var observableModel: ObservableValue<SaveModel>
+    private var observableModel: ObservableValue<SaveComponentModel>
 
-    private var model: SaveModel { observableModel.value }
+    private var model: SaveComponentModel { observableModel.value }
 
-    init(component: Save) {
+    init(component: SaveComponent) {
         self.component = component
         observableModel = ObservableValue(component.models)
     }
 
+    @State private var worldName: String = "World 1"
+
     var body: some View {
         VStack {
-            Button {
-                component.exit()
-            } label: {
-                Image(systemName: "chevron.backward")
+            GameGridView(
+                world: model.world,
+                onTap: { _, _ in }
+            )
+            HStack {
+                let binding = Binding<String>(
+                    get: { model.name },
+                    set: { component.setName(name: $0) }
+                )
+                Button {
+                    component.exit()
+                } label: {
+                    Image(systemName: "chevron.backward")
+                }
+                TextField(
+                    "",
+                    text: binding
+                )
+                .padding(.horizontal, 16.0)
+                Button {
+                    component.save()
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                }
             }
-            GameGridView(world: model.world)
-            Button {
-                component.save()
-            } label: {
-                Image(systemName: "square.and.pencil")
-            }
+            .padding(.horizontal, 16.0)
         }
     }
 }
 
-struct SaveView_Previews: PreviewProvider {
-    static var previews: some View {
-        SaveView(component: SaveMock())
-    }
+#Preview {
+    SaveView(
+        component: SaveComponentMock()
+    )
 }

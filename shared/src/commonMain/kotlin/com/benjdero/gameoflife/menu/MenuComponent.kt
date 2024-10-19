@@ -1,38 +1,20 @@
 package com.benjdero.gameoflife.menu
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.decompose.value.operator.map
-import com.arkivanov.mvikotlin.core.instancekeeper.getStore
-import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.benjdero.gameoflife.asValue
-import com.benjdero.gameoflife.menu.Menu.Model
-import com.benjdero.gameoflife.menu.Menu.Output
 
-class MenuComponent(
-    componentContext: ComponentContext,
-    storeFactory: StoreFactory,
-    private val output: (Output) -> Unit
-) : Menu, ComponentContext by componentContext {
+interface MenuComponent {
+    val models: Value<Model>
 
-    private val store =
-        instanceKeeper.getStore {
-            MenuStoreProvider(
-                storeFactory = storeFactory
-            ).provide()
-        }
+    fun onStartDraw()
 
-    override val models: Value<Model> = store.asValue().map {
-        Model(
-            unused = it.unused
-        )
-    }
+    fun onStartGame()
 
-    override fun onStartDraw() {
-        output(Output.StartDraw)
-    }
+    data class Model(
+        val unused: Int
+    )
 
-    override fun onStartGame() {
-        output(Output.StartGame)
+    sealed class Output {
+        data object StartDraw : Output()
+        data object StartGame : Output()
     }
 }

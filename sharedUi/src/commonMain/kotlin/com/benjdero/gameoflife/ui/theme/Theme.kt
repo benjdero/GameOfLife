@@ -31,7 +31,7 @@ fun MyTheme(
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
+        typography = MyTypography(),
         shapes = Shapes,
         content = content
     )

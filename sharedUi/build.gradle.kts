@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
@@ -6,10 +8,15 @@ plugins {
 }
 
 kotlin {
-    androidTarget()
+    androidTarget {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+
     jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "18"
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 
@@ -22,8 +29,8 @@ kotlin {
             implementation(compose.animation)
             implementation(compose.uiTooling)
             implementation(compose.materialIconsExtended)
-            api(libs.decomposeCompose)
-            implementation(libs.mokoResourcesCompose)
+            api(libs.decompose.compose)
+            implementation(libs.mokoResources.compose)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
@@ -45,11 +52,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlin {
-        jvmToolchain(18)
+        jvmToolchain(17)
     }
 }

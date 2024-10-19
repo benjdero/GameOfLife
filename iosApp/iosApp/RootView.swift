@@ -3,9 +3,9 @@ import SwiftUI
 
 struct RootView: View {
     @ObservedObject
-    private var childStack: ObservableValue<ChildStack<AnyObject, RootChild>>
+    private var childStack: ObservableValue<ChildStack<AnyObject, RootComponentChild>>
 
-    init(component: Root) {
+    init(component: RootComponent) {
         childStack = ObservableValue(component.childStack)
     }
 
@@ -13,11 +13,11 @@ struct RootView: View {
         let child = self.childStack.value.active.instance
 
         switch child {
-        case let menu as RootChild.ChildMenu:
+        case let menu as RootComponentChild.Menu:
             MenuView(
                 component: menu.component
             )
-        case let draw as RootChild.ChildDraw:
+        case let draw as RootComponentChild.Draw:
             DrawView(
                 component: draw.component
             )
@@ -28,7 +28,7 @@ struct RootView: View {
                 )
             )
             .animation(.easeInOut)
-        case let load as RootChild.ChildLoad:
+        case let load as RootComponentChild.Load:
             LoadView(
                 component: load.component
             )
@@ -39,7 +39,7 @@ struct RootView: View {
                 )
             )
             .animation(.easeInOut)
-        case let save as RootChild.ChildSave:
+        case let save as RootComponentChild.Save:
             SaveView(
                 component: save.component
             )
@@ -50,7 +50,7 @@ struct RootView: View {
                 )
             )
             .animation(.easeInOut)
-        case let game as RootChild.ChildGame:
+        case let game as RootComponentChild.Game:
             GameView(
                 component: game.component
             )
@@ -64,11 +64,5 @@ struct RootView: View {
 
         default: EmptyView()
         }
-    }
-}
-
-struct RootView_Previews: PreviewProvider {
-    static var previews: some View {
-        EmptyView()
     }
 }

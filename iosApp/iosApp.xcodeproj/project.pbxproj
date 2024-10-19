@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,7 @@
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7C2C2A6128690AF000B2F0BC /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2C2A6028690AF000B2F0BC /* ObservableValue.swift */; };
+		7C7A758E2C36F3C2004E84D6 /* ClickGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7A758D2C36F3C2004E84D6 /* ClickGesture.swift */; };
 		7CC46AC82AC9AF9E003C2B77 /* LoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC46AC72AC9AF9E003C2B77 /* LoadView.swift */; };
 		7CC46ACA2AC9B060003C2B77 /* GameGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC46AC92AC9B060003C2B77 /* GameGridView.swift */; };
 		7CC46ACC2AC9B23D003C2B77 /* SaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC46ACB2AC9B23D003C2B77 /* SaveView.swift */; };
@@ -43,6 +44,7 @@
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C2C2A6028690AF000B2F0BC /* ObservableValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
+		7C7A758D2C36F3C2004E84D6 /* ClickGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickGesture.swift; sourceTree = "<group>"; };
 		7CC46AC72AC9AF9E003C2B77 /* LoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadView.swift; sourceTree = "<group>"; };
 		7CC46AC92AC9B060003C2B77 /* GameGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGridView.swift; sourceTree = "<group>"; };
 		7CC46ACB2AC9B23D003C2B77 /* SaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveView.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				7CC46AC92AC9B060003C2B77 /* GameGridView.swift */,
 				7CC46ACB2AC9B23D003C2B77 /* SaveView.swift */,
 				7CC46ACD2AC9B251003C2B77 /* DrawView.swift */,
+				7C7A758D2C36F3C2004E84D6 /* ClickGesture.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 			files = (
 				7CFC99FC2888760600E9AD3D /* MenuView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				7C7A758E2C36F3C2004E84D6 /* ClickGesture.swift in Sources */,
 				7CC46ACE2AC9B251003C2B77 /* DrawView.swift in Sources */,
 				7CC46ACA2AC9B060003C2B77 /* GameGridView.swift in Sources */,
 				7CFC99FE2888767C00E9AD3D /* RootView.swift in Sources */,
@@ -359,6 +363,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = iosApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -384,6 +389,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = iosApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

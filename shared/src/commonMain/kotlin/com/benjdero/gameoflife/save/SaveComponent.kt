@@ -1,56 +1,27 @@
 package com.benjdero.gameoflife.save
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.decompose.value.operator.map
-import com.arkivanov.mvikotlin.core.instancekeeper.getStore
-import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.benjdero.gameoflife.World
-import com.benjdero.gameoflife.asValue
-import com.benjdero.gameoflife.model.dao.DaoService
-import com.benjdero.gameoflife.save.Save.Model
-import com.benjdero.gameoflife.save.Save.Output
-import com.benjdero.gameoflife.save.SaveStore.Intent
+import com.benjdero.gameoflife.model.World
 
-class SaveComponent(
-    componentContext: ComponentContext,
-    storeFactory: StoreFactory,
-    daoService: DaoService,
-    world: World,
-    private val output: (Output) -> Unit
-) : Save, ComponentContext by componentContext {
+interface SaveComponent {
+    val models: Value<Model>
 
-    private val store =
-        instanceKeeper.getStore {
-            SaveStoreProvider(
-                storeFactory = storeFactory,
-                daoService = daoService,
-                world = world
-            ).provide()
-        }
+    fun setName(name: String)
 
-    override val models: Value<Model> = store.asValue().map {
-        Model(
-            name = it.name,
-            world = it.world,
-            canSave = it.canSave,
-            saved = it.saved
-        )
-    }
+    fun clearName()
 
-    override fun setName(name: String) {
-        store.accept(Intent.SetName(name))
-    }
+    fun save()
 
-    override fun clearName() {
-        store.accept(Intent.ClearName)
-    }
+    fun exit()
 
-    override fun save() {
-        store.accept(Intent.Save)
-    }
+    data class Model(
+        val name: String,
+        val world: World,
+        val canSave: Boolean,
+        val saved: Boolean
+    )
 
-    override fun exit() {
-        output(Output.GoBack)
+    sealed class Output {
+        data object GoBack : Output()
     }
 }

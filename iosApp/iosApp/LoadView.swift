@@ -2,14 +2,14 @@ import Shared
 import SwiftUI
 
 struct LoadView: View {
-    private let component: Load
+    private let component: LoadComponent
 
     @ObservedObject
-    private var observableModel: ObservableValue<LoadModel>
+    private var observableModel: ObservableValue<LoadComponentModel>
 
-    private var model: LoadModel { observableModel.value }
+    private var model: LoadComponentModel { observableModel.value }
 
-    init(component: Load) {
+    init(component: LoadComponent) {
         self.component = component
         observableModel = ObservableValue(component.models)
     }
@@ -21,18 +21,37 @@ struct LoadView: View {
             } label: {
                 Image(systemName: "chevron.backward")
             }
-            LazyVStack {
-                ForEach(model.worldList, id: \.self) { item in
-                    VStack {
-                        HStack {
-                            Text("World")
-                            Button {
-                                component.deleteWorld(world: item)
-                            } label: {
-                                Image(systemName: "trash")
+            if model.worldList.isEmpty {
+                Text(Res.strings().load_list_empty.localized())
+            } else {
+                ScrollView {
+                    LazyVStack {
+                        ForEach(model.worldList, id: \.self) { item in
+                            VStack {
+                                HStack {
+                                    if let saved = item.saved as? World.SavedAsWorld {
+                                        Text(saved.name)
+                                    } else {
+                                        Text("") // Should never happen here
+                                    }
+                                    Spacer()
+                                    Button {
+                                        component.deleteWorld(world: item)
+                                    } label: {
+                                        Image(systemName: "trash")
+                                    }
+                                }
+                                .padding(.horizontal, 8.0)
+                                GameGridView(
+                                    world: item,
+                                    onTap: { _, _ in }
+                                )
+                                .frame(maxWidth: .infinity, minHeight: 200.0, maxHeight: 200.0)
                             }
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, 16.0)
+                            .padding(.vertical, 16.0)
                         }
-                        GameGridView(world: item)
                     }
                 }
             }
@@ -40,8 +59,8 @@ struct LoadView: View {
     }
 }
 
-struct LoadView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoadView(component: LoadMock())
-    }
+#Preview {
+    LoadView(
+        component: LoadComponentMock()
+    )
 }

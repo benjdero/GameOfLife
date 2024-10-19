@@ -5,7 +5,7 @@ import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.benjdero.gameoflife.World
+import com.benjdero.gameoflife.model.World
 import com.benjdero.gameoflife.model.dao.DaoService
 import com.benjdero.gameoflife.save.SaveStore.Action
 import com.benjdero.gameoflife.save.SaveStore.Intent

@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -9,13 +10,18 @@ plugins {
 }
 
 kotlin {
-    targetHierarchy.default()
-    androidTarget()
-    jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "18"
+    androidTarget {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
+
+    jvm {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -23,49 +29,41 @@ kotlin {
     ).forEach { iosTarget: KotlinNativeTarget ->
         iosTarget.binaries.framework {
             baseName = "Shared"
-            export(libs.mvikotlin)
-            export(libs.mvikotlinLogging)
-            export(libs.mvikotlinTimetravel)
-            export(libs.decompose)
+            export(libs.mvikotlin.core)
+            export(libs.mvikotlin.logging)
+            export(libs.mvikotlin.timetravel)
+            export(libs.decompose.core)
             export(libs.essenty)
-            export(libs.mokoResources)
-        }
-    }
-
-    // Fix temporaire pour MokoResources
-    // Voir https://github.com/icerockdev/moko-resources/issues/531
-    sourceSets {
-        jvmMain {
-            dependsOn(commonMain.get())
+            export(libs.mokoResources.core)
         }
     }
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.coroutines)
-            api(libs.mvikotlin)
-            api(libs.mvikotlinLogging)
-            api(libs.mvikotlinTimetravel)
-            implementation(libs.mvikotlinCoroutines)
-            api(libs.decompose)
+            implementation(libs.coroutines.core)
+            api(libs.mvikotlin.core)
+            api(libs.mvikotlin.logging)
+            api(libs.mvikotlin.timetravel)
+            implementation(libs.mvikotlin.coroutines)
+            api(libs.decompose.core)
             api(libs.essenty)
-            implementation(libs.sqldelightRuntime)
-            implementation(libs.sqldelightPrimitive)
-            api(libs.mokoResources)
+            implementation(libs.sqldelight.runtime)
+            implementation(libs.sqldelight.primitive)
+            api(libs.mokoResources.core)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
-            implementation(libs.mokoResourcesTest)
+            implementation(libs.mokoResources.test)
         }
         androidMain.dependencies {
-            implementation(libs.sqldelightAndroidDriver)
+            implementation(libs.sqldelight.android)
         }
         jvmMain.dependencies {
-            implementation(libs.coroutinesDesktop)
-            implementation(libs.sqldelightDesktopDriver)
+            implementation(libs.coroutines.desktop)
+            implementation(libs.sqldelight.desktop)
         }
         iosMain.dependencies {
-            implementation(libs.sqldelightNativeDriver)
+            implementation(libs.sqldelight.native)
         }
     }
 }
@@ -82,12 +80,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlin {
-        jvmToolchain(18)
+        jvmToolchain(17)
     }
 }
 
@@ -101,6 +99,6 @@ sqldelight {
 }
 
 multiplatformResources {
-    multiplatformResourcesPackage = "com.benjdero.gameoflife"
-    multiplatformResourcesClassName = "Res"
+    resourcesPackage.set("com.benjdero.gameoflife")
+    resourcesClassName.set("Res")
 }

@@ -2,21 +2,92 @@ import Shared
 import SwiftUI
 
 struct DrawView: View {
-    private let component: Draw
+    private let component: DrawComponent
 
     @ObservedObject
-    private var observableModel: ObservableValue<DrawModel>
+    private var observableModel: ObservableValue<DrawComponentModel>
 
-    private var model: DrawModel { observableModel.value }
+    private var model: DrawComponentModel { observableModel.value }
 
-    init(component: Draw) {
+    init(component: DrawComponent) {
         self.component = component
         observableModel = ObservableValue(component.models)
     }
 
     var body: some View {
         VStack {
-            GameGridView(world: model.world)
+            ZStack {
+                GameGridView(
+                    world: model.world,
+                    onTap: { x, y in
+                        component.onDraw(x: Int32(x), y: Int32(y))
+                    }
+                )
+                HStack {
+                    Button(
+                        action: component.increaseLeft,
+                        label: {
+                            Image(systemName: "arrow.left.circle")
+                        }
+                    )
+                    Button(
+                        action: component.decreaseLeft,
+                        label: {
+                            Image(systemName: "arrow.right.circle")
+                        }
+                    )
+                    .disabled(!model.allowDecreaseWidth)
+                    Spacer()
+                }
+                VStack {
+                    Button(
+                        action: component.increaseTop,
+                        label: {
+                            Image(systemName: "arrow.up.circle")
+                        }
+                    )
+                    Button(
+                        action: component.decreaseTop,
+                        label: {
+                            Image(systemName: "arrow.down.circle")
+                        }
+                    )
+                    .disabled(!model.allowDecreaseHeight)
+                    Spacer()
+                }
+                HStack {
+                    Spacer()
+                    Button(
+                        action: component.decreaseRight,
+                        label: {
+                            Image(systemName: "arrow.left.circle")
+                        }
+                    )
+                    .disabled(!model.allowDecreaseWidth)
+                    Button(
+                        action: component.increaseRight,
+                        label: {
+                            Image(systemName: "arrow.right.circle")
+                        }
+                    )
+                }
+                VStack {
+                    Spacer()
+                    Button(
+                        action: component.decreaseBottom,
+                        label: {
+                            Image(systemName: "arrow.up.circle")
+                        }
+                    )
+                    .disabled(!model.allowDecreaseHeight)
+                    Button(
+                        action: component.increaseBottom,
+                        label: {
+                            Image(systemName: "arrow.down.circle")
+                        }
+                    )
+                }
+            }
             HStack {
                 Button(
                     action: component.goBack,
@@ -66,8 +137,8 @@ struct DrawView: View {
     }
 }
 
-struct DrawView_Previews: PreviewProvider {
-    static var previews: some View {
-        DrawView(component: DrawMock())
-    }
+#Preview {
+    DrawView(
+        component: DrawComponentMock()
+    )
 }

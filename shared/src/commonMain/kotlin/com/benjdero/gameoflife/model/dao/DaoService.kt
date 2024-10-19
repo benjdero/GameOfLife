@@ -3,7 +3,7 @@ package com.benjdero.gameoflife.model.dao
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.logs.LogSqliteDriver
-import com.benjdero.gameoflife.World as GolWorld
+import com.benjdero.gameoflife.model.World as GolWorld
 
 class DaoService(
     sqlDriverFactory: SqlDriverFactory

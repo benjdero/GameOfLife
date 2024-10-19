@@ -21,7 +21,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.BorderClear
 import androidx.compose.material.icons.filled.BrowserUpdated
 import androidx.compose.material.icons.filled.Casino
@@ -46,16 +46,15 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.benjdero.gameoflife.draw.Draw
-import com.benjdero.gameoflife.draw.Draw.Model
+import com.benjdero.gameoflife.draw.DrawComponent
+import com.benjdero.gameoflife.draw.DrawComponent.Model
 import com.benjdero.gameoflife.ui.common.CellGridView
 import com.benjdero.gameoflife.ui.common.ToggleGridButton
-import com.benjdero.gameoflife.ui.theme.MyTheme
 import kotlin.math.min
 
 @Composable
 fun DrawView(
-    component: Draw
+    component: DrawComponent
 ) {
 
     fun getCellFromOffset(canvasSize: IntSize, worldWidth: Int, worldHeight: Int, offset: Offset): IntOffset {
@@ -72,271 +71,269 @@ fun DrawView(
     val model: Model by component.models.subscribeAsState()
     var firstCellDragValue: Boolean by remember { mutableStateOf(false) }
 
-    MyTheme {
-        Scaffold(
-            backgroundColor = Color.Black,
-            bottomBar = {
-                BottomAppBar {
-                    IconButton(
-                        onClick = component::goBack
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = null
+    Scaffold(
+        backgroundColor = Color.Black,
+        bottomBar = {
+            BottomAppBar {
+                IconButton(
+                    onClick = component::goBack
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                        contentDescription = null
+                    )
+                }
+                Spacer(
+                    modifier = Modifier.weight(1f)
+                )
+                IconButton(
+                    onClick = component::clearWorld
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.BorderClear,
+                        contentDescription = null
+                    )
+                }
+                Spacer(
+                    modifier = Modifier.width(4.dp)
+                )
+                IconButton(
+                    onClick = component::randomWorld
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Casino,
+                        contentDescription = null
+                    )
+                }
+                Spacer(
+                    modifier = Modifier.width(16.dp)
+                )
+                ToggleGridButton(
+                    showGrid = model.showGrid,
+                    toggleGrid = component::toggleGrid
+                )
+                Spacer(
+                    modifier = Modifier.width(16.dp)
+                )
+                IconButton(
+                    onClick = component::load
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.BrowserUpdated,
+                        contentDescription = null
+                    )
+                }
+                Spacer(
+                    modifier = Modifier.width(8.dp)
+                )
+                IconButton(
+                    onClick = {
+                        component.save(model.world)
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Save,
+                        contentDescription = null
+                    )
+                }
+                Spacer(
+                    modifier = Modifier.width(16.dp)
+                )
+                IconButton(
+                    onClick = component::finish
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Done,
+                        contentDescription = null
+                    )
+                }
+            }
+        }
+    ) { scaffoldPadding: PaddingValues ->
+        Column(
+            modifier = Modifier.padding(scaffoldPadding)
+        ) {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .pointerInput(Unit) {
+                        detectDragGestures(
+                            onDragStart = { offset: Offset ->
+                                val cellPosition: IntOffset = getCellFromOffset(size, model.world.width, model.world.height, offset)
+                                if (!model.world.isWithinBounds(cellPosition.x, cellPosition.y)) {
+                                    println("Out of bounds coordinates [${cellPosition.x}:${cellPosition.y}]")
+                                    return@detectDragGestures
+                                }
+                                firstCellDragValue = model.world.isAlive(cellPosition.x, cellPosition.y)
+                                component.onDrawValue(cellPosition.x, cellPosition.y, !firstCellDragValue)
+                            },
+                            onDrag = { change: PointerInputChange, _: Offset ->
+                                val previousCellPosition: IntOffset =
+                                    getCellFromOffset(size, model.world.width, model.world.height, change.previousPosition)
+                                val currentCellPosition: IntOffset = getCellFromOffset(size, model.world.width, model.world.height, change.position)
+                                if (previousCellPosition != currentCellPosition)
+                                    component.onDrawValue(currentCellPosition.x, currentCellPosition.y, !firstCellDragValue)
+                            }
                         )
                     }
-                    Spacer(
-                        modifier = Modifier.weight(1f)
-                    )
-                    IconButton(
-                        onClick = component::clearWorld
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.BorderClear,
-                            contentDescription = null
-                        )
-                    }
-                    Spacer(
-                        modifier = Modifier.width(4.dp)
-                    )
-                    IconButton(
-                        onClick = component::randomWorld
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Casino,
-                            contentDescription = null
-                        )
-                    }
-                    Spacer(
-                        modifier = Modifier.width(16.dp)
-                    )
-                    ToggleGridButton(
-                        showGrid = model.showGrid,
-                        toggleGrid = component::toggleGrid
-                    )
-                    Spacer(
-                        modifier = Modifier.width(16.dp)
-                    )
-                    IconButton(
-                        onClick = component::load
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.BrowserUpdated,
-                            contentDescription = null
-                        )
-                    }
-                    Spacer(
-                        modifier = Modifier.width(8.dp)
-                    )
-                    IconButton(
-                        onClick = {
-                            component.save(model.world)
+                    .pointerInput(Unit) {
+                        detectTapGestures { offset: Offset ->
+                            val cellPosition: IntOffset = getCellFromOffset(size, model.world.width, model.world.height, offset)
+                            component.onDraw(cellPosition.x, cellPosition.y)
                         }
+                    }
+            ) {
+                CellGridView(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            if (model.showGrid)
+                                MaterialTheme.colors.onBackground
+                            else
+                                MaterialTheme.colors.background
+                        ),
+                    showCursor = true,
+                    world = model.world
+                )
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(start = 16.dp)
+                ) {
+                    Button(
+                        modifier = Modifier.size(36.dp),
+                        shape = RoundedCornerShape(
+                            topStart = 50f,
+                            bottomStart = 50f
+                        ),
+                        contentPadding = PaddingValues(all = 0.dp),
+                        onClick = component::increaseLeft
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Save,
+                            imageVector = Icons.Outlined.ArrowCircleLeft,
                             contentDescription = null
                         )
                     }
-                    Spacer(
-                        modifier = Modifier.width(16.dp)
-                    )
-                    IconButton(
-                        onClick = component::finish
+                    Button(
+                        modifier = Modifier.size(36.dp),
+                        shape = RoundedCornerShape(
+                            topEnd = 50f,
+                            bottomEnd = 50f
+                        ),
+                        contentPadding = PaddingValues(all = 0.dp),
+                        enabled = model.allowDecreaseWidth,
+                        onClick = component::decreaseLeft
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Done,
+                            imageVector = Icons.Outlined.ArrowCircleRight,
                             contentDescription = null
                         )
                     }
                 }
-            }
-        ) { scaffoldPadding: PaddingValues ->
-            Column(
-                modifier = Modifier.padding(scaffoldPadding)
-            ) {
-                Box(
+                Column(
                     modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                        .pointerInput(Unit) {
-                            detectDragGestures(
-                                onDragStart = { offset: Offset ->
-                                    val cellPosition: IntOffset = getCellFromOffset(size, model.world.width, model.world.height, offset)
-                                    if (!model.world.isWithinBounds(cellPosition.x, cellPosition.y)) {
-                                        println("Out of bounds coordinates [${cellPosition.x}:${cellPosition.y}]")
-                                        return@detectDragGestures
-                                    }
-                                    firstCellDragValue = model.world.isAlive(cellPosition.x, cellPosition.y)
-                                    component.onDrawValue(cellPosition.x, cellPosition.y, !firstCellDragValue)
-                                },
-                                onDrag = { change: PointerInputChange, _: Offset ->
-                                    val previousCellPosition: IntOffset =
-                                        getCellFromOffset(size, model.world.width, model.world.height, change.previousPosition)
-                                    val currentCellPosition: IntOffset = getCellFromOffset(size, model.world.width, model.world.height, change.position)
-                                    if (previousCellPosition != currentCellPosition)
-                                        component.onDrawValue(currentCellPosition.x, currentCellPosition.y, !firstCellDragValue)
-                                }
-                            )
-                        }
-                        .pointerInput(Unit) {
-                            detectTapGestures { offset: Offset ->
-                                val cellPosition: IntOffset = getCellFromOffset(size, model.world.width, model.world.height, offset)
-                                component.onDraw(cellPosition.x, cellPosition.y)
-                            }
-                        }
+                        .align(Alignment.TopCenter)
+                        .padding(top = 16.dp)
                 ) {
-                    CellGridView(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                if (model.showGrid)
-                                    MaterialTheme.colors.onBackground
-                                else
-                                    MaterialTheme.colors.background
-                            ),
-                        showCursor = true,
-                        world = model.world
-                    )
-                    Row(
-                        modifier = Modifier
-                            .align(Alignment.CenterStart)
-                            .padding(start = 16.dp)
+                    Button(
+                        modifier = Modifier.size(36.dp),
+                        shape = RoundedCornerShape(
+                            topStart = 50f,
+                            topEnd = 50f
+                        ),
+                        contentPadding = PaddingValues(all = 0.dp),
+                        onClick = component::increaseTop
                     ) {
-                        Button(
-                            modifier = Modifier.size(36.dp),
-                            shape = RoundedCornerShape(
-                                topStart = 50f,
-                                bottomStart = 50f
-                            ),
-                            contentPadding = PaddingValues(all = 0.dp),
-                            onClick = component::increaseLeft
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.ArrowCircleLeft,
-                                contentDescription = null
-                            )
-                        }
-                        Button(
-                            modifier = Modifier.size(36.dp),
-                            shape = RoundedCornerShape(
-                                topEnd = 50f,
-                                bottomEnd = 50f
-                            ),
-                            contentPadding = PaddingValues(all = 0.dp),
-                            enabled = model.allowDecreaseWidth,
-                            onClick = component::decreaseLeft
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.ArrowCircleRight,
-                                contentDescription = null
-                            )
-                        }
+                        Icon(
+                            imageVector = Icons.Outlined.ArrowCircleUp,
+                            contentDescription = null
+                        )
                     }
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .padding(top = 16.dp)
+                    Button(
+                        modifier = Modifier.size(36.dp),
+                        shape = RoundedCornerShape(
+                            bottomStart = 50f,
+                            bottomEnd = 50f
+                        ),
+                        contentPadding = PaddingValues(all = 0.dp),
+                        enabled = model.allowDecreaseHeight,
+                        onClick = component::decreaseTop
                     ) {
-                        Button(
-                            modifier = Modifier.size(36.dp),
-                            shape = RoundedCornerShape(
-                                topStart = 50f,
-                                topEnd = 50f
-                            ),
-                            contentPadding = PaddingValues(all = 0.dp),
-                            onClick = component::increaseTop
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.ArrowCircleUp,
-                                contentDescription = null
-                            )
-                        }
-                        Button(
-                            modifier = Modifier.size(36.dp),
-                            shape = RoundedCornerShape(
-                                bottomStart = 50f,
-                                bottomEnd = 50f
-                            ),
-                            contentPadding = PaddingValues(all = 0.dp),
-                            enabled = model.allowDecreaseHeight,
-                            onClick = component::decreaseTop
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.ArrowCircleDown,
-                                contentDescription = null
-                            )
-                        }
+                        Icon(
+                            imageVector = Icons.Outlined.ArrowCircleDown,
+                            contentDescription = null
+                        )
                     }
-                    Row(
-                        modifier = Modifier
-                            .align(Alignment.CenterEnd)
-                            .padding(end = 16.dp)
+                }
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(end = 16.dp)
+                ) {
+                    Button(
+                        modifier = Modifier.size(36.dp),
+                        shape = RoundedCornerShape(
+                            topStart = 50f,
+                            bottomStart = 50f
+                        ),
+                        contentPadding = PaddingValues(all = 0.dp),
+                        enabled = model.allowDecreaseWidth,
+                        onClick = component::decreaseRight
                     ) {
-                        Button(
-                            modifier = Modifier.size(36.dp),
-                            shape = RoundedCornerShape(
-                                topStart = 50f,
-                                bottomStart = 50f
-                            ),
-                            contentPadding = PaddingValues(all = 0.dp),
-                            enabled = model.allowDecreaseWidth,
-                            onClick = component::decreaseRight
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.ArrowCircleLeft,
-                                contentDescription = null
-                            )
-                        }
-                        Button(
-                            modifier = Modifier.size(36.dp),
-                            shape = RoundedCornerShape(
-                                topEnd = 50f,
-                                bottomEnd = 50f
-                            ),
-                            contentPadding = PaddingValues(all = 0.dp),
-                            onClick = component::increaseRight
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.ArrowCircleRight,
-                                contentDescription = null
-                            )
-                        }
+                        Icon(
+                            imageVector = Icons.Outlined.ArrowCircleLeft,
+                            contentDescription = null
+                        )
                     }
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .padding(bottom = 16.dp)
+                    Button(
+                        modifier = Modifier.size(36.dp),
+                        shape = RoundedCornerShape(
+                            topEnd = 50f,
+                            bottomEnd = 50f
+                        ),
+                        contentPadding = PaddingValues(all = 0.dp),
+                        onClick = component::increaseRight
                     ) {
-                        Button(
-                            modifier = Modifier.size(36.dp),
-                            shape = RoundedCornerShape(
-                                topStart = 50f,
-                                topEnd = 50f
-                            ),
-                            contentPadding = PaddingValues(all = 0.dp),
-                            enabled = model.allowDecreaseHeight,
-                            onClick = component::decreaseBottom
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.ArrowCircleUp,
-                                contentDescription = null
-                            )
-                        }
-                        Button(
-                            modifier = Modifier.size(36.dp),
-                            shape = RoundedCornerShape(
-                                bottomStart = 50f,
-                                bottomEnd = 50f
-                            ),
-                            contentPadding = PaddingValues(all = 0.dp),
-                            onClick = component::increaseBottom
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.ArrowCircleDown,
-                                contentDescription = null
-                            )
-                        }
+                        Icon(
+                            imageVector = Icons.Outlined.ArrowCircleRight,
+                            contentDescription = null
+                        )
+                    }
+                }
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 16.dp)
+                ) {
+                    Button(
+                        modifier = Modifier.size(36.dp),
+                        shape = RoundedCornerShape(
+                            topStart = 50f,
+                            topEnd = 50f
+                        ),
+                        contentPadding = PaddingValues(all = 0.dp),
+                        enabled = model.allowDecreaseHeight,
+                        onClick = component::decreaseBottom
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.ArrowCircleUp,
+                            contentDescription = null
+                        )
+                    }
+                    Button(
+                        modifier = Modifier.size(36.dp),
+                        shape = RoundedCornerShape(
+                            bottomStart = 50f,
+                            bottomEnd = 50f
+                        ),
+                        contentPadding = PaddingValues(all = 0.dp),
+                        onClick = component::increaseBottom
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.ArrowCircleDown,
+                            contentDescription = null
+                        )
                     }
                 }
             }

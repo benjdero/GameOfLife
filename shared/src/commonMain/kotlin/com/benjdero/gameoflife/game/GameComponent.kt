@@ -1,69 +1,38 @@
 package com.benjdero.gameoflife.game
 
-import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.decompose.value.operator.map
-import com.arkivanov.mvikotlin.core.instancekeeper.getStore
-import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.benjdero.gameoflife.World
-import com.benjdero.gameoflife.asValue
-import com.benjdero.gameoflife.game.Game.Model
-import com.benjdero.gameoflife.game.Game.Output
-import com.benjdero.gameoflife.game.GameStore.Intent
+import com.benjdero.gameoflife.model.Speed
+import com.benjdero.gameoflife.model.World
 
-class GameComponent(
-    componentContext: ComponentContext,
-    storeFactory: StoreFactory,
-    world: World?,
-    private val output: (Output) -> Unit
-) : Game, ComponentContext by componentContext {
+interface GameComponent {
+    val models: Value<Model>
 
-    private val store =
-        instanceKeeper.getStore {
-            GameStoreProvider(
-                storeFactory = storeFactory,
-                world = world
-            ).provide()
-        }
+    fun runGame()
 
-    override val models: Value<Model> = store.asValue().map {
-        Model(
-            running = it.running,
-            generation = it.generation,
-            speed = it.speed,
-            canSpeedUp = it.canSpeedUp,
-            canSpeedDown = it.canSpeedDown,
-            world = it.world,
-            showGrid = it.showGrid,
-            history = it.history
-        )
-    }
+    fun prevStep()
 
-    override fun runGame() {
-        store.accept(Intent.RunGame)
-    }
+    fun nextStep()
 
-    override fun prevStep() {
-        store.accept(Intent.PrevStep)
-    }
+    fun toggleGrid()
 
-    override fun nextStep() {
-        store.accept(Intent.NextStep)
-    }
+    fun goBack()
 
-    override fun toggleGrid() {
-        store.accept(Intent.ShowGrid)
-    }
+    fun speedUp()
 
-    override fun goBack() {
-        output(Output.GoBack)
-    }
+    fun speedDown()
 
-    override fun speedUp() {
-        store.accept(Intent.SpeedUp)
-    }
+    data class Model(
+        val running: Boolean,
+        val generation: Int,
+        val speed: Speed,
+        val canSpeedUp: Boolean,
+        val canSpeedDown: Boolean,
+        val world: World,
+        val showGrid: Boolean,
+        val history: List<World>
+    )
 
-    override fun speedDown() {
-        store.accept(Intent.SpeedDown)
+    sealed class Output {
+        data object GoBack : Output()
     }
 }

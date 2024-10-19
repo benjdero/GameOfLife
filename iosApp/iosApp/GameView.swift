@@ -2,21 +2,53 @@ import Shared
 import SwiftUI
 
 struct GameView: View {
-    private let component: Game
+    private let component: GameComponent
 
     @ObservedObject
-    private var observableModel: ObservableValue<GameModel>
+    private var observableModel: ObservableValue<GameComponentModel>
 
-    private var model: GameModel { observableModel.value }
+    private var model: GameComponentModel { observableModel.value }
 
-    init(component: Game) {
+    init(component: GameComponent) {
         self.component = component
         observableModel = ObservableValue(component.models)
     }
 
     var body: some View {
         VStack {
-            GameGridView(world: model.world)
+            GameGridView(
+                world: model.world,
+                onTap: { _, _ in }
+            )
+            HStack {
+                Button(
+                    action: component.speedDown,
+                    label: {
+                        Image(systemName: "minus")
+                    }
+                )
+                .disabled(!model.canSpeedDown)
+                let speed: String = switch model.speed {
+                case Speed.normal:
+                    "x1"
+                case Speed.fast2x:
+                    "x2"
+                case Speed.fast4x:
+                    "x4"
+                case Speed.fast10x:
+                    "x10"
+                default:
+                    ""
+                }
+                Text(speed)
+                Button(
+                    action: component.speedUp,
+                    label: {
+                        Image(systemName: "plus")
+                    }
+                )
+                .disabled(!model.canSpeedUp)
+            }
             HStack {
                 Button(
                     action: component.goBack,
@@ -27,6 +59,13 @@ struct GameView: View {
                 Spacer()
                 Image(systemName: "person.3.fill")
                 Text("\(model.generation)")
+                Spacer()
+                Button(
+                    action: component.prevStep,
+                    label: {
+                        Image(systemName: "backward.fill")
+                    }
+                ).disabled(model.running || model.history.count == 0)
                 Spacer()
                 Button(
                     action: component.runGame,
@@ -40,13 +79,6 @@ struct GameView: View {
                 )
                 Spacer()
                 Button(
-                    action: component.prevStep,
-                    label: {
-                        Image(systemName: "backward.fill")
-                    }
-                ).disabled(model.running || model.history.count == 0)
-                Spacer()
-                Button(
                     action: component.nextStep,
                     label: {
                         Image(systemName: "forward.fill")
@@ -57,10 +89,8 @@ struct GameView: View {
     }
 }
 
-struct GameView_Previews: PreviewProvider {
-    static var previews: some View {
-        GameView(
-            component: GameMock()
-        )
-    }
+#Preview {
+    GameView(
+        component: GameComponentMock()
+    )
 }
