@@ -5,7 +5,7 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
-import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.mvikotlin.core.store.StoreFactory
@@ -85,16 +85,16 @@ class RootComponentImpl(
 
     private fun onMenuOutput(output: MenuComponent.Output): Unit =
         when (output) {
-            MenuComponent.Output.StartDraw -> navigation.push(Config.Draw(null))
-            MenuComponent.Output.StartGame -> navigation.push(Config.Game(null))
+            MenuComponent.Output.StartDraw -> navigation.pushNew(Config.Draw(null))
+            MenuComponent.Output.StartGame -> navigation.pushNew(Config.Game(null))
         }
 
     private fun onDrawOutput(output: DrawComponent.Output): Unit =
         when (output) {
-            is DrawComponent.Output.Finish -> navigation.push(Config.Game(output.world))
+            is DrawComponent.Output.Finish -> navigation.pushNew(Config.Game(output.world))
             DrawComponent.Output.GoBack -> navigation.pop()
-            DrawComponent.Output.Load -> navigation.push(Config.Load)
-            is DrawComponent.Output.Save -> navigation.push(Config.Save(output.world))
+            DrawComponent.Output.Load -> navigation.pushNew(Config.Load)
+            is DrawComponent.Output.Save -> navigation.pushNew(Config.Save(output.world))
         }
 
     private fun onLoadOutput(output: LoadComponent.Output): Unit =
@@ -116,7 +116,7 @@ class RootComponentImpl(
             GameComponent.Output.GoBack -> navigation.pop()
         }
 
-    override val childStack: Value<ChildStack<*, RootComponent.Child>> = stack
+    override val childStack: Value<ChildStack<*, Child>> = stack
 
     @Serializable
     private sealed class Config {
