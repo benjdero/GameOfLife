@@ -12,6 +12,7 @@ The UI for iPhone is written using SwiftUI.
 
 ## Screenshots
 
+### Android
 <p align="middle">
     <img src="img/screenshot_android_1.png" alt="Android screenshot 1" width="30%" />
     <img src="img/screenshot_android_2.png" alt="Android screenshot 2" width="30%" /> 
@@ -22,6 +23,12 @@ The UI for iPhone is written using SwiftUI.
     <img src="img/screenshot_android_4.png" alt="Android screenshot 4" width="100%" /> 
 </p>
 
+### Desktop
+<p align="middle">
+    <img src="img/screenshot_desktop.png" alt="Desktop screenshot" width="100%" /> 
+</p>
+
+### iPhone
 <p align="middle">
     <img src="img/screenshot_iphone_1.png" alt="iPhone screenshot 1" width="30%" />
     <img src="img/screenshot_iphone_2.png" alt="iPhone screenshot 2" width="30%" /> 
