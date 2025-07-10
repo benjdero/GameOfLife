@@ -6,8 +6,6 @@ import androidx.activity.compose.setContent
 import com.arkivanov.decompose.defaultComponentContext
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
-import com.benjdero.gameoflife.RootComponent
-import com.benjdero.gameoflife.RootComponentImpl
 import com.benjdero.gameoflife.model.dao.DaoService
 import com.benjdero.gameoflife.model.dao.SqlDriverFactory
 import com.benjdero.gameoflife.ui.RootView

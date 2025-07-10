@@ -18,4 +18,3 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":shared")
-include(":sharedUi")

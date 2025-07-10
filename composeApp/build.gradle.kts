@@ -21,14 +21,8 @@ kotlin {
     }
 
     sourceSets {
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.activityCompose)
-            implementation(libs.appcompat)
-        }
         commonMain.dependencies {
             implementation(projects.shared)
-            implementation(projects.sharedUi)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.ui)
@@ -43,9 +37,12 @@ kotlin {
         commonTest.dependencies {
             implementation(kotlin("test"))
         }
+        androidMain.dependencies {
+            implementation(compose.preview)
+            implementation(libs.activityCompose)
+            implementation(libs.appcompat)
+        }
         jvmMain.dependencies {
-            implementation(projects.shared)
-            implementation(projects.sharedUi)
             implementation(compose.desktop.currentOs)
         }
     }
