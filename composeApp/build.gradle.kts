@@ -83,7 +83,7 @@ compose.desktop {
         mainClass = "com.benjdero.gameoflife.MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "jvm"
+            packageName = "com.benjdero.gameoflife"
             packageVersion = "1.0.0"
             macOS {
                 iconFile.set(project.file("src/jvmMain/resources/drawable/icon.icns"))
