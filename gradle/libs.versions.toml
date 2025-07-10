@@ -1,13 +1,13 @@
 [versions]
 checker = "0.52.0"
-agp = "8.10.1"
-kotlin = "2.1.21"
+agp = "8.11.0"
+kotlin = "2.2.0"
 coroutines = "1.10.2"
 mvikotlin = "4.3.0"
 decompose = "3.3.0"
 essenty = "2.5.0"
 sqldelight = "2.1.0"
-mokoResources = "0.24.5"
+mokoResources = "0.25.0"
 composePlugin = "1.8.2"
 activity = "1.10.1"
 appcompat = "1.7.1"
@@ -36,7 +36,6 @@ mokoResources-compose = { group = "dev.icerock.moko", name = "resources-compose"
 mokoResources-test = { group = "dev.icerock.moko", name = "resources-test", version.ref = "mokoResources" }
 activityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

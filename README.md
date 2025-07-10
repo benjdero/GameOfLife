@@ -2,13 +2,13 @@
 
 Pet project to experiment with Kotlin Multiplatform
 
-## Description
+## Structure
 
-The business logic is wrote in Kotlin and shared across all targets.
-
-The UI for Android and Desktop/JVM use Jetbrains Compose.
-
-The UI for iPhone is written using SwiftUI.
+* `/shared` the business logic shared across all the applications.
+  - `commonMain` is for code that's common for all targets.
+  - `androidMain`, `iosMain` and `jvmMain` for target specific implementation
+* `/composeApp` the Android and Jvm application using Jebrains Compose for its user interface.
+* `/iosApp` the iOS application using SwiftUI for its user interface.
 
 ## Screenshots
 
@@ -33,14 +33,3 @@ The UI for iPhone is written using SwiftUI.
     <img src="img/screenshot_iphone_1.png" alt="iPhone screenshot 1" width="30%" />
     <img src="img/screenshot_iphone_2.png" alt="iPhone screenshot 2" width="30%" /> 
 </p>
-
-## Todo
-
-- Save/Load only sub-areas of the game world to make reusable patterns
-- Add pre-made interesting patterns
-- Cells of different colors
-- Dynamically alterable game rules
-- Improve the ergonomics of the UI
-- Add decorations to the screenshots (device frame, captions..)
-- Android EdgeToEdge
-- Android pinch zoom on location
