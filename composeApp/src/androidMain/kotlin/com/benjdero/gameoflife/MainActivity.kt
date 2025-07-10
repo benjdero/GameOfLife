@@ -8,7 +8,6 @@ import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
 import com.benjdero.gameoflife.model.dao.DaoService
 import com.benjdero.gameoflife.model.dao.SqlDriverFactory
-import com.benjdero.gameoflife.ui.RootView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
