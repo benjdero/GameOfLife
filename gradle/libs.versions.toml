@@ -36,7 +36,6 @@ mokoResources-compose = { group = "dev.icerock.moko", name = "resources-compose"
 mokoResources-test = { group = "dev.icerock.moko", name = "resources-test", version.ref = "mokoResources" }
 activityCompose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
