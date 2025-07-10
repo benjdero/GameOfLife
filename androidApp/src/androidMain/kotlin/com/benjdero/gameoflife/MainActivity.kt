@@ -1,4 +1,4 @@
-package com.benjdero.gameoflife.android
+package com.benjdero.gameoflife
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
