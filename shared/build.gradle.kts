@@ -29,7 +29,6 @@ kotlin {
     ).forEach { iosTarget: KotlinNativeTarget ->
         iosTarget.binaries.framework {
             baseName = "Shared"
-            isStatic = true
             export(libs.mvikotlin.core)
             export(libs.mvikotlin.logging)
             export(libs.mvikotlin.timetravel)
@@ -73,8 +72,8 @@ android {
     compileSdk = libs.versions.compileSdk.get().toInt()
     namespace = "com.benjdero.gameoflife"
 
-//    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-//    sourceSets["main"].java.srcDirs("build/generated/moko/androidMain/src")
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].java.srcDirs("build/generated/moko/androidMain/src")
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
