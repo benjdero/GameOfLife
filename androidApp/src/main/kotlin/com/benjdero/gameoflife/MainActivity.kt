@@ -1,19 +1,19 @@
-package com.benjdero.gameoflife.android
+package com.benjdero.gameoflife
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import com.arkivanov.decompose.defaultComponentContext
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.timetravel.store.TimeTravelStoreFactory
-import com.benjdero.gameoflife.RootComponent
-import com.benjdero.gameoflife.RootComponentImpl
 import com.benjdero.gameoflife.model.dao.DaoService
 import com.benjdero.gameoflife.model.dao.SqlDriverFactory
 import com.benjdero.gameoflife.ui.RootView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         val component: RootComponent = RootComponentImpl(
@@ -33,3 +33,9 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+//@Preview
+//@Composable
+//fun AppAndroidPreview() {
+//    App()
+//}

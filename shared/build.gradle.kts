@@ -1,34 +1,22 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.mokoResources)
     alias(libs.plugins.serialization)
 }
 
 kotlin {
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
-        }
-    }
-
-    jvm {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
-        }
-    }
-
     listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach { iosTarget: KotlinNativeTarget ->
+    ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "Shared"
+            isStatic = true
             export(libs.mvikotlin.core)
             export(libs.mvikotlin.logging)
             export(libs.mvikotlin.timetravel)
@@ -38,9 +26,30 @@ kotlin {
         }
     }
 
+    jvm()
+
+    androidLibrary {
+        namespace = "com.benjdero.gameoflife.Shared"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+
+//        sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+//        sourceSets["main"].java.srcDirs("build/generated/moko/androidMain/src")
+
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_11
+        }
+        androidResources {
+            enable = true
+        }
+        withHostTest {
+            isIncludeAndroidResources = true
+        }
+    }
+
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.coroutines.core)
+            implementation(libs.kotlinx.coroutinesCore)
             api(libs.mvikotlin.core)
             api(libs.mvikotlin.logging)
             api(libs.mvikotlin.timetravel)
@@ -52,40 +61,18 @@ kotlin {
             api(libs.mokoResources.core)
         }
         commonTest.dependencies {
-            implementation(kotlin("test"))
-            implementation(libs.mokoResources.test)
+            implementation(libs.kotlin.test)
         }
         androidMain.dependencies {
             implementation(libs.sqldelight.android)
         }
         jvmMain.dependencies {
-            implementation(libs.coroutines.desktop)
+            implementation(libs.kotlinx.coroutinesSwing)
             implementation(libs.sqldelight.desktop)
         }
         iosMain.dependencies {
             implementation(libs.sqldelight.native)
         }
-    }
-}
-
-android {
-    compileSdk = libs.versions.compileSdk.get().toInt()
-    namespace = "com.benjdero.gameoflife"
-
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    sourceSets["main"].java.srcDirs("build/generated/moko/androidMain/src")
-
-    defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    kotlin {
-        jvmToolchain(21)
     }
 }
 

@@ -1,43 +1,36 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.kotlinJvm)
+    alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
 }
 
-kotlin {
-    jvm {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
-        }
-    }
+dependencies {
+    implementation(projects.sharedUI)
 
-    sourceSets {
-        jvmMain.dependencies {
-            implementation(projects.shared)
-            implementation(projects.sharedUi)
-            implementation(compose.desktop.currentOs)
-        }
-    }
+    implementation(compose.desktop.currentOs)
+    implementation(libs.kotlinx.coroutinesSwing)
+
+    implementation(libs.compose.uiToolingPreview)
 }
 
 compose.desktop {
     application {
-        mainClass = "MainKt"
+        mainClass = "com.benjdero.gameoflife.MainKt"
+
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "jvm"
+            packageName = "com.benjdero.gameoflife"
             packageVersion = "1.0.0"
             macOS {
-                iconFile.set(project.file("src/jvmMain/resources/drawable/icon.icns"))
+                iconFile.set(project.file("src/main/resources/drawable/icon.icns"))
             }
             windows {
-                iconFile.set(project.file("src/jvmMain/resources/drawable/icon.ico"))
+                iconFile.set(project.file("src/main/resources/drawable/icon.ico"))
             }
             linux {
-                iconFile.set(project.file("src/jvmMain/resources/drawable/icon.png"))
+                iconFile.set(project.file("src/main/resources/drawable/icon.png"))
             }
         }
     }
