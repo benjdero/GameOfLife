@@ -1,5 +1,5 @@
 [versions]
-checker = "0.52.0"
+checker = "0.67.0"
 agp = "9.2.1"
 android-compileSdk = "36"
 android-minSdk = "24"
@@ -68,5 +68,5 @@ kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 mokoResources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "mokoResources" }
-checker = { id = "com.github.ben-manes.versions", version.ref = "checker" }
+checker = { id = "io.github.ben-manes.versions", version.ref = "checker" }
 serialization = { id = 'org.jetbrains.kotlin.plugin.serialization', version.ref = 'kotlin' }
