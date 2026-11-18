@@ -30,6 +30,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.load.LoadComponent
 import com.benjdero.gameoflife.load.LoadComponent.Model
+import com.benjdero.gameoflife.load_list_empty
 import com.benjdero.gameoflife.model.World
 import com.benjdero.gameoflife.ui.common.CellGridView
 import dev.icerock.moko.resources.compose.stringResource

@@ -8,6 +8,24 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.benjdero.gameoflife.Res
+import com.benjdero.gameoflife.inter_black
+import com.benjdero.gameoflife.inter_blackitalic
+import com.benjdero.gameoflife.inter_bold
+import com.benjdero.gameoflife.inter_bolditalic
+import com.benjdero.gameoflife.inter_extrabold
+import com.benjdero.gameoflife.inter_extrabolditalic
+import com.benjdero.gameoflife.inter_extralight
+import com.benjdero.gameoflife.inter_extralightitalic
+import com.benjdero.gameoflife.inter_italic
+import com.benjdero.gameoflife.inter_light
+import com.benjdero.gameoflife.inter_lightitalic
+import com.benjdero.gameoflife.inter_medium
+import com.benjdero.gameoflife.inter_mediumitalic
+import com.benjdero.gameoflife.inter_regular
+import com.benjdero.gameoflife.inter_semibold
+import com.benjdero.gameoflife.inter_semibolditalic
+import com.benjdero.gameoflife.inter_thin
+import com.benjdero.gameoflife.inter_thinitalic
 import dev.icerock.moko.resources.compose.asFont
 
 @Composable
