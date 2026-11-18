@@ -1,9 +1,10 @@
 [versions]
 checker = "0.67.0"
 agp = "9.5.1"
-android-compileSdk = "36"
+android-compileSdk = "37"
+android-compileSdkMinor = "2"
 android-minSdk = "24"
-android-targetSdk = "36"
+android-targetSdk = "37"
 androidx-activity = "1.13.0"
 androidx-appcompat = "1.7.1"
 androidx-core = "1.18.0"
