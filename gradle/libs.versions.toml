@@ -18,10 +18,10 @@ kotlinx-coroutines = "1.11.0"
 material = "1.12.2"
 materialIconsExtended = "1.7.3"
 mvikotlin = "4.4.0"
-decompose = "3.5.0"
-essenty = "2.5.0"
-sqldelight = "2.3.2"
-mokoResources = "0.26.4"
+decompose = "3.6.2"
+essenty = "2.7.1"
+sqldelight = "2.4.1"
+mokoResources = "0.27.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }

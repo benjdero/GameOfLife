@@ -17,6 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.benjdero.gameoflife.Res
+import com.benjdero.gameoflife.app_name
+import com.benjdero.gameoflife.good_bakwan
+import com.benjdero.gameoflife.menu_start_draw
+import com.benjdero.gameoflife.menu_start_game
 import com.benjdero.gameoflife.menu.MenuComponent
 import com.benjdero.gameoflife.ui.AppIcon
 import dev.icerock.moko.resources.compose.fontFamilyResource

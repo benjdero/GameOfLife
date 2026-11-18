@@ -28,6 +28,12 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
 import com.benjdero.gameoflife.Res
 import com.benjdero.gameoflife.game.GameComponent
+import com.benjdero.gameoflife.game_next_step
+import com.benjdero.gameoflife.game_pause
+import com.benjdero.gameoflife.game_prev_step
+import com.benjdero.gameoflife.game_run
+import com.benjdero.gameoflife.game_zoom_in
+import com.benjdero.gameoflife.game_zoom_out
 import com.benjdero.gameoflife.model.Speed
 import com.benjdero.gameoflife.ui.common.ToggleGridButton
 import dev.icerock.moko.resources.compose.stringResource
