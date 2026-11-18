@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.sharedUI)
+    implementation(projects.sharedUi)
 
     implementation(libs.androidx.activity.compose)
 
