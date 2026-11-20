@@ -1,26 +1,27 @@
 [versions]
-checker = "0.52.0"
-agp = "9.2.1"
-android-compileSdk = "36"
+checker = "0.67.0"
+agp = "9.5.1"
+android-compileSdk = "37"
+android-compileSdkMinor = "2"
 android-minSdk = "24"
-android-targetSdk = "36"
+android-targetSdk = "37"
 androidx-activity = "1.13.0"
-androidx-appcompat = "1.7.1"
-androidx-core = "1.18.0"
+androidx-appcompat = "1.8.0"
+androidx-core = "1.19.1"
 androidx-espresso = "3.7.0"
-androidx-lifecycle = "2.11.0-beta01"
+androidx-lifecycle = "2.11.0"
 androidx-testExt = "1.3.0"
-composeMultiplatform = "1.11.0"
+composeMultiplatform = "1.12.2"
 junit = "4.13.2"
-kotlin = "2.3.21"
+kotlin = "2.4.21"
 kotlinx-coroutines = "1.11.0"
-material = "1.11.0"
+material = "1.12.2"
 materialIconsExtended = "1.7.3"
 mvikotlin = "4.4.0"
-decompose = "3.5.0"
-essenty = "2.5.0"
-sqldelight = "2.3.2"
-mokoResources = "0.26.4"
+decompose = "3.6.2"
+essenty = "2.7.1"
+sqldelight = "2.4.1"
+mokoResources = "0.27.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -68,5 +69,5 @@ kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 mokoResources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "mokoResources" }
-checker = { id = "com.github.ben-manes.versions", version.ref = "checker" }
+checker = { id = "io.github.ben-manes.versions", version.ref = "checker" }
 serialization = { id = 'org.jetbrains.kotlin.plugin.serialization', version.ref = 'kotlin' }

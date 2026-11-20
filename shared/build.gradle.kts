@@ -28,9 +28,13 @@ kotlin {
 
     jvm()
 
-    androidLibrary {
+    android {
         namespace = "com.benjdero.gameoflife.Shared"
-        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        compileSdk {
+            version = release(libs.versions.android.compileSdk.get().toInt()) {
+                minorApiLevel = libs.versions.android.compileSdkMinor.get().toInt()
+            }
+        }
         minSdk = libs.versions.android.minSdk.get().toInt()
 
 //        sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
@@ -17,6 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.benjdero.gameoflife.Res
+import com.benjdero.gameoflife.app_name
+import com.benjdero.gameoflife.good_bakwan
+import com.benjdero.gameoflife.menu_start_draw
+import com.benjdero.gameoflife.menu_start_game
 import com.benjdero.gameoflife.menu.MenuComponent
 import com.benjdero.gameoflife.ui.AppIcon
 import dev.icerock.moko.resources.compose.fontFamilyResource
@@ -26,9 +31,11 @@ import dev.icerock.moko.resources.compose.stringResource
 fun MenuView(
     component: MenuComponent
 ) {
-    Scaffold {
+    Scaffold { innerPadding ->
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
